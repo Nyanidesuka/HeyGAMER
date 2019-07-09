@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:HeyGAMER Wireframe.xcodeproj">
+      location = "group:/Users/haleyjones/DevMountain Projects/HeyGAMER/HeyGAMER.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

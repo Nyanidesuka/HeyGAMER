@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -25,7 +25,7 @@
 
 /* Begin PBXFileReference section */
 		0E7F03AF17AE5F7585703B7D /* Pods_HeyGAMER_Wireframe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HeyGAMER_Wireframe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		171F7EFA22D3BE420012210A /* HeyGAMER Wireframe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HeyGAMER Wireframe.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		171F7EFA22D3BE420012210A /* HeyGAMER.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeyGAMER.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		171F7EFD22D3BE420012210A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		171F7EFF22D3BE420012210A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		171F7F0222D3BE420012210A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -69,7 +69,7 @@
 		171F7EFB22D3BE420012210A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				171F7EFA22D3BE420012210A /* HeyGAMER Wireframe.app */,
+				171F7EFA22D3BE420012210A /* HeyGAMER.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -125,16 +125,15 @@
 				F688D78FE41A1F86FCBA77C7 /* Pods-HeyGAMER Wireframe.debug.xcconfig */,
 				F03525E219F480A91613D7EB /* Pods-HeyGAMER Wireframe.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		171F7EF922D3BE420012210A /* HeyGAMER Wireframe */ = {
+		171F7EF922D3BE420012210A /* HeyGAMER */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 171F7F0F22D3BE430012210A /* Build configuration list for PBXNativeTarget "HeyGAMER Wireframe" */;
+			buildConfigurationList = 171F7F0F22D3BE430012210A /* Build configuration list for PBXNativeTarget "HeyGAMER" */;
 			buildPhases = (
 				9C15A3EDD0BD0BD02BDFFD62 /* [CP] Check Pods Manifest.lock */,
 				171F7EF622D3BE420012210A /* Sources */,
@@ -146,9 +145,9 @@
 			);
 			dependencies = (
 			);
-			name = "HeyGAMER Wireframe";
+			name = HeyGAMER;
 			productName = "HeyGAMER Wireframe";
-			productReference = 171F7EFA22D3BE420012210A /* HeyGAMER Wireframe.app */;
+			productReference = 171F7EFA22D3BE420012210A /* HeyGAMER.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -166,7 +165,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 171F7EF522D3BE420012210A /* Build configuration list for PBXProject "HeyGAMER Wireframe" */;
+			buildConfigurationList = 171F7EF522D3BE420012210A /* Build configuration list for PBXProject "HeyGAMER" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -179,7 +178,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				171F7EF922D3BE420012210A /* HeyGAMER Wireframe */,
+				171F7EF922D3BE420012210A /* HeyGAMER */,
 			);
 		};
 /* End PBXProject section */
@@ -436,7 +435,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		171F7EF522D3BE420012210A /* Build configuration list for PBXProject "HeyGAMER Wireframe" */ = {
+		171F7EF522D3BE420012210A /* Build configuration list for PBXProject "HeyGAMER" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				171F7F0D22D3BE430012210A /* Debug */,
@@ -445,7 +444,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		171F7F0F22D3BE430012210A /* Build configuration list for PBXNativeTarget "HeyGAMER Wireframe" */ = {
+		171F7F0F22D3BE430012210A /* Build configuration list for PBXNativeTarget "HeyGAMER" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				171F7F1022D3BE430012210A /* Debug */,
