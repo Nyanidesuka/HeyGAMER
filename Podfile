@@ -1,7 +1,7 @@
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
-target 'HeyGAMER Wireframe' do
+target 'HeyGAMER' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
@@ -9,5 +9,6 @@ target 'HeyGAMER Wireframe' do
 
 pod 'Firebase/Core'
 pod 'Firebase/Firestore'
+pod 'Firebase/Auth'
 
 end

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class UserListViewController: UIViewController {
 
@@ -14,6 +15,19 @@ class UserListViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func logOutButtonTapped(_ sender: Any) {
+        do{
+            try Auth.auth().signOut()
+            print("henlo, we're firing the segue to the fetch VC.")
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "initialFetchVC")
+            UIApplication.shared.windows.first?.rootViewController = viewController
+            self.performSegue(withIdentifier: "logOut", sender: nil)
+        }catch{
+            print(error)
+        }
     }
     
 

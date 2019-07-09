@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		171F7EFE22D3BE420012210A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171F7EFD22D3BE420012210A /* AppDelegate.swift */; };
-		171F7F0022D3BE420012210A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171F7EFF22D3BE420012210A /* ViewController.swift */; };
 		171F7F0322D3BE420012210A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 171F7F0122D3BE420012210A /* Main.storyboard */; };
 		171F7F0622D3BE420012210A /* HeyGAMER_Wireframe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 171F7F0422D3BE420012210A /* HeyGAMER_Wireframe.xcdatamodeld */; };
 		171F7F0822D3BE430012210A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 171F7F0722D3BE430012210A /* Assets.xcassets */; };
@@ -20,14 +19,26 @@
 		171F7F1D22D3E4150012210A /* UserDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171F7F1C22D3E4150012210A /* UserDetailViewController.swift */; };
 		171F7F1F22D3E46E0012210A /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171F7F1E22D3E46E0012210A /* UserInfoTableViewCell.swift */; };
 		171F7F2122D3E47B0012210A /* UserBioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171F7F2022D3E47B0012210A /* UserBioTableViewCell.swift */; };
-		CF42FB8C3F74FFCA98342121 /* Pods_HeyGAMER_Wireframe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E7F03AF17AE5F7585703B7D /* Pods_HeyGAMER_Wireframe.framework */; };
+		17228DB822D525E900A9D4D2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 17228DB722D525E900A9D4D2 /* GoogleService-Info.plist */; };
+		17228DBA22D526BA00A9D4D2 /* FirebaseReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DB922D526BA00A9D4D2 /* FirebaseReferenceManager.swift */; };
+		17228DBD22D5280800A9D4D2 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DBC22D5280800A9D4D2 /* FirebaseService.swift */; };
+		17228DC022D529D200A9D4D2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DBF22D529D200A9D4D2 /* User.swift */; };
+		17228DC222D529DF00A9D4D2 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DC122D529DF00A9D4D2 /* Conversation.swift */; };
+		17228DC422D529ED00A9D4D2 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DC322D529ED00A9D4D2 /* Message.swift */; };
+		17228DC622D529FB00A9D4D2 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DC522D529FB00A9D4D2 /* Event.swift */; };
+		17228DC822D52A5C00A9D4D2 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DC722D52A5C00A9D4D2 /* UserController.swift */; };
+		17228DCB22D52A6D00A9D4D2 /* MessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DCA22D52A6D00A9D4D2 /* MessageController.swift */; };
+		17228DCD22D52A7700A9D4D2 /* ConversationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DCC22D52A7700A9D4D2 /* ConversationController.swift */; };
+		17228DCF22D52A8100A9D4D2 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DCE22D52A8100A9D4D2 /* EventController.swift */; };
+		17228DD122D53A4A00A9D4D2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DD022D53A4A00A9D4D2 /* LoginViewController.swift */; };
+		17228DD322D53B6B00A9D4D2 /* InitialFetchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DD222D53B6B00A9D4D2 /* InitialFetchViewController.swift */; };
+		17228DD522D543B400A9D4D2 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DD422D543B400A9D4D2 /* SignUpViewController.swift */; };
+		9A4D00AE5C20F03EF7E4ECC2 /* Pods_HeyGAMER.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6283FE23C0F58E14034A67B0 /* Pods_HeyGAMER.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0E7F03AF17AE5F7585703B7D /* Pods_HeyGAMER_Wireframe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HeyGAMER_Wireframe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		171F7EFA22D3BE420012210A /* HeyGAMER.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeyGAMER.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		171F7EFD22D3BE420012210A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		171F7EFF22D3BE420012210A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		171F7F0222D3BE420012210A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		171F7F0522D3BE420012210A /* HeyGAMER_Wireframe.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HeyGAMER_Wireframe.xcdatamodel; sourceTree = "<group>"; };
 		171F7F0722D3BE430012210A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -40,6 +51,23 @@
 		171F7F1C22D3E4150012210A /* UserDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewController.swift; sourceTree = "<group>"; };
 		171F7F1E22D3E46E0012210A /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
 		171F7F2022D3E47B0012210A /* UserBioTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBioTableViewCell.swift; sourceTree = "<group>"; };
+		17228DB722D525E900A9D4D2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		17228DB922D526BA00A9D4D2 /* FirebaseReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseReferenceManager.swift; sourceTree = "<group>"; };
+		17228DBC22D5280800A9D4D2 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		17228DBF22D529D200A9D4D2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		17228DC122D529DF00A9D4D2 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		17228DC322D529ED00A9D4D2 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		17228DC522D529FB00A9D4D2 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		17228DC722D52A5C00A9D4D2 /* UserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
+		17228DCA22D52A6D00A9D4D2 /* MessageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageController.swift; sourceTree = "<group>"; };
+		17228DCC22D52A7700A9D4D2 /* ConversationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationController.swift; sourceTree = "<group>"; };
+		17228DCE22D52A8100A9D4D2 /* EventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
+		17228DD022D53A4A00A9D4D2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		17228DD222D53B6B00A9D4D2 /* InitialFetchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialFetchViewController.swift; sourceTree = "<group>"; };
+		17228DD422D543B400A9D4D2 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		362E1679E1F03EBED8735052 /* Pods-HeyGAMER.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeyGAMER.release.xcconfig"; path = "Target Support Files/Pods-HeyGAMER/Pods-HeyGAMER.release.xcconfig"; sourceTree = "<group>"; };
+		6283FE23C0F58E14034A67B0 /* Pods_HeyGAMER.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HeyGAMER.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7195809B4CA86434B866A8ED /* Pods-HeyGAMER.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeyGAMER.debug.xcconfig"; path = "Target Support Files/Pods-HeyGAMER/Pods-HeyGAMER.debug.xcconfig"; sourceTree = "<group>"; };
 		F03525E219F480A91613D7EB /* Pods-HeyGAMER Wireframe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeyGAMER Wireframe.release.xcconfig"; path = "Target Support Files/Pods-HeyGAMER Wireframe/Pods-HeyGAMER Wireframe.release.xcconfig"; sourceTree = "<group>"; };
 		F688D78FE41A1F86FCBA77C7 /* Pods-HeyGAMER Wireframe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeyGAMER Wireframe.debug.xcconfig"; path = "Target Support Files/Pods-HeyGAMER Wireframe/Pods-HeyGAMER Wireframe.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -49,7 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF42FB8C3F74FFCA98342121 /* Pods_HeyGAMER_Wireframe.framework in Frameworks */,
+				9A4D00AE5C20F03EF7E4ECC2 /* Pods_HeyGAMER.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,13 +106,16 @@
 			isa = PBXGroup;
 			children = (
 				171F7EFD22D3BE420012210A /* AppDelegate.swift */,
-				171F7EFF22D3BE420012210A /* ViewController.swift */,
 				171F7F0122D3BE420012210A /* Main.storyboard */,
+				17228DBB22D527F800A9D4D2 /* Models */,
+				17228DC922D52A6000A9D4D2 /* Model Controllers */,
+				17228DBE22D5280B00A9D4D2 /* Network Services */,
 				171F7F1422D3C0AC0012210A /* Custom Views */,
 				171F7F1722D3C2960012210A /* View Controllers */,
 				171F7F0722D3BE430012210A /* Assets.xcassets */,
 				171F7F0922D3BE430012210A /* LaunchScreen.storyboard */,
 				171F7F0C22D3BE430012210A /* Info.plist */,
+				17228DB722D525E900A9D4D2 /* GoogleService-Info.plist */,
 				171F7F0422D3BE420012210A /* HeyGAMER_Wireframe.xcdatamodeld */,
 			);
 			path = "HeyGAMER Wireframe";
@@ -105,16 +136,50 @@
 			isa = PBXGroup;
 			children = (
 				171F7F1522D3C11A0012210A /* UserListViewController.swift */,
+				17228DD422D543B400A9D4D2 /* SignUpViewController.swift */,
+				17228DD222D53B6B00A9D4D2 /* InitialFetchViewController.swift */,
+				17228DD022D53A4A00A9D4D2 /* LoginViewController.swift */,
 				171F7F1C22D3E4150012210A /* UserDetailViewController.swift */,
 				171F7F1822D3D5BC0012210A /* ConversationsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
 		};
+		17228DBB22D527F800A9D4D2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				17228DB922D526BA00A9D4D2 /* FirebaseReferenceManager.swift */,
+				17228DBF22D529D200A9D4D2 /* User.swift */,
+				17228DC122D529DF00A9D4D2 /* Conversation.swift */,
+				17228DC322D529ED00A9D4D2 /* Message.swift */,
+				17228DC522D529FB00A9D4D2 /* Event.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		17228DBE22D5280B00A9D4D2 /* Network Services */ = {
+			isa = PBXGroup;
+			children = (
+				17228DBC22D5280800A9D4D2 /* FirebaseService.swift */,
+			);
+			path = "Network Services";
+			sourceTree = "<group>";
+		};
+		17228DC922D52A6000A9D4D2 /* Model Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				17228DC722D52A5C00A9D4D2 /* UserController.swift */,
+				17228DCA22D52A6D00A9D4D2 /* MessageController.swift */,
+				17228DCC22D52A7700A9D4D2 /* ConversationController.swift */,
+				17228DCE22D52A8100A9D4D2 /* EventController.swift */,
+			);
+			path = "Model Controllers";
+			sourceTree = "<group>";
+		};
 		2AAE3763CB6EC8E37CD3B43D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0E7F03AF17AE5F7585703B7D /* Pods_HeyGAMER_Wireframe.framework */,
+				6283FE23C0F58E14034A67B0 /* Pods_HeyGAMER.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -124,6 +189,8 @@
 			children = (
 				F688D78FE41A1F86FCBA77C7 /* Pods-HeyGAMER Wireframe.debug.xcconfig */,
 				F03525E219F480A91613D7EB /* Pods-HeyGAMER Wireframe.release.xcconfig */,
+				7195809B4CA86434B866A8ED /* Pods-HeyGAMER.debug.xcconfig */,
+				362E1679E1F03EBED8735052 /* Pods-HeyGAMER.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -189,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				171F7F0B22D3BE430012210A /* LaunchScreen.storyboard in Resources */,
+				17228DB822D525E900A9D4D2 /* GoogleService-Info.plist in Resources */,
 				171F7F0822D3BE430012210A /* Assets.xcassets in Resources */,
 				171F7F0322D3BE420012210A /* Main.storyboard in Resources */,
 			);
@@ -212,7 +280,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-HeyGAMER Wireframe-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-HeyGAMER-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -225,15 +293,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HeyGAMER Wireframe/Pods-HeyGAMER Wireframe-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-HeyGAMER/Pods-HeyGAMER-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HeyGAMER Wireframe/Pods-HeyGAMER Wireframe-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-HeyGAMER/Pods-HeyGAMER-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HeyGAMER Wireframe/Pods-HeyGAMER Wireframe-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HeyGAMER/Pods-HeyGAMER-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -243,15 +311,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17228DD522D543B400A9D4D2 /* SignUpViewController.swift in Sources */,
+				17228DC022D529D200A9D4D2 /* User.swift in Sources */,
 				171F7F1622D3C11A0012210A /* UserListViewController.swift in Sources */,
+				17228DC822D52A5C00A9D4D2 /* UserController.swift in Sources */,
 				171F7F0622D3BE420012210A /* HeyGAMER_Wireframe.xcdatamodeld in Sources */,
+				17228DCB22D52A6D00A9D4D2 /* MessageController.swift in Sources */,
 				171F7F1D22D3E4150012210A /* UserDetailViewController.swift in Sources */,
+				17228DC222D529DF00A9D4D2 /* Conversation.swift in Sources */,
+				17228DBA22D526BA00A9D4D2 /* FirebaseReferenceManager.swift in Sources */,
+				17228DD122D53A4A00A9D4D2 /* LoginViewController.swift in Sources */,
 				171F7F2122D3E47B0012210A /* UserBioTableViewCell.swift in Sources */,
+				17228DD322D53B6B00A9D4D2 /* InitialFetchViewController.swift in Sources */,
 				171F7F1F22D3E46E0012210A /* UserInfoTableViewCell.swift in Sources */,
+				17228DCD22D52A7700A9D4D2 /* ConversationController.swift in Sources */,
+				17228DC622D529FB00A9D4D2 /* Event.swift in Sources */,
 				171F7F1322D3C0A70012210A /* UserCollectionViewCell.swift in Sources */,
 				171F7F1B22D3D5F70012210A /* ConversationTableViewCell.swift in Sources */,
 				171F7F1922D3D5BC0012210A /* ConversationsViewController.swift in Sources */,
-				171F7F0022D3BE420012210A /* ViewController.swift in Sources */,
+				17228DC422D529ED00A9D4D2 /* Message.swift in Sources */,
+				17228DBD22D5280800A9D4D2 /* FirebaseService.swift in Sources */,
+				17228DCF22D52A8100A9D4D2 /* EventController.swift in Sources */,
 				171F7EFE22D3BE420012210A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -396,7 +476,7 @@
 		};
 		171F7F1022D3BE430012210A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F688D78FE41A1F86FCBA77C7 /* Pods-HeyGAMER Wireframe.debug.xcconfig */;
+			baseConfigurationReference = 7195809B4CA86434B866A8ED /* Pods-HeyGAMER.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -406,7 +486,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.HaleyJones.HeyGAMER-Wireframe";
+				PRODUCT_BUNDLE_IDENTIFIER = com.HaleyJones.HeyGAMER;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -415,7 +495,7 @@
 		};
 		171F7F1122D3BE430012210A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F03525E219F480A91613D7EB /* Pods-HeyGAMER Wireframe.release.xcconfig */;
+			baseConfigurationReference = 362E1679E1F03EBED8735052 /* Pods-HeyGAMER.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -425,7 +505,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.HaleyJones.HeyGAMER-Wireframe";
+				PRODUCT_BUNDLE_IDENTIFIER = com.HaleyJones.HeyGAMER;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
