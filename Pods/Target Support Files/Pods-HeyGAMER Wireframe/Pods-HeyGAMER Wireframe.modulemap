@@ -1,0 +1,6 @@
+framework module Pods_HeyGAMER_Wireframe {
+  umbrella header "Pods-HeyGAMER Wireframe-umbrella.h"
+
+  export *
+  module * { export * }
+}
