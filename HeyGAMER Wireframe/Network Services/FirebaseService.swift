@@ -22,8 +22,8 @@ class FirebaseService{
         }
     }
     
-    func fetchCollection(completion: @escaping (QuerySnapshot?) -> Void){
-        FirebaseReferenceManager.root.collection("Messages").getDocuments { (snapshot, error) in
+    func fetchCollection(collectionName: String, completion: @escaping (QuerySnapshot?) -> Void){
+        FirebaseReferenceManager.root.collection(collectionName).getDocuments { (snapshot, error) in
             if let error = error{
                 print("there was an error in \(#function); \(error.localizedDescription)")
                 completion(nil)

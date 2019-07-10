@@ -27,6 +27,9 @@ class LoginViewController: UIViewController {
         Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             //if result is nil, the sign-in was unsuccessful
             print("Login result: \(result.debugDescription)🦀🦀🦀")
+            
+            let userUID = result?.user.uid 
+            
             if let loginResult = result{
                 print("henlo, we're firing the segue to the fetch VC.")
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)

@@ -7,3 +7,8 @@
 //
 
 import Foundation
+class ConversationController{
+    //SoT
+    static let shared = ConversationController()
+    let conversations: [Conversation] = []
+}

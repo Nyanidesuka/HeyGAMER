@@ -9,13 +9,13 @@
 import Foundation
 
 class Conversation{
-    var users: [User]
+    var userRefs: [String]
     var messages: [Message]
     var uuid: String
     
-    init(users: [User], messages: [Message] = [], uuid: String = UUID().uuidString){
+    init(users: [String], messages: [Message] = [], uuid: String = UUID().uuidString){
         self.uuid = uuid
         self.messages = messages
-        self.users = users
+        self.userRefs = users
     }
 }
