@@ -46,4 +46,27 @@ class FirebaseService{
             completion(document?.data())
         }
     }
+    
+    func sendConvoRef(toUser user: User, ref: String){
+        let collectionRef = FirebaseReferenceManager.root.collection(FirebaseReferenceManager.userCollection).document(user.authUserRef).collection("conversationRefs")
+        collectionRef.addDocument(data: ["ref" : ref])
+    }
+    
+    func fetchConversationRefs(completion: @escaping () -> Void){
+        guard let user = UserController.shared.currentUser else {return}
+        let collectionRef = FirebaseReferenceManager.root.collection(FirebaseReferenceManager.userCollection).document(user.authUserRef).collection("conversationRefs")
+        collectionRef.getDocuments { (snapshot, error) in
+            if let error = error{
+                print("there was an error in \(#function); \(error.localizedDescription)")
+                completion()
+                return
+            }
+            guard let snapshot = snapshot else {print("Couldnt unwrap the snap"); return}
+            for document in snapshot.documents{
+                guard let ref = document.data()["ref"] as? String else {return}
+                user.conversationRefs.insert(ref, at: 0)
+            }
+            completion()
+        }
+    }
 }

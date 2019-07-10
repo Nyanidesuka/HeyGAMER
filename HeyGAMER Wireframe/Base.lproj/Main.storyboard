@@ -95,12 +95,15 @@
                     <navigationItem key="navigationItem" id="g7a-gK-rgt">
                         <barButtonItem key="rightBarButtonItem" systemItem="trash" id="2Yk-j4-UMs"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="GlY-QZ-L3K" id="Q7d-fX-b6c"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JDo-vd-lew" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1074" y="700"/>
         </scene>
-        <!--Conversation View Controller-->
+        <!--[username]-->
         <scene sceneID="YHp-of-30s">
             <objects>
                 <viewController id="9hA-JX-6Jp" customClass="ConversationViewController" customModule="HeyGAMER" customModuleProvider="target" sceneMemberID="viewController">
@@ -109,22 +112,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bDw-dR-h6o">
-                                <rect key="frame" x="0.0" y="783" width="414" height="30"/>
+                                <rect key="frame" x="0.0" y="739" width="414" height="30"/>
                                 <color key="backgroundColor" red="0.86330148959999997" green="0.7821137574" blue="0.42697663159999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Hey GAMER"/>
+                                <connections>
+                                    <action selector="heyGamerButtonPressed:" destination="9hA-JX-6Jp" eventType="touchUpInside" id="cl6-wZ-5Mb"/>
+                                </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="100" verticalCompressionResistancePriority="751" scrollEnabled="NO" text="Message a gamer" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="648-hd-XI4">
-                                <rect key="frame" x="8" y="742" width="368" height="33"/>
+                                <rect key="frame" x="8" y="698" width="368" height="33"/>
                                 <color key="backgroundColor" red="0.81326910620000004" green="0.81326910620000004" blue="0.81326910620000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="140" id="IPd-gu-b6T"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="9hA-JX-6Jp" id="eSH-N8-Cx0"/>
+                                </connections>
                             </textView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1gW-ch-msm">
-                                <rect key="frame" x="0.0" y="88" width="414" height="646"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="602"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="fromSelf" rowHeight="72" id="6iQ-hW-3R8">
@@ -176,8 +185,11 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZS-dp-U9z">
-                                <rect key="frame" x="376" y="742" width="30" height="33"/>
+                                <rect key="frame" x="376" y="698" width="30" height="33"/>
                                 <state key="normal" image="paper_plane"/>
+                                <connections>
+                                    <action selector="sendButtonPressed:" destination="9hA-JX-6Jp" eventType="touchUpInside" id="Ish-oN-iH3"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -200,7 +212,17 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WS5-2c-51h"/>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem title="Item" id="Xcu-sz-N3Q"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="[username]" id="Pa0-3S-FNN">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="zTQ-rE-bUT"/>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="heyGamerButton" destination="bDw-dR-h6o" id="tTQ-vB-G9l"/>
+                        <outlet property="messageTextView" destination="648-hd-XI4" id="dQO-4B-0i9"/>
+                        <outlet property="sendButton" destination="dZS-dp-U9z" id="D8v-CM-RLF"/>
                         <outlet property="tableView" destination="1gW-ch-msm" id="Vq1-gk-Tl6"/>
                     </connections>
                 </viewController>
@@ -487,7 +509,7 @@
                     <navigationItem key="navigationItem" title="[Username]" id="4Tz-Lf-wCn">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="speech_buble" id="ayn-iB-7ab">
                             <connections>
-                                <segue destination="9hA-JX-6Jp" kind="show" identifier="messageUSer" id="V7p-Qk-7dE"/>
+                                <segue destination="9hA-JX-6Jp" kind="show" identifier="messageUser" id="V7p-Qk-7dE"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -792,6 +814,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tmV-4k-62e"/>
-        <segue reference="ZZk-yb-Rg6"/>
+        <segue reference="V7p-Qk-7dE"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -67,16 +67,22 @@ class UserDetailViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("segue jawn")
         if segue.identifier == "messageUser"{
+            print("in the segue")
             guard let destinVC = segue.destination as? ConversationViewController, let user = self.user else {return}
+            print("past the guard")
             //let's find out if there's already a conversation between these two; if there's not, we'll make one.
             if let conversation = ConversationController.shared.conversations.first(where: {$0.userRefs.contains(user.authUserRef)}){
                 //so if we get here, we know these two are already talkin.
                 print("there's a conversation! we are gonna pass it in.")
                 destinVC.conversation = conversation
+                destinVC.conversationPartner = user
             } else {
                 print("there's no conversation! A new one will be made when the first message is sent.")
+                destinVC.conversationPartner = self.user
             }
+            destinVC.navigationItem.title = ""
         }
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Firebase
 
 class Message{
     
@@ -20,5 +21,13 @@ class Message{
         self.uuid = uuid
         self.text = text
         self.timestamp = timestamp
+    }
+    
+    convenience init?(firestoreDocument data: [String : Any]){
+        guard let username = data["username"] as? String,
+        let timestamp = data["timestamp"] as? Timestamp,
+        let text = data["text"] as? String,
+            let uuid = data["uuid"] as? String else {print("couldnt unwrap all of the info from the dictionary."); return nil}
+        self.init(username: username, text: text, timestamp: timestamp.dateValue(), uuid: uuid)
     }
 }

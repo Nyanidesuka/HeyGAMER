@@ -18,4 +18,17 @@ class Conversation{
         self.messages = messages
         self.userRefs = users
     }
+    
+    convenience init?(firebaseDocument data: [String : Any]){
+        guard let userRefs = data["userRefs"] as? [String],
+            let messages = data["messages"] as? [[String : Any]],
+            let uuid = data["uuid"] as? String else {return nil}
+        //convert the messages to messages
+        var convertedMessages: [Message] = []
+        for dict in messages{
+            guard let loadedMessage = Message(firestoreDocument: dict) else {return nil}
+            convertedMessages.insert(loadedMessage, at: 0)
+        }
+        self.init(users: userRefs, messages: convertedMessages, uuid: uuid)
+    }
 }

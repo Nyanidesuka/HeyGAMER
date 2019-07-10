@@ -27,6 +27,10 @@ class InitialFetchViewController: UIViewController {
                 guard let loadedUser = User(firestoreDoc: userDoc) else {print("couldnt turn the loaded doc into a user🦀🦀🦀 \(userDoc)"); return}
                 UserController.shared.currentUser = loadedUser
                 print(UserController.shared.currentUser?.username)
+                let collectionRef = FirebaseReferenceManager.root.collection(FirebaseReferenceManager.userCollection).document(user.uid).collection("conversationRefs")
+                collectionRef.addSnapshotListener({ (snappy, error) in
+                    print("the snappy snapped")
+                })
                 DispatchQueue.main.async {
                     self.segueToTabBarVC()
                 }
