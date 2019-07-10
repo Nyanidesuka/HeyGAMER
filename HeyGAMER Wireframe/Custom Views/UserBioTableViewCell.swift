@@ -10,6 +10,7 @@ import UIKit
 
 class UserBioTableViewCell: UITableViewCell {
 
+    
     //MARK: Outlets
     @IBOutlet weak var bioTextView: UITextView!
     

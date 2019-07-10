@@ -44,28 +44,15 @@ class User{
     }
     
     convenience init?(firestoreDoc data: [String : Any]){
-//        let username = data["username"] as? String
-//        let authUserRef = data["authUserRef"] as? String
-//        let bio = data["bio"] as? String
-//        let lookingFor = data["lookingFor"] as? [String]
-//        let conversationRefs = data["conversationRefs"] as? [String]
-//        let eventRefs = data["eventRefs"] as? [String]
-//        let nowPlaying = data["nowPlaying"] as? String
-//        let favoriteGames = data["favoriteGames"] as? [String]
-//        let favoriteGenres = data["favoriteGenres"] as? [String]
-//        let pfpDocName = data["pfpDocName"] as? String?
-//        print("username: \(username), authUserRef: \(authUserRef), bio: \(bio), lookingFor: \(lookingFor), conversationRefs: \(conversationRefs), eventRefs: \(eventRefs), nowPlaying: \(nowPlaying), favoriteGames: \(favoriteGames), favoriteGenres: \(favoriteGenres), pfpDocName: \(pfpDocName)")
-//        self.init(username: username!, authUserRef: authUserRef!, eventRefs: eventRefs!, conversationRefs: conversationRefs!, bio: bio!, nowPlaying: nowPlaying!, lookingFor: lookingFor!, favoriteGames: favoriteGames!, favoriteGenres: favoriteGenres!, pfpDocName: pfpDocName!)
         guard let username = data["username"] as? String,
         let authUserRef = data["authUserRef"] as? String,
         let bio = data["bio"] as? String,
         let lookingFor = data["lookingFor"] as? [String],
-        let conversationRefs = data["conversationRefs"] as? [String],
         let eventRefs = data["eventRefs"] as? [String],
         let nowPlaying = data["nowPlaying"] as? String,
         let favoriteGames = data["favoriteGames"] as? [String],
         let favoriteGenres = data["favoriteGenres"] as? [String] else {print("couldnt get all of the info we needed from the document. Gonna print it all!"); return nil}
         let pfpDocName = data["pfpDocName"] as? String
-        self.init(username: username, authUserRef: authUserRef, eventRefs: eventRefs, conversationRefs: conversationRefs, bio: bio, nowPlaying: nowPlaying, lookingFor: lookingFor, favoriteGames: favoriteGames, favoriteGenres: favoriteGenres, pfpDocName: pfpDocName)
+        self.init(username: username, authUserRef: authUserRef, eventRefs: eventRefs, conversationRefs: [], bio: bio, nowPlaying: nowPlaying, lookingFor: lookingFor, favoriteGames: favoriteGames, favoriteGenres: favoriteGenres, pfpDocName: pfpDocName)
     }
 }

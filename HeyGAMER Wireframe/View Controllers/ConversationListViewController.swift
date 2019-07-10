@@ -8,12 +8,20 @@
 
 import UIKit
 
-class ConversationsViewController: UIViewController {
+class ConversationListViewController: UIViewController {
 
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        guard let user = UserController.shared.currentUser else {return}
+        //so this one needs to fetch all the conversations for a user
+        
     }
     
 
@@ -29,9 +37,9 @@ class ConversationsViewController: UIViewController {
 
 }
 
-extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource{
+extension ConversationListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return ConversationController.shared.conversations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
