@@ -19,4 +19,5 @@ struct FirebaseReferenceManager {
     static let userCollection = "Users"
     static let eventsCollection = "Events"
     static let conversationCollection = "Conversations"
+    static let profilePicCollection = "Profile Pictures"
 }
