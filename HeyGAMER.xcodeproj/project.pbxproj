@@ -34,6 +34,8 @@
 		17228DD122D53A4A00A9D4D2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DD022D53A4A00A9D4D2 /* LoginViewController.swift */; };
 		17228DD322D53B6B00A9D4D2 /* InitialFetchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DD222D53B6B00A9D4D2 /* InitialFetchViewController.swift */; };
 		17228DD522D543B400A9D4D2 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DD422D543B400A9D4D2 /* SignUpViewController.swift */; };
+		173B063D22DCEA7000147244 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173B063C22DCEA7000147244 /* EditProfileViewController.swift */; };
+		173B063F22DD23A400147244 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173B063E22DD23A400147244 /* ImagePicker.swift */; };
 		176749A022D661130031C29A /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1767499F22D661130031C29A /* ConversationViewController.swift */; };
 		9A4D00AE5C20F03EF7E4ECC2 /* Pods_HeyGAMER.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6283FE23C0F58E14034A67B0 /* Pods_HeyGAMER.framework */; };
 /* End PBXBuildFile section */
@@ -68,6 +70,8 @@
 		17228DD022D53A4A00A9D4D2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		17228DD222D53B6B00A9D4D2 /* InitialFetchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialFetchViewController.swift; sourceTree = "<group>"; };
 		17228DD422D543B400A9D4D2 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		173B063C22DCEA7000147244 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		173B063E22DD23A400147244 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		1767499F22D661130031C29A /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		362E1679E1F03EBED8735052 /* Pods-HeyGAMER.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeyGAMER.release.xcconfig"; path = "Target Support Files/Pods-HeyGAMER/Pods-HeyGAMER.release.xcconfig"; sourceTree = "<group>"; };
 		6283FE23C0F58E14034A67B0 /* Pods_HeyGAMER.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HeyGAMER.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				171F7F1222D3C0A70012210A /* UserCollectionViewCell.swift */,
+				173B063E22DD23A400147244 /* ImagePicker.swift */,
 				171613E722DC01640088C9C9 /* ComposeMessageTextView.swift */,
 				171F7F1A22D3D5F70012210A /* ConversationTableViewCell.swift */,
 				171F7F1E22D3E46E0012210A /* UserInfoTableViewCell.swift */,
@@ -141,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				171F7F1522D3C11A0012210A /* UserListViewController.swift */,
+				173B063C22DCEA7000147244 /* EditProfileViewController.swift */,
 				17228DD422D543B400A9D4D2 /* SignUpViewController.swift */,
 				17228DD222D53B6B00A9D4D2 /* InitialFetchViewController.swift */,
 				17228DD022D53A4A00A9D4D2 /* LoginViewController.swift */,
@@ -330,6 +336,7 @@
 				17228DD122D53A4A00A9D4D2 /* LoginViewController.swift in Sources */,
 				171F7F2122D3E47B0012210A /* UserBioTableViewCell.swift in Sources */,
 				17228DD322D53B6B00A9D4D2 /* InitialFetchViewController.swift in Sources */,
+				173B063F22DD23A400147244 /* ImagePicker.swift in Sources */,
 				171F7F1F22D3E46E0012210A /* UserInfoTableViewCell.swift in Sources */,
 				17228DCD22D52A7700A9D4D2 /* ConversationController.swift in Sources */,
 				17228DC622D529FB00A9D4D2 /* Event.swift in Sources */,
@@ -340,6 +347,7 @@
 				17228DBD22D5280800A9D4D2 /* FirebaseService.swift in Sources */,
 				17228DCF22D52A8100A9D4D2 /* EventController.swift in Sources */,
 				171F7EFE22D3BE420012210A /* AppDelegate.swift in Sources */,
+				173B063D22DCEA7000147244 /* EditProfileViewController.swift in Sources */,
 				176749A022D661130031C29A /* ConversationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

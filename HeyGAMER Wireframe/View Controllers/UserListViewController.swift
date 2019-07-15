@@ -80,6 +80,7 @@ extension UserListViewController: UICollectionViewDelegate, UICollectionViewData
         } else {
             cell.userImageView.image = UIImage(named: "marioSprite")
             cell.usernameLabel.text = UserController.shared.currentUser?.username
+            cell.isUserInteractionEnabled = false
         }
         return cell
     }
