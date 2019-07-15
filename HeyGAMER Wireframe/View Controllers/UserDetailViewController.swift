@@ -10,9 +10,15 @@ import UIKit
 
 class UserDetailViewController: UIViewController {
     //MARK: Outlets
-    @IBOutlet weak var tableView: UITableView!
+
     @IBOutlet weak var scrollableView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var nowPlayingLabel: UILabel!
+    @IBOutlet weak var lookingForLabel: UILabel!
+    @IBOutlet weak var favoriteGamesLabel: UILabel!
+    @IBOutlet weak var favoriteGenresLabel: UILabel!
+    @IBOutlet weak var profileTextView: UITextView!
+    
     
     //The user whomst's data to display on the page
     var user: User?{
@@ -20,7 +26,7 @@ class UserDetailViewController: UIViewController {
             loadViewIfNeeded()
             DispatchQueue.main.async {
                 self.navigationItem.title = self.user?.username
-                self.tableView.reloadData()
+                self.updateViews()
             }
         }
     }
@@ -32,7 +38,7 @@ class UserDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    func updateCellViews(forCell cell: UserInfoTableViewCell){
+    func updateViews(){
         guard let user = self.user else {print("no user has been assigned to this page"); return}
         //gonna build some strings for the other labels
         var lookingForString = ""
@@ -56,10 +62,11 @@ class UserDetailViewController: UIViewController {
                 favoriteGenresString += ", "
             }
         }
-        cell.nowPlayingLabel.text = user.nowPlaying
-        cell.lookingForLabel.text = lookingForString
-        cell.favoriteGenresLabel.text = favoriteGenresString
-        cell.favoriteGamesLabel.text = favoriteGamesString
+        self.nowPlayingLabel.text = user.nowPlaying
+        self.favoriteGamesLabel.text = favoriteGamesString
+        self.lookingForLabel.text = lookingForString
+        self.favoriteGenresLabel.text = favoriteGenresString
+        self.profileTextView.text = user.bio
     }
 
     
@@ -87,20 +94,4 @@ class UserDetailViewController: UIViewController {
     }
 }
 
-extension UserDetailViewController: UITableViewDelegate, UITableViewDataSource{
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0{
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "basicInfoCell") as? UserInfoTableViewCell else {return UITableViewCell()}
-            self.updateCellViews(forCell: cell)
-            return cell
-        } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "bioCell") as? UserBioTableViewCell else {return UITableViewCell()}
-            cell.bioTextView.text = user?.bio
-            return cell
-        }
-    }
-}
+

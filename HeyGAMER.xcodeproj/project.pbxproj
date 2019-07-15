@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		171613E822DC01640088C9C9 /* ComposeMessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171613E722DC01640088C9C9 /* ComposeMessageTextView.swift */; };
 		171F7EFE22D3BE420012210A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171F7EFD22D3BE420012210A /* AppDelegate.swift */; };
 		171F7F0322D3BE420012210A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 171F7F0122D3BE420012210A /* Main.storyboard */; };
 		171F7F0622D3BE420012210A /* HeyGAMER_Wireframe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 171F7F0422D3BE420012210A /* HeyGAMER_Wireframe.xcdatamodeld */; };
@@ -38,6 +39,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		171613E722DC01640088C9C9 /* ComposeMessageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeMessageTextView.swift; sourceTree = "<group>"; };
 		171F7EFA22D3BE420012210A /* HeyGAMER.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeyGAMER.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		171F7EFD22D3BE420012210A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		171F7F0222D3BE420012210A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				171F7F1222D3C0A70012210A /* UserCollectionViewCell.swift */,
+				171613E722DC01640088C9C9 /* ComposeMessageTextView.swift */,
 				171F7F1A22D3D5F70012210A /* ConversationTableViewCell.swift */,
 				171F7F1E22D3E46E0012210A /* UserInfoTableViewCell.swift */,
 				171F7F2022D3E47B0012210A /* UserBioTableViewCell.swift */,
@@ -316,6 +319,7 @@
 			files = (
 				17228DD522D543B400A9D4D2 /* SignUpViewController.swift in Sources */,
 				17228DC022D529D200A9D4D2 /* User.swift in Sources */,
+				171613E822DC01640088C9C9 /* ComposeMessageTextView.swift in Sources */,
 				171F7F1622D3C11A0012210A /* UserListViewController.swift in Sources */,
 				17228DC822D52A5C00A9D4D2 /* UserController.swift in Sources */,
 				171F7F0622D3BE420012210A /* HeyGAMER_Wireframe.xcdatamodeld in Sources */,
