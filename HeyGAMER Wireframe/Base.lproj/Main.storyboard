@@ -62,6 +62,7 @@
                                                 <constraint firstItem="d70-Ue-rrg" firstAttribute="height" secondItem="wKC-qg-L8N" secondAttribute="height" id="SX3-Qf-yi3"/>
                                                 <constraint firstAttribute="bottom" secondItem="d70-Ue-rrg" secondAttribute="bottom" id="a7p-XA-cct"/>
                                                 <constraint firstItem="d70-Ue-rrg" firstAttribute="top" secondItem="wKC-qg-L8N" secondAttribute="top" id="boB-JH-Lnj"/>
+                                                <constraint firstItem="H4u-cb-zLR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="LqD-Zt-hcP" secondAttribute="trailing" constant="8" id="bp6-dq-0xc"/>
                                                 <constraint firstItem="VPb-p0-RsV" firstAttribute="leading" secondItem="LqD-Zt-hcP" secondAttribute="leading" id="g6M-Zg-E9p"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="VPb-p0-RsV" secondAttribute="trailing" id="lcn-hH-GWr"/>
                                                 <constraint firstItem="d70-Ue-rrg" firstAttribute="leading" secondItem="wKC-qg-L8N" secondAttribute="leading" id="sXJ-Z4-fQy"/>
@@ -73,7 +74,7 @@
                                             <outlet property="timestampLabel" destination="H4u-cb-zLR" id="Pu2-yE-Z6n"/>
                                             <outlet property="userImageView" destination="d70-Ue-rrg" id="qVg-OJ-b3K"/>
                                             <outlet property="usernameLabel" destination="LqD-Zt-hcP" id="oRb-cR-mEx"/>
-                                            <segue destination="9hA-JX-6Jp" kind="show" id="ZZk-yb-Rg6"/>
+                                            <segue destination="9hA-JX-6Jp" kind="show" identifier="toConversation" id="ZZk-yb-Rg6"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -103,7 +104,7 @@
             </objects>
             <point key="canvasLocation" x="1074" y="700"/>
         </scene>
-        <!--[username]-->
+        <!--Conversation View Controller-->
         <scene sceneID="YHp-of-30s">
             <objects>
                 <viewController id="9hA-JX-6Jp" customClass="ConversationViewController" customModule="HeyGAMER" customModuleProvider="target" sceneMemberID="viewController">
@@ -120,31 +121,39 @@
                                     <action selector="heyGamerButtonPressed:" destination="9hA-JX-6Jp" eventType="touchUpInside" id="cl6-wZ-5Mb"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="100" verticalCompressionResistancePriority="751" scrollEnabled="NO" text="Message a gamer" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="648-hd-XI4">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="100" verticalCompressionResistancePriority="751" scrollEnabled="NO" text="Message a gamer..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="648-hd-XI4">
                                 <rect key="frame" x="8" y="698" width="368" height="33"/>
-                                <color key="backgroundColor" red="0.81326910620000004" green="0.81326910620000004" blue="0.81326910620000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.95126295335025912" green="0.95126295335025912" blue="0.95126295335025912" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="140" id="IPd-gu-b6T"/>
                                 </constraints>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
                                     <outlet property="delegate" destination="9hA-JX-6Jp" id="eSH-N8-Cx0"/>
                                 </connections>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZS-dp-U9z">
+                                <rect key="frame" x="376" y="698" width="30" height="33"/>
+                                <state key="normal" image="paper_plane"/>
+                                <connections>
+                                    <action selector="sendButtonPressed:" destination="9hA-JX-6Jp" eventType="touchUpInside" id="Ish-oN-iH3"/>
+                                </connections>
+                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1gW-ch-msm">
                                 <rect key="frame" x="0.0" y="88" width="414" height="602"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="fromSelf" rowHeight="72" id="6iQ-hW-3R8">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="messageFromOther" rowHeight="72" id="6iQ-hW-3R8" userLabel="fromOther" customClass="MessageFromUserTableViewCell" customModule="HeyGAMER" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6iQ-hW-3R8" id="a0v-y1-oNm">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="72"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Message from someone else]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sCf-HP-bhD">
-                                                    <rect key="frame" x="20" y="11" width="232" height="20.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Message from someone else]" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sCf-HP-bhD">
+                                                    <rect key="frame" x="20" y="11" width="231.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -156,15 +165,19 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.86330148959999997" green="0.78211375744513301" blue="0.42697663164829486" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <connections>
+                                            <outlet property="backgroundColorView" destination="a0v-y1-oNm" id="16w-bn-A32"/>
+                                            <outlet property="messageTextLabel" destination="sCf-HP-bhD" id="XKV-2e-klr"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="fromOtherUser" rowHeight="72" id="WP4-RL-AjB">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="messageFromSelf" rowHeight="72" id="WP4-RL-AjB" userLabel="fromSelf" customClass="MessageFromSelfTableViewCell" customModule="HeyGAMER" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="100" width="414" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WP4-RL-AjB" id="96m-4V-cLz">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="72"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Mesage from this user]" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X7u-Es-eR9">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Mesage from this user]" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X7u-Es-eR9">
                                                     <rect key="frame" x="211" y="11" width="183" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -177,6 +190,11 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.51455480229612827" green="0.71985533831813109" blue="0.96620899438858032" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <connections>
+                                            <outlet property="backgroundColorView" destination="96m-4V-cLz" id="JpO-sa-laK"/>
+                                            <outlet property="contentView" destination="96m-4V-cLz" id="Zeq-N4-hDj"/>
+                                            <outlet property="messageTextLabel" destination="X7u-Es-eR9" id="XtD-uC-1DJ"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -184,13 +202,6 @@
                                     <outlet property="delegate" destination="9hA-JX-6Jp" id="zUO-ry-sg9"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZS-dp-U9z">
-                                <rect key="frame" x="376" y="698" width="30" height="33"/>
-                                <state key="normal" image="paper_plane"/>
-                                <connections>
-                                    <action selector="sendButtonPressed:" destination="9hA-JX-6Jp" eventType="touchUpInside" id="Ish-oN-iH3"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -213,7 +224,7 @@
                         <viewLayoutGuide key="safeArea" id="WS5-2c-51h"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="[username]" id="Pa0-3S-FNN">
+                    <navigationItem key="navigationItem" id="Pa0-3S-FNN">
                         <barButtonItem key="rightBarButtonItem" title="Item" id="zTQ-rE-bUT"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
@@ -558,7 +569,6 @@
         <!--Hey GAMER-->
         <scene sceneID="fyI-wG-Xua">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="m3B-4b-MTk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="ygy-Fb-fxO" customClass="UserListViewController" customModule="HeyGAMER" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zdG-Zo-7p7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -648,10 +658,11 @@
                         <segue destination="Pmf-Fd-FG7" kind="show" identifier="logOut" id="tmV-4k-62e"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="m3B-4b-MTk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1073.913043478261" y="-87.053571428571431"/>
         </scene>
-        <!--[Username]-->
+        <!--User Detail View Controller-->
         <scene sceneID="Cse-Gh-ud6">
             <objects>
                 <viewController id="pde-ky-qk4" customClass="UserDetailViewController" customModule="HeyGAMER" customModuleProvider="target" sceneMemberID="viewController">
@@ -699,6 +710,9 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="XK7-7G-oXr"/>
+                                                </constraints>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorite Games:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ucJ-f9-XlJ">
                                                 <rect key="frame" x="8" y="549.5" width="123.5" height="20.5"/>
@@ -800,7 +814,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="X9o-S8-sSt"/>
                     </view>
-                    <navigationItem key="navigationItem" title="[Username]" id="4Tz-Lf-wCn">
+                    <navigationItem key="navigationItem" id="4Tz-Lf-wCn">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="speech_buble" id="ayn-iB-7ab">
                             <connections>
                                 <segue destination="9hA-JX-6Jp" kind="show" identifier="messageUser" id="V7p-Qk-7dE"/>
@@ -813,6 +827,7 @@
                         <outlet property="favoriteGenresLabel" destination="h15-Vp-Kya" id="oSP-8b-NX1"/>
                         <outlet property="lookingForLabel" destination="zFU-tO-g2q" id="JML-GP-uHs"/>
                         <outlet property="nowPlayingLabel" destination="0tT-a8-uJI" id="wUT-yB-1hx"/>
+                        <outlet property="pfpImageView" destination="O2v-S4-o9n" id="E8T-al-N1m"/>
                         <outlet property="profileTextView" destination="UnR-vE-UU2" id="JU0-NS-eZl"/>
                         <outlet property="scrollView" destination="p0B-GH-wTe" id="Ycw-IY-B61"/>
                         <outlet property="scrollableView" destination="1CG-6t-z62" id="LFV-eT-pO6"/>
@@ -1028,16 +1043,25 @@
                                 </constraints>
                                 <color key="color" red="0.86330148959999997" green="0.7821137574" blue="0.42697663159999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jbh-DX-gVA">
+                                <rect key="frame" x="181" y="512" width="52.5" height="26.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Jbh-DX-gVA" firstAttribute="centerX" secondItem="B4D-WX-OMR" secondAttribute="centerX" id="BwK-gm-guT"/>
                             <constraint firstItem="sIK-ce-a1e" firstAttribute="centerX" secondItem="B4D-WX-OMR" secondAttribute="centerX" id="QWa-Hv-TT0"/>
                             <constraint firstItem="sIK-ce-a1e" firstAttribute="centerY" secondItem="B4D-WX-OMR" secondAttribute="centerY" id="oxg-FA-4ye"/>
+                            <constraint firstItem="Jbh-DX-gVA" firstAttribute="top" secondItem="sIK-ce-a1e" secondAttribute="bottom" constant="32" id="uvT-OC-Rht"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="b4q-fy-SSR"/>
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="sIK-ce-a1e" id="Kne-AV-cFI"/>
+                        <outlet property="loadingMessageLabel" destination="Jbh-DX-gVA" id="V9p-Gx-8Bt"/>
                         <segue destination="Toc-D9-V9f" kind="show" identifier="toTabBarVC" id="diU-Mc-UG6"/>
                         <segue destination="8yY-XO-6OG" kind="show" identifier="toLoginVC" id="48s-0h-Lu2"/>
                     </connections>
@@ -1113,6 +1137,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tmV-4k-62e"/>
-        <segue reference="V7p-Qk-7dE"/>
+        <segue reference="ZZk-yb-Rg6"/>
     </inferredMetricsTieBreakers>
 </document>

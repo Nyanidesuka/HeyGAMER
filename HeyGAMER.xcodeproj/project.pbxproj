@@ -37,6 +37,9 @@
 		173B063D22DCEA7000147244 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173B063C22DCEA7000147244 /* EditProfileViewController.swift */; };
 		173B063F22DD23A400147244 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173B063E22DD23A400147244 /* ImagePicker.swift */; };
 		176749A022D661130031C29A /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1767499F22D661130031C29A /* ConversationViewController.swift */; };
+		17DBFF8222DE3713000C1F43 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DBFF8122DE3713000C1F43 /* LocationManager.swift */; };
+		17DBFF8422DE7EC0000C1F43 /* MessageFromUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DBFF8322DE7EC0000C1F43 /* MessageFromUserTableViewCell.swift */; };
+		17DBFF8622DE7ECD000C1F43 /* MessageFromSelfTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DBFF8522DE7ECD000C1F43 /* MessageFromSelfTableViewCell.swift */; };
 		9A4D00AE5C20F03EF7E4ECC2 /* Pods_HeyGAMER.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6283FE23C0F58E14034A67B0 /* Pods_HeyGAMER.framework */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +76,9 @@
 		173B063C22DCEA7000147244 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		173B063E22DD23A400147244 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		1767499F22D661130031C29A /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
+		17DBFF8122DE3713000C1F43 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		17DBFF8322DE7EC0000C1F43 /* MessageFromUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFromUserTableViewCell.swift; sourceTree = "<group>"; };
+		17DBFF8522DE7ECD000C1F43 /* MessageFromSelfTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFromSelfTableViewCell.swift; sourceTree = "<group>"; };
 		362E1679E1F03EBED8735052 /* Pods-HeyGAMER.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeyGAMER.release.xcconfig"; path = "Target Support Files/Pods-HeyGAMER/Pods-HeyGAMER.release.xcconfig"; sourceTree = "<group>"; };
 		6283FE23C0F58E14034A67B0 /* Pods_HeyGAMER.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HeyGAMER.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7195809B4CA86434B866A8ED /* Pods-HeyGAMER.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeyGAMER.debug.xcconfig"; path = "Target Support Files/Pods-HeyGAMER/Pods-HeyGAMER.debug.xcconfig"; sourceTree = "<group>"; };
@@ -133,6 +139,8 @@
 			isa = PBXGroup;
 			children = (
 				171F7F1222D3C0A70012210A /* UserCollectionViewCell.swift */,
+				17DBFF8322DE7EC0000C1F43 /* MessageFromUserTableViewCell.swift */,
+				17DBFF8522DE7ECD000C1F43 /* MessageFromSelfTableViewCell.swift */,
 				173B063E22DD23A400147244 /* ImagePicker.swift */,
 				171613E722DC01640088C9C9 /* ComposeMessageTextView.swift */,
 				171F7F1A22D3D5F70012210A /* ConversationTableViewCell.swift */,
@@ -162,6 +170,7 @@
 			children = (
 				17228DB922D526BA00A9D4D2 /* FirebaseReferenceManager.swift */,
 				17228DBF22D529D200A9D4D2 /* User.swift */,
+				17DBFF8122DE3713000C1F43 /* LocationManager.swift */,
 				17228DC122D529DF00A9D4D2 /* Conversation.swift */,
 				17228DC322D529ED00A9D4D2 /* Message.swift */,
 				17228DC522D529FB00A9D4D2 /* Event.swift */,
@@ -341,14 +350,17 @@
 				17228DCD22D52A7700A9D4D2 /* ConversationController.swift in Sources */,
 				17228DC622D529FB00A9D4D2 /* Event.swift in Sources */,
 				171F7F1322D3C0A70012210A /* UserCollectionViewCell.swift in Sources */,
+				17DBFF8622DE7ECD000C1F43 /* MessageFromSelfTableViewCell.swift in Sources */,
 				171F7F1B22D3D5F70012210A /* ConversationTableViewCell.swift in Sources */,
 				171F7F1922D3D5BC0012210A /* ConversationListViewController.swift in Sources */,
 				17228DC422D529ED00A9D4D2 /* Message.swift in Sources */,
 				17228DBD22D5280800A9D4D2 /* FirebaseService.swift in Sources */,
 				17228DCF22D52A8100A9D4D2 /* EventController.swift in Sources */,
 				171F7EFE22D3BE420012210A /* AppDelegate.swift in Sources */,
+				17DBFF8422DE7EC0000C1F43 /* MessageFromUserTableViewCell.swift in Sources */,
 				173B063D22DCEA7000147244 /* EditProfileViewController.swift in Sources */,
 				176749A022D661130031C29A /* ConversationViewController.swift in Sources */,
+				17DBFF8222DE3713000C1F43 /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

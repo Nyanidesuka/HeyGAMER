@@ -22,6 +22,7 @@ class MessageController{
         return ["username" : message.username, "text" : message.text, "timestamp" : message.timestamp, "uuid" : message.uuid]
     }
     func getMessages(withConversationRef ref: String, completion: @escaping () -> Void){
+        print("the \(#function) is firing✲✲✲✲✲✲✲")
         //find the actual conversation object
         guard let targetConversation = ConversationController.shared.conversations.first(where: {$0.uuid == ref}) else {print("couldnt find the conversation in the SoT🐝🐝🐝");completion(); return}
         //pull the messages, then find which ones are new
@@ -30,10 +31,12 @@ class MessageController{
             for dict in messages{
                 guard let loadedMessage = Message(firestoreDocument: dict) else {print("couldn't make a message from the document🐝🐝🐝"); return}
                 if !targetConversation.messages.contains(where: {$0.uuid == loadedMessage.uuid}){
+                    print("inserting a new message into the conversation! 💰💰💰")
                     targetConversation.messages.insert(loadedMessage, at: 0)
                 }
                 //we might need to sort the collection by date again.
             }
+            completion()
         }
     }
 }

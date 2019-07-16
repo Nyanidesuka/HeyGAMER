@@ -10,8 +10,21 @@ import Foundation
 
 class Conversation{
     var userRefs: [String]
-    var messages: [Message]
+    var messages: [Message]{
+        didSet{
+            print("fired the messages didset!⛳️⛳️⛳️")
+            DispatchQueue.main.async {
+                self.delegate?.loadViewIfNeeded()
+                self.delegate?.tableView.reloadData()
+            }
+        }
+    }
     var uuid: String
+    var delegate: ConversationViewController?{
+        didSet{
+            print("fired the delegate didset!⛳️⛳️⛳️")
+        }
+    }
     
     init(users: [String], messages: [Message] = [], uuid: String = UUID().uuidString){
         self.uuid = uuid
