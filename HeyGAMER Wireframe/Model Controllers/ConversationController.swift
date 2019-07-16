@@ -16,12 +16,13 @@ class ConversationController{
         conversation.messages.insert(message, at: 0)
         let convoDict = ConversationController.shared.createDictionary(fromConversation: conversation)
         FirebaseService.shared.addDocument(documentName: conversation.uuid, collectionName: FirebaseReferenceManager.conversationCollection, data: convoDict) { (success) in
-            print("tried to create a new conversation. Success: \(success)")
+            print("tried to update the conversation with a new message. Success: \(success)")
         }
     }
     
     func createConversation(initialMessage: Message, users: [String], completion: @escaping (Conversation) -> Void){
         let newConversation = Conversation(users: users, messages: [initialMessage], uuid: UUID().uuidString)
+        ConversationController.shared.conversations.insert(newConversation, at: 0)
         let convoDict = ConversationController.shared.createDictionary(fromConversation: newConversation)
         FirebaseService.shared.addDocument(documentName: newConversation.uuid, collectionName: FirebaseReferenceManager.conversationCollection, data: convoDict) { (success) in
             print("tried to create a new conversation. Success: \(success)")
@@ -44,10 +45,13 @@ class ConversationController{
         print("user has \(user.conversationRefs.count) refs and we're about to try and fetch index \(index)")
         FirebaseService.shared.fetchDocument(documentName: user.conversationRefs[index], collectionName: FirebaseReferenceManager.conversationCollection) { (document) in
             guard let document = document, let loadedConversation = Conversation(firebaseDocument: document) else {return}
-            ConversationController.shared.conversations.insert(loadedConversation, at: 0)
+            if !ConversationController.shared.conversations.contains(where: {$0.uuid == loadedConversation.uuid}){
+                ConversationController.shared.conversations.insert(loadedConversation, at: 0)
+            }
             if ConversationController.shared.conversations.count < user.conversationRefs.count{
                 self.fetchUserConversations(index: index + 1, completion: completion)
             } else {
+                print("completing with \(ConversationController.shared.conversations.count) conversations, \(user.conversationRefs)🏈")
                 completion()
             }
         }
@@ -68,6 +72,20 @@ class ConversationController{
                 UserController.shared.currentUser?.conversationRefs.insert(ref, at: 0)
             }
             completion()
+        }
+    }
+    
+    func updateLocalConversation(conversation: Conversation, completion: @escaping (Bool) -> Void){
+        //what this function needs to do is pull a conversation's messages from firestore and update its messages locally
+        FirebaseService.shared.fetchDocument(documentName: conversation.uuid, collectionName: FirebaseReferenceManager.conversationCollection) { (document) in
+            guard let document = document, let messages = document["messages"] as? [[String : Any]] else {completion(false); return}
+            for message in messages{
+                guard let loadedMessage = Message(firestoreDocument: message) else {return}
+                if !conversation.messages.contains(where: {$0.uuid == loadedMessage.uuid}){
+                    conversation.messages.insert(loadedMessage, at: 0)
+                }
+            }
+            completion(true)
         }
     }
 }

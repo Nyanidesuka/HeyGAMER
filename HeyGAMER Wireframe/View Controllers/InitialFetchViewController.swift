@@ -9,17 +9,21 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import CoreLocation
 
 class InitialFetchViewController: UIViewController {
     
     //MARK: Outlets
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
+    @IBOutlet weak var loadingMessageLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.activityIndicator.startAnimating()
+        self.loadingMessageLabel.text = "Authenticating..."
         //check to see if the user is signed in
         if let user = Auth.auth().currentUser{
+            self.loadingMessageLabel.text = "Loading user data..."
             print("we are totally signed in 🦀🦀")
             //Since we are totally signed in, we'll get what data we need and then head to the main view.
             FirebaseService.shared.fetchDocument(documentName: user.uid, collectionName: FirebaseReferenceManager.userCollection) { (userDoc) in
@@ -28,47 +32,105 @@ class InitialFetchViewController: UIViewController {
                 UserController.shared.currentUser = loadedUser
                 print(UserController.shared.currentUser?.username)
                 //MARK: Set up listeners for conversations
+                DispatchQueue.main.async{
+                    self.loadingMessageLabel.text = "Reticulating Splines..."
+                }
                 let collectionRef = FirebaseReferenceManager.root.collection(FirebaseReferenceManager.userCollection).document(user.uid).collection("conversationRefs")
                 collectionRef.addSnapshotListener({ (snappy, error) in
                     print("the snapshot listener for this user's list of conversations has fired. 🐝🐝🐝")
-                    //we should add a listener to the new thing, too
+                    //we should add a listener to the new conversation, too
+                    guard let snapshot = snappy else {return}
+                    for document in snapshot.documents{
+                        guard let ref = document.data()["ref"] as? String, let user = UserController.shared.currentUser else {return}
+                        if !user.conversationRefs.contains(ref){
+                            //ok! after all that, we've found the new conversation. So, we're going to:
+                            //add the ref to the user's refs
+                            user.conversationRefs.insert(ref, at: 0)
+                            //add a listener to the conversation
+                            let docRef = FirebaseReferenceManager.root.collection(FirebaseReferenceManager.conversationCollection).document(ref)
+                            docRef.addSnapshotListener({ (snapshot, error) in
+                                if let error = error{
+                                    print("there was an error in \(#function); \(error.localizedDescription)")
+                                    return
+                                }
+                                //do the same thing here as you'd do in the observer for other conversations
+                                //which is like, check if the conversation exists, if it does, add the messages, etc
+                                //💈💈💈💈💈💈💈💈💈💈💈💈💈💈💈💈
+                                MessageController.shared.getMessages(withConversationRef: ref, completion: {
+                                    print("completion of a message update ✲✲✲✲✲✲✲✲🏓")
+                                })
+                            })
+                            //and pull the conversation
+                            docRef.getDocument(completion: { (document, error) in
+                                if let error = error{
+                                    print("there was an error in \(#function); \(error.localizedDescription)")
+                                    return
+                                }
+                                guard let data = document?.data(), let loadedConversation = Conversation(firebaseDocument: data), !ConversationController.shared.conversations.contains(where: {$0.uuid == loadedConversation.uuid}) else {return}
+                                ConversationController.shared.conversations.insert(loadedConversation, at: 0)
+                            })
+                        }
+                    }
                 })
-                //so the next thing to do is to add a listener into each conversation.
+                //so the next thing to do is to add a listener into each conversation. Maybe? Let's see.
                 //so let's get each one first
                 collectionRef.getDocuments(completion: { (snapshot, error) in
+                    DispatchQueue.main.async{
+                        self.loadingMessageLabel.text = "Finding more loading messages..."
+                    }
                     if let error = error{
                         print("there was an error in \(#function); \(error.localizedDescription)")
                         return
                     }
                     guard let snapshot = snapshot else {print("couldn't unwrap the snapshot"); return}
                     for document in snapshot.documents{
+                        print("Constructing advanced units...")
                         guard let docName = document.data()["ref"] as? String else {print("couldnt get the string from the document🐝🐝🐝"); return}
+                        //actully add that reference to the user's thing
+                        if !loadedUser.conversationRefs.contains(where: {$0 == docName}){
+                            print("adding conversation ref to the user")
+                            loadedUser.conversationRefs.append(docName)
+                        }
                         let docRef = FirebaseReferenceManager.root.collection(FirebaseReferenceManager.conversationCollection).document(docName)
-                        docRef.addSnapshotListener({ (snapshot, error) in
-                            if let error = error{
-                                print("there was an error in \(#function); \(error.localizedDescription)")
-                                return
-                            }
-                            //here, we would get the messages from that conversation.
-                            MessageController.shared.getMessages(withConversationRef: docName, completion: {
-                                //we shouldnt have to do anything here but we do need to make sure the table reloads.
-                            })
-                        })
+                        //apparently i dont need this whole block so let's... leave it here til i realize why i do need it
+//                        docRef.addSnapshotListener({ (snapshot, error) in
+//                            if let error = error{
+//                                print("there was an error in \(#function); \(error.localizedDescription)")
+//                                return
+//                            }
+//                            print("A converation snapshot listener fired, likely because a new message was added.🧲🧲🧲")
+//                            //here, we would get the messages from that conversation.
+//                            MessageController.shared.getMessages(withConversationRef: docName, completion: {
+//                                //we shouldnt have to do anything here but we do need to make sure the table reloads.
+//                                print("completion of a message update ✲✲✲✲✲✲✲✲🥎")
+//                            })
+//                        })
                     }
-                })
-                if let pfpRef = loadedUser.pfpDocName{
-                    FirebaseService.shared.fetchDocument(documentName: pfpRef, collectionName: FirebaseReferenceManager.profilePicCollection, completion: { (document) in
-                        guard let document = document, let imageData = document["data"] as? Data, let profilePic = UIImage(data: imageData) else {return}
-                        loadedUser.profilePicture = profilePic
+                    //And then finally we actually load the conversations
+                    //MARK: load conversations
+                    ConversationController.shared.fetchUserConversations(completion: {
                         DispatchQueue.main.async {
-                            self.segueToTabBarVC()
+                            self.loadingMessageLabel.text = "Synthesizing gravity..."
+                        }
+                        //AND THEN we load the profile pic.
+                        if let pfpRef = loadedUser.pfpDocName{
+                            DispatchQueue.main.async {
+                                self.loadingMessageLabel.text = "We got it!"
+                            }
+                            FirebaseService.shared.fetchDocument(documentName: pfpRef, collectionName: FirebaseReferenceManager.profilePicCollection, completion: { (document) in
+                                guard let document = document, let imageData = document["data"] as? Data, let profilePic = UIImage(data: imageData) else {return}
+                                loadedUser.profilePicture = profilePic
+                                DispatchQueue.main.async {
+                                    self.segueToTabBarVC()
+                                }
+                            })
+                        } else {
+                            DispatchQueue.main.async {
+                                self.segueToTabBarVC()
+                            }
                         }
                     })
-                } else {
-                    DispatchQueue.main.async {
-                        self.segueToTabBarVC()
-                    }
-                }
+                })
             }
         } else {
             print("we are totally not signed in🦀🦀")
@@ -94,15 +156,4 @@ class InitialFetchViewController: UIViewController {
         UIApplication.shared.windows.first?.rootViewController = viewController
         self.performSegue(withIdentifier: "toLoginVC", sender: nil)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

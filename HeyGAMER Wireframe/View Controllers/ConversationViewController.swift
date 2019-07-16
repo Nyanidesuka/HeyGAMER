@@ -31,13 +31,20 @@ class ConversationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
+        self.messageTextView.textColor = .lightGray
+        guard let conversation = self.conversation else {return}
     }
     
+    //i would like to refactor this to only take in the uuid of the other user but i'm gonna save things like that for after basic feature are done
     @IBAction func sendButtonPressed(_ sender: Any) {
         print("wow the button got pressed!!!!⚙️⚙️⚙️")
         print(conversationPartner)
         print(UserController.shared.currentUser)
-        guard messageTextView.text != "", messageTextView.textColor != UIColor.lightText, let messageText = messageTextView.text, let newMessage = MessageController.shared.createMessage(withText: messageText), let userTwo = self.conversationPartner, let userOne = UserController.shared.currentUser else {print("failed the first guard");return}
+        guard messageTextView.text != "",
+            let messageText = messageTextView.text,
+            let newMessage = MessageController.shared.createMessage(withText: messageText),
+            let userTwo = self.conversationPartner,
+            let userOne = UserController.shared.currentUser else {print("failed the first guard");return}
         if let conversation = self.conversation{
             ConversationController.shared.addMessage(toConversation: conversation, message: newMessage)
             self.tableView.reloadData()
@@ -45,7 +52,6 @@ class ConversationViewController: UIViewController {
             guard let targetIndex = userOne.conversationRefs.firstIndex(of: conversation.uuid) else {print("failed the second guard"); return}
             userOne.conversationRefs.remove(at: targetIndex)
             userOne.conversationRefs.insert(conversation.uuid, at: 0)
-            UserController.shared.updateUserDocument()
         } else {
             //make a new conversation
             ConversationController.shared.createConversation(initialMessage: newMessage, users: [userOne.authUserRef, userTwo.authUserRef]) { (newConversation) in
@@ -53,10 +59,14 @@ class ConversationViewController: UIViewController {
                 //the didset on conversation will handle the reload in this case
                 //make sure we add a ref to this conversation to the user!
                 userOne.conversationRefs.insert(newConversation.uuid, at: 0)
-                UserController.shared.updateUserDocument()
+                UserController.shared.updateConversationRefs(withNewRef: newConversation.uuid)
                 FirebaseService.shared.sendConvoRef(toUser: userTwo, ref: newConversation.uuid)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         }
+        self.messageTextView.text = ""
     }
     
     @IBAction func heyGamerButtonPressed(_ sender: Any) {
@@ -70,16 +80,45 @@ extension ConversationViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let cellMessage = conversation?.messages[indexPath.row],
+        let user = UserController.shared.currentUser else {return UITableViewCell()}
+        if cellMessage.username == user.username{
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "messageFromSelf") as? MessageFromSelfTableViewCell else {return UITableViewCell()}
+            cell.messageTextLabel.text = cellMessage.text
+            cell.transform = CGAffineTransform(scaleX: 1, y: -1)
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "messageFromOther") as? MessageFromUserTableViewCell else {return UITableViewCell()}
+            cell.messageTextLabel.text = cellMessage.text
+            cell.transform = CGAffineTransform(scaleX: 1, y: -1)
+            return cell
+        }
     }
 }
 
 extension ConversationViewController: UITextViewDelegate{
     func textViewDidChange(_ textView: UITextView) {
-        if textView.text == "" || textView.textColor == UIColor.lightText{
+        print("didChange firing")
+        if textView.text == "" || textView.textColor == UIColor.lightGray{
             self.sendButton.isEnabled = false
         } else {
             sendButton.isEnabled = true
+        }
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        print("endEditing fired")
+        if textView.text == ""{
+            textView.text = "Message a gamer"
+            textView.textColor = .lightGray
+            self.sendButton.isEnabled = false
+        }
+    }
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        print("beginEditing firing")
+        if textView.textColor == UIColor.lightGray{
+            textView.text = ""
+            textView.textColor = .black
+            self.sendButton.isEnabled = false
         }
     }
 }

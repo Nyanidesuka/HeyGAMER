@@ -200,9 +200,12 @@ extension EditProfileViewController: UIPickerViewDelegate, UIPickerViewDataSourc
 
 extension EditProfileViewController: ImagePickerDelegate{
     func didSelect(image: UIImage?) {
-        //set the imageView to the picture we selected
-        self.pfpImageView.image = image
-        self.imageChanged = true
+        //if they selected an image,
+        if let image = image{
+            //set the imageView to the picture we selected
+            self.pfpImageView.image = image
+            self.imageChanged = true
+        }
     }
 }
 

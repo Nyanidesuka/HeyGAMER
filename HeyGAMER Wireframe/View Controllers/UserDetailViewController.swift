@@ -18,7 +18,7 @@ class UserDetailViewController: UIViewController {
     @IBOutlet weak var favoriteGamesLabel: UILabel!
     @IBOutlet weak var favoriteGenresLabel: UILabel!
     @IBOutlet weak var profileTextView: UITextView!
-    
+    @IBOutlet weak var pfpImageView: UIImageView!
     
     //The user whomst's data to display on the page
     var user: User?{
@@ -30,11 +30,18 @@ class UserDetailViewController: UIViewController {
             }
         }
     }
+    var userIsSelf = false{
+        didSet{
+            loadViewIfNeeded()
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+            self.navigationItem.rightBarButtonItem?.image = nil
+            self.navigationItem.rightBarButtonItem?.title = ""
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
-        self.navigationItem.backBarButtonItem?.title = "Back"
         // Do any additional setup after loading the view.
     }
     
@@ -48,6 +55,7 @@ class UserDetailViewController: UIViewController {
                 lookingForString += ", "
             }
         }
+        lookingForString = lookingForString.isEmpty ? "-" : lookingForString
         var favoriteGamesString = ""
         for word in user.favoriteGames{
             favoriteGamesString += word
@@ -55,6 +63,7 @@ class UserDetailViewController: UIViewController {
                 favoriteGamesString += ", "
             }
         }
+        favoriteGamesString = favoriteGamesString.isEmpty ? "-" : favoriteGamesString
         var favoriteGenresString = ""
         for word in user.favoriteGenres{
             favoriteGenresString += word
@@ -62,19 +71,28 @@ class UserDetailViewController: UIViewController {
                 favoriteGenresString += ", "
             }
         }
-        self.nowPlayingLabel.text = user.nowPlaying
+        favoriteGenresString = favoriteGenresString.isEmpty ? "-" : favoriteGenresString
+        self.nowPlayingLabel.text = user.nowPlaying.isEmpty ? "-" : user.nowPlaying
         self.favoriteGamesLabel.text = favoriteGamesString
         self.lookingForLabel.text = lookingForString
         self.favoriteGenresLabel.text = favoriteGenresString
         self.profileTextView.text = user.bio
+        let labelCollection = [nowPlayingLabel, lookingForLabel, favoriteGamesLabel, favoriteGenresLabel]
+        for label in labelCollection{
+            guard let text = label?.text else {return}
+            if text == "-"{
+                label?.textColor = .lightGray
+            } else {
+                label?.textColor = .darkText
+            }
+        }
+        self.pfpImageView.image = user.profilePicture
     }
 
     
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("segue jawn")
         if segue.identifier == "messageUser"{
             print("in the segue")
             guard let destinVC = segue.destination as? ConversationViewController, let user = self.user else {return}

@@ -16,7 +16,7 @@ class ConversationTableViewCell: UITableViewCell {
     @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var recentMessageLabel: UILabel!
     
-    
+    var user: User?
     
     override func awakeFromNib() {
         super.awakeFromNib()

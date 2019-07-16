@@ -25,4 +25,12 @@ class UserController{
             print("tried to update the user. Success: \(success)")
         }
     }
+    
+    func updateConversationRefs(withNewRef ref: String){
+        guard let user = UserController.shared.currentUser else {return}
+        let collectionRef = FirebaseReferenceManager.root.collection(FirebaseReferenceManager.userCollection).document(user.authUserRef).collection("conversationRefs")
+        //turn each of the user's conversation references into a dictionary and then add it to the collection!
+        let refDict: [String : Any] = ["ref" : ref]
+        collectionRef.addDocument(data: refDict)
+    }
 }

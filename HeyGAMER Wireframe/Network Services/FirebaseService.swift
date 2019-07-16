@@ -50,6 +50,7 @@ class FirebaseService{
     func sendConvoRef(toUser user: User, ref: String){
         let collectionRef = FirebaseReferenceManager.root.collection(FirebaseReferenceManager.userCollection).document(user.authUserRef).collection("conversationRefs")
         collectionRef.addDocument(data: ["ref" : ref])
+        print("trying to add the thing!")
     }
     
     func fetchConversationRefs(completion: @escaping () -> Void){

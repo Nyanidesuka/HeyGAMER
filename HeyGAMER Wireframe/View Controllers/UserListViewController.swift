@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import CoreLocation
 
 class UserListViewController: UIViewController {
     
@@ -19,7 +20,21 @@ class UserListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //FIRST THING WE DO is ask for that sweet sweet location permission
+        //core location request
+        LocationManager.shared.locationManager = CLLocationManager()
+        LocationManager.shared.locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+        if authorizationStatus == CLAuthorizationStatus.notDetermined{
+            LocationManager.shared.locationManager?.requestWhenInUseAuthorization()
+            print("we do not have permissions.⚠️⚠️⚠️⚠️⚠️⚠️⚠️")
+        } else {
+            print("we have permissions. ⚠️⚠️⚠️⚠️⚠️⚠️")
+            if LocationManager.shared.locationManager?.location == nil{
+                LocationManager.shared.locationManager?.startUpdatingLocation()
+            }
+        }
+        LocationManager.shared.locationManager?.delegate = self
         FirebaseService.shared.fetchCollection(collectionName: "Users") { (snapshot) in
             guard let snapshot = snapshot else {print("couldn't unwrap the snap"); return}
             let documents = snapshot.documents
@@ -50,16 +65,19 @@ class UserListViewController: UIViewController {
         }
     }
     
-
-    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toUserDetail"{
             guard let destinVC = segue.destination as? UserDetailViewController, let index = self.collectionView.indexPathsForSelectedItems?.first else {return}
-            let passUser = self.loadedUsers[index.item - 1]
-            destinVC.user = passUser
+            if index.item > 0{
+                let passUser = self.loadedUsers[index.item - 1]
+                destinVC.user = passUser
+            } else {
+                destinVC.user = UserController.shared.currentUser
+                destinVC.userIsSelf = true
+            }
         }
     }
 }
@@ -80,11 +98,16 @@ extension UserListViewController: UICollectionViewDelegate, UICollectionViewData
         } else {
             cell.userImageView.image = UIImage(named: "marioSprite")
             cell.usernameLabel.text = UserController.shared.currentUser?.username
-            cell.isUserInteractionEnabled = false
         }
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width / 3, height: collectionView.frame.width / 3)
+    }
+}
+
+extension UserListViewController: CLLocationManagerDelegate{
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("the location manager updated the location. 🔪🔪🔪")
     }
 }
