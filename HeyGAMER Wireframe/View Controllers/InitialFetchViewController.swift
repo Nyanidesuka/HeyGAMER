@@ -115,7 +115,7 @@ class InitialFetchViewController: UIViewController {
                         //AND THEN we load the profile pic.
                         if let pfpRef = loadedUser.pfpDocName{
                             DispatchQueue.main.async {
-                                self.loadingMessageLabel.text = "We got it!"
+                                self.loadingMessageLabel.text = "Rising Up"
                             }
                             FirebaseService.shared.fetchDocument(documentName: pfpRef, collectionName: FirebaseReferenceManager.profilePicCollection, completion: { (document) in
                                 guard let document = document, let imageData = document["data"] as? Data, let profilePic = UIImage(data: imageData) else {return}

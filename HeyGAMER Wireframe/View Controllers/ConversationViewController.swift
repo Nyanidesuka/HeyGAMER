@@ -30,6 +30,8 @@ class ConversationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 48
         self.tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
         self.messageTextView.textColor = .lightGray
         guard let conversation = self.conversation else {return}
@@ -91,6 +93,7 @@ extension ConversationViewController: UITableViewDelegate, UITableViewDataSource
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "messageFromOther") as? MessageFromUserTableViewCell else {return UITableViewCell()}
             cell.messageTextLabel.text = cellMessage.text
             cell.transform = CGAffineTransform(scaleX: 1, y: -1)
+            cell.messageTextLabel.layer.cornerRadius = cell.messageTextLabel.frame.height / 2
             return cell
         }
     }
