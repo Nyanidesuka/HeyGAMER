@@ -153,17 +153,23 @@ class EditProfileViewController: UIViewController {
         if !bioTextView.text.isEmpty{
             bioTextView.textColor = .darkText
         }
-        for i in 0...user.lookingFor.count - 1{
-            guard let targetField = self.lookingForFields.first(where: {$0.tag == i}) else {return}
-            targetField.text = user.lookingFor[i]
+        if !user.lookingFor.isEmpty{
+            for i in 0...user.lookingFor.count - 1{
+                guard let targetField = self.lookingForFields.first(where: {$0.tag == i}) else {return}
+                targetField.text = user.lookingFor[i]
+            }
         }
-        for i in 0...user.favoriteGames.count - 1{
-            guard let targetField = self.favoriteGameFields.first(where: {$0.tag == i}) else {print("couldnt get a favorite game"); return}
-            targetField.text = user.favoriteGames[i]
+        if !user.favoriteGames.isEmpty{
+            for i in 0...user.favoriteGames.count - 1{
+                guard let targetField = self.favoriteGameFields.first(where: {$0.tag == i}) else {print("couldnt get a favorite game"); return}
+                targetField.text = user.favoriteGames[i]
+            }
         }
-        for i in 0...user.favoriteGenres.count - 1{
-            guard let targetField = self.favoriteGenreFields.first(where: {$0.tag == i}) else {print("couldnt find favorite genres"); return}
-            targetField.text = user.favoriteGenres[i]
+        if !user.favoriteGenres.isEmpty{
+            for i in 0...user.favoriteGenres.count - 1{
+                guard let targetField = self.favoriteGenreFields.first(where: {$0.tag == i}) else {print("couldnt find favorite genres"); return}
+                targetField.text = user.favoriteGenres[i]
+            }
         }
     }
 }
