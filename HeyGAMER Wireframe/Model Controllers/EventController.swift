@@ -15,8 +15,28 @@ class EventController{
     var events: [Event] = []
     var eventRefs: [String] = []
     
+    func createNewEvent(title: String, date: Date, hostRef: String, state: String, venue: String, openToAnyone: Bool, isCompetitive: Bool, headerPhotoRef: String?, attendingUserRefs: [String], game: String, address: String, completion: @escaping () -> Void){
+        guard let user = UserController.shared.currentUser else {return}
+        //this function needs to create a new event, save a ref to it to the user who made it, and add it to firestore so other users can find it.
+        let newEvent = Event(title: title, date: date, hostRef: hostRef, state: state, venue: venue, openToAnyone: openToAnyone, isCompetitive: isCompetitive, headerPhotoRef: headerPhotoRef, attendingUserRefs: attendingUserRefs, game: game, address: address)
+        EventController.shared.events.append(newEvent)
+        let eventDict = EventController.shared.createDictionary(fromEvent: newEvent)
+        FirebaseService.shared.addDocument(documentName: newEvent.uuid, collectionName: FirebaseReferenceManager.eventsCollection, data: eventDict) { (success) in
+            print("tried to save the event to firebasee. Success: \(success)🥾🥾🥾")
+            user.eventRefs.insert(newEvent.uuid, at: 0)
+            completion()
+        }
+    }
+    
+    func saveEventPhoto(image: UIImage, forEvent event: Event){
+        guard let data = image.jpegData(compressionQuality: 0.7), let docName = event.headerPhotoRef else {return}
+        FirebaseService.shared.addDocument(documentName: docName, collectionName: FirebaseReferenceManager.eventPicCollection, data: ["data" : data]) { (success) in
+            print("tried to save the event's photo data to firestore. Success: \(success)🎩🎩🎩")
+        }
+    }
+    
     func createDictionary(fromEvent event: Event) -> [String : Any]{
-        let returnDict: [String : Any] = ["uuid" : event.uuid, "title" : event.title, "date" : event.date, "hostRef" : event.hostRef, "state" : event.state, "venue" : event.venue, "openToAnyone" : event.openToAnyone, "isCompetitive" : event.isCompetitive, "headerPhotoRef" : event.headerPhotoRef, "attendingUserRefs" : event.attendingUserRefs]
+        let returnDict: [String : Any] = ["uuid" : event.uuid, "title" : event.title, "date" : event.date, "hostRef" : event.hostRef, "state" : event.state, "venue" : event.venue, "openToAnyone" : event.openToAnyone, "isCompetitive" : event.isCompetitive, "headerPhotoRef" : event.headerPhotoRef, "attendingUserRefs" : event.attendingUserRefs, "game" : event.game, "address" : event.address]
         return returnDict
     }
     

@@ -47,6 +47,14 @@ class EditProfileViewController: UIViewController {
         self.updateViews()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
+    }
+    
     //MARK: IBActions
     @IBAction func lookingForTapped(_ sender: UIButton) {
         self.resignFirstResponder()

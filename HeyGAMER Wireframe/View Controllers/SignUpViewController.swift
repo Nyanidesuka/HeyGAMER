@@ -23,6 +23,13 @@ class SignUpViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
+    }
     
     @IBAction func signUpButtonPressed(_ sender: Any) {
         guard let gamerTag = gamerTagField.text,

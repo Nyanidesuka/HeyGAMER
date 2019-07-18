@@ -52,6 +52,14 @@ class UserListViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
+    }
+    
     @IBAction func logOutButtonTapped(_ sender: Any) {
         do{
             try Auth.auth().signOut()

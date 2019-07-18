@@ -139,6 +139,14 @@ class InitialFetchViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
+    }
+    
     func segueToTabBarVC(){
         self.activityIndicator.stopAnimating()
         print("henlo, we're firing the segue to the tab bar controller.")
