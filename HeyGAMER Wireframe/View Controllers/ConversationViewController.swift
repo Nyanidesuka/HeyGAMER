@@ -36,6 +36,13 @@ class ConversationViewController: UIViewController {
         self.messageTextView.textColor = .lightGray
         guard let conversation = self.conversation else {return}
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
+    }
     
     //i would like to refactor this to only take in the uuid of the other user but i'm gonna save things like that for after basic feature are done
     @IBAction func sendButtonPressed(_ sender: Any) {

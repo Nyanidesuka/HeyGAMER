@@ -37,6 +37,10 @@
 		173B063D22DCEA7000147244 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173B063C22DCEA7000147244 /* EditProfileViewController.swift */; };
 		173B063F22DD23A400147244 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173B063E22DD23A400147244 /* ImagePicker.swift */; };
 		176749A022D661130031C29A /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1767499F22D661130031C29A /* ConversationViewController.swift */; };
+		1775D31C22E0C30A002F99EA /* EventListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775D31B22E0C30A002F99EA /* EventListViewController.swift */; };
+		1775D31E22E0C313002F99EA /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775D31D22E0C313002F99EA /* EventDetailViewController.swift */; };
+		1775D32022E0C339002F99EA /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775D31F22E0C339002F99EA /* EventCollectionViewCell.swift */; };
+		1775D32222E0DA1B002F99EA /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775D32122E0DA1B002F99EA /* AddEventViewController.swift */; };
 		17DBFF8222DE3713000C1F43 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DBFF8122DE3713000C1F43 /* LocationManager.swift */; };
 		17DBFF8422DE7EC0000C1F43 /* MessageFromUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DBFF8322DE7EC0000C1F43 /* MessageFromUserTableViewCell.swift */; };
 		17DBFF8622DE7ECD000C1F43 /* MessageFromSelfTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DBFF8522DE7ECD000C1F43 /* MessageFromSelfTableViewCell.swift */; };
@@ -76,6 +80,10 @@
 		173B063C22DCEA7000147244 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		173B063E22DD23A400147244 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		1767499F22D661130031C29A /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
+		1775D31B22E0C30A002F99EA /* EventListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListViewController.swift; sourceTree = "<group>"; };
+		1775D31D22E0C313002F99EA /* EventDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
+		1775D31F22E0C339002F99EA /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
+		1775D32122E0DA1B002F99EA /* AddEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
 		17DBFF8122DE3713000C1F43 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		17DBFF8322DE7EC0000C1F43 /* MessageFromUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFromUserTableViewCell.swift; sourceTree = "<group>"; };
 		17DBFF8522DE7ECD000C1F43 /* MessageFromSelfTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFromSelfTableViewCell.swift; sourceTree = "<group>"; };
@@ -146,6 +154,7 @@
 				171F7F1A22D3D5F70012210A /* ConversationTableViewCell.swift */,
 				171F7F1E22D3E46E0012210A /* UserInfoTableViewCell.swift */,
 				171F7F2022D3E47B0012210A /* UserBioTableViewCell.swift */,
+				1775D31F22E0C339002F99EA /* EventCollectionViewCell.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -161,6 +170,9 @@
 				171F7F1C22D3E4150012210A /* UserDetailViewController.swift */,
 				171F7F1822D3D5BC0012210A /* ConversationListViewController.swift */,
 				1767499F22D661130031C29A /* ConversationViewController.swift */,
+				1775D31B22E0C30A002F99EA /* EventListViewController.swift */,
+				1775D31D22E0C313002F99EA /* EventDetailViewController.swift */,
+				1775D32122E0DA1B002F99EA /* AddEventViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -333,11 +345,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				17228DD522D543B400A9D4D2 /* SignUpViewController.swift in Sources */,
+				1775D32022E0C339002F99EA /* EventCollectionViewCell.swift in Sources */,
 				17228DC022D529D200A9D4D2 /* User.swift in Sources */,
 				171613E822DC01640088C9C9 /* ComposeMessageTextView.swift in Sources */,
 				171F7F1622D3C11A0012210A /* UserListViewController.swift in Sources */,
 				17228DC822D52A5C00A9D4D2 /* UserController.swift in Sources */,
 				171F7F0622D3BE420012210A /* HeyGAMER_Wireframe.xcdatamodeld in Sources */,
+				1775D32222E0DA1B002F99EA /* AddEventViewController.swift in Sources */,
+				1775D31E22E0C313002F99EA /* EventDetailViewController.swift in Sources */,
 				17228DCB22D52A6D00A9D4D2 /* MessageController.swift in Sources */,
 				171F7F1D22D3E4150012210A /* UserDetailViewController.swift in Sources */,
 				17228DC222D529DF00A9D4D2 /* Conversation.swift in Sources */,
@@ -357,6 +372,7 @@
 				17228DBD22D5280800A9D4D2 /* FirebaseService.swift in Sources */,
 				17228DCF22D52A8100A9D4D2 /* EventController.swift in Sources */,
 				171F7EFE22D3BE420012210A /* AppDelegate.swift in Sources */,
+				1775D31C22E0C30A002F99EA /* EventListViewController.swift in Sources */,
 				17DBFF8422DE7EC0000C1F43 /* MessageFromUserTableViewCell.swift in Sources */,
 				173B063D22DCEA7000147244 /* EditProfileViewController.swift in Sources */,
 				176749A022D661130031C29A /* ConversationViewController.swift in Sources */,
