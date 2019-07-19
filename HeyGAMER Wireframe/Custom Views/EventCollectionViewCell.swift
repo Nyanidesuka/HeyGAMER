@@ -12,5 +12,6 @@ class EventCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var casualOrCompetitiveImage: UIImageView!
     @IBOutlet weak var eventNameLabel: UILabel!
     @IBOutlet weak var eventImageView: UIImageView!
+    @IBOutlet weak var labelBackgroundView: UIView!
     
 }

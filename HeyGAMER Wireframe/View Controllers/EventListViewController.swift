@@ -26,17 +26,13 @@ class EventListViewController: UIViewController {
         return .lightContent
     }
     
-
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "toEventDetail"{
+            guard let destinVC = segue.destination as? EventDetailViewController, let index = self.collectionView.indexPathsForSelectedItems?.first else {return}
+            destinVC.event = EventController.shared.events[index.item]
+        }
     }
-    */
-
 }
 
 extension EventListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
@@ -53,6 +49,7 @@ extension EventListViewController: UICollectionViewDelegate, UICollectionViewDat
         let cellEvent = EventController.shared.events[indexPath.item]
         cell.eventNameLabel.text = cellEvent.title
         cell.casualOrCompetitiveImage.image = UIImage(named: cellEvent.isCompetitive ? "trophy" : "meeting")
+        cell.labelBackgroundView.layer.cornerRadius = 5
         if let photo = cellEvent.headerPhoto{
             cell.eventImageView.image = photo
         } else {
@@ -62,6 +59,8 @@ extension EventListViewController: UICollectionViewDelegate, UICollectionViewDat
                 cell.eventImageView.image = UIImage(data: data)
             }
         }
+        
+        cell.backgroundColor = .clear
         return cell
     }
     
