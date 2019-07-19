@@ -12,6 +12,7 @@ class MessageFromSelfTableViewCell: UITableViewCell {
     
     @IBOutlet weak var messageTextLabel: UILabel!
     @IBOutlet weak var backgroundColorView: UIView!
+    @IBOutlet weak var messageBubbleView: UIView!
     
     
     override func awakeFromNib() {

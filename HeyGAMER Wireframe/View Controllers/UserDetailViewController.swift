@@ -19,6 +19,9 @@ class UserDetailViewController: UIViewController {
     @IBOutlet weak var favoriteGenresLabel: UILabel!
     @IBOutlet weak var profileTextView: UITextView!
     @IBOutlet weak var pfpImageView: UIImageView!
+    @IBOutlet weak var messageUserButton: UIButton!
+    @IBOutlet weak var cityStateLabel: UILabel!
+    
     
     //The user whomst's data to display on the page
     var user: User?{
@@ -36,13 +39,16 @@ class UserDetailViewController: UIViewController {
             self.navigationItem.rightBarButtonItem?.isEnabled = false
             self.navigationItem.rightBarButtonItem?.image = nil
             self.navigationItem.rightBarButtonItem?.title = ""
+            self.messageUserButton.isEnabled = false
+            self.messageUserButton.alpha = 0
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
-        // Do any additional setup after loading the view.
+        self.messageUserButton.layer.cornerRadius = self.messageUserButton.frame.height / 2
+        self.profileTextView.layer.cornerRadius = 5
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -85,6 +91,8 @@ class UserDetailViewController: UIViewController {
         self.favoriteGenresLabel.text = favoriteGenresString
         self.profileTextView.text = user.bio
         let labelCollection = [nowPlayingLabel, lookingForLabel, favoriteGamesLabel, favoriteGenresLabel]
+        self.pfpImageView.image = user.profilePicture
+        self.cityStateLabel.text = user.cityState
         for label in labelCollection{
             guard let text = label?.text else {return}
             if text == "-"{
@@ -93,7 +101,6 @@ class UserDetailViewController: UIViewController {
                 label?.textColor = .darkText
             }
         }
-        self.pfpImageView.image = user.profilePicture
     }
 
     

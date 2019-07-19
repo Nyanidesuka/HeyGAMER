@@ -89,16 +89,30 @@ extension UserListViewController: UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "userCell", for: indexPath) as? UserCollectionViewCell else {return UICollectionViewCell()}
-        cell.layer.borderColor = UIColor.black.cgColor
-        cell.layer.borderWidth = 0.5
+
         if indexPath != IndexPath(row: 0, section: 0){
-            cell.userImageView.image = UIImage(named: "luigiSprite")
+            let cellUser = self.loadedUsers[indexPath.item - 1]
+            if let image = cellUser.profilePicture{
+                cell.userImageView.image = image
+            } else {
+                if let docName = cellUser.pfpDocName{
+                    FirebaseService.shared.fetchDocument(documentName: docName, collectionName: FirebaseReferenceManager.profilePicCollection) { (document) in
+                        guard let document = document, let data = document["data"] as? Data, let image = UIImage(data: data) else {return}
+                        cell.userImageView.image = image
+                        cellUser.profilePicture = image
+                    }
+                } else {
+                    cell.userImageView.image = UIImage(named: "noImage")
+                    cellUser.profilePicture = UIImage(named: "noImage")
+                }
+            }
             //we have to take 1 off of item because we're reserving that first cell to be the current user.
-            cell.usernameLabel.text = self.loadedUsers[indexPath.item - 1].username
+            cell.usernameLabel.text = cellUser.username
         } else {
-            cell.userImageView.image = UIImage(named: "marioSprite")
+            cell.userImageView.image = UserController.shared.currentUser?.profilePicture
             cell.usernameLabel.text = UserController.shared.currentUser?.username
         }
+        cell.labelBGView.layer.cornerRadius = 5
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

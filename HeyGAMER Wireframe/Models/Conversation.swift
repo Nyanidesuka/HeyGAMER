@@ -14,13 +14,12 @@ class Conversation{
         didSet{
             print("fired the messages didset!⛳️⛳️⛳️")
             DispatchQueue.main.async {
-                self.delegate?.loadViewIfNeeded()
-                self.delegate?.tableView.reloadData()
+                self.delegate?.updateMessages(forConversation: self)
             }
         }
     }
     var uuid: String
-    var delegate: ConversationViewController?{
+    var delegate: ConversationDelegate?{
         didSet{
             print("fired the delegate didset!⛳️⛳️⛳️")
         }
@@ -44,4 +43,8 @@ class Conversation{
         }
         self.init(users: userRefs, messages: convertedMessages, uuid: uuid)
     }
+}
+
+protocol ConversationDelegate{
+    func updateMessages(forConversation conversation: Conversation)
 }

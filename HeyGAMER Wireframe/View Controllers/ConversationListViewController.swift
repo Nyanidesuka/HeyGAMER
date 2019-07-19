@@ -20,6 +20,9 @@ class ConversationListViewController: UIViewController {
         super.viewWillAppear(true)
         self.tableView.reloadData()
         self.setNeedsStatusBarAppearanceUpdate()
+        for conversation in ConversationController.shared.conversations{
+            conversation.delegate = self
+        }
     }
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return .lightContent
@@ -65,11 +68,31 @@ extension ConversationListViewController: UITableViewDelegate, UITableViewDataSo
         }
         //format the date bb
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        let dateString = formatter.string(from: conversation.messages[0].timestamp)
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        var dateString = ""
+        if Date().timeIntervalSince(conversation.messages[0].timestamp) >= 120{
+            dateString = formatter.string(from: conversation.messages[0].timestamp)
+        } else {
+            dateString = "Just now!"
+        }
+        
         cell.timestampLabel.text = dateString
         cell.recentMessageLabel.text = conversation.messages[0].text
         return cell
     }
 }
 
+extension ConversationListViewController: ConversationDelegate{
+    func updateMessages(forConversation conversation: Conversation) {
+        //move the updated conversation to the top of the conversation list
+        if let targetIndex = ConversationController.shared.conversations.firstIndex(where: {$0.uuid == conversation.uuid}){
+            ConversationController.shared.conversations.remove(at: targetIndex)
+            ConversationController.shared.conversations.insert(conversation, at: 0)
+        }
+        DispatchQueue.main.async {
+            self.loadViewIfNeeded()
+            self.tableView.reloadData()
+        }
+    }
+}

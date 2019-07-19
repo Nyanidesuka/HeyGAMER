@@ -16,6 +16,10 @@ class ConversationViewController: UIViewController {
             loadViewIfNeeded()
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                if self.conversation != nil{
+                    self.heyGamerButtonView.alpha = 0
+                    self.heyGamerButton.isEnabled = false
+                }
             }
         }
     }
@@ -26,15 +30,18 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var messageTextView: UITextView!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var heyGamerButton: UIButton!
+    @IBOutlet weak var heyGamerButtonView: UIView!
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.estimatedRowHeight = 202
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 48
         self.tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
         self.messageTextView.textColor = .lightGray
         self.messageTextView.layer.cornerRadius = 4
+        self.heyGamerButtonView.layer.cornerRadius = self.heyGamerButtonView.frame.height / 2
         guard let conversation = self.conversation else {return}
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -96,12 +103,13 @@ extension ConversationViewController: UITableViewDelegate, UITableViewDataSource
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "messageFromSelf") as? MessageFromSelfTableViewCell else {return UITableViewCell()}
             cell.messageTextLabel.text = cellMessage.text
             cell.transform = CGAffineTransform(scaleX: 1, y: -1)
+            cell.messageBubbleView.layer.cornerRadius = 6
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "messageFromOther") as? MessageFromUserTableViewCell else {return UITableViewCell()}
             cell.messageTextLabel.text = cellMessage.text
             cell.transform = CGAffineTransform(scaleX: 1, y: -1)
-            cell.messageTextLabel.layer.cornerRadius = cell.messageTextLabel.frame.height / 2
+            cell.messageBubbleView.layer.cornerRadius = 6
             return cell
         }
     }
@@ -130,6 +138,15 @@ extension ConversationViewController: UITextViewDelegate{
             textView.text = ""
             textView.textColor = .black
             self.sendButton.isEnabled = false
+        }
+    }
+}
+
+extension ConversationViewController: ConversationDelegate{
+    func updateMessages(forConversation conversation: Conversation) {
+        DispatchQueue.main.async {
+            self.loadViewIfNeeded()
+            self.tableView.reloadData()
         }
     }
 }

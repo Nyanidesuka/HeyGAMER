@@ -16,7 +16,7 @@ class UserController{
     var loadedUsers: [User] = []
     
     func createDictionary(fromUser user: User) -> [String : Any]{
-        let returnDict: [String : Any] = ["username" : user.username, "eventRefs" : user.eventRefs, "bio" : user.bio, "nowPlaying" : user.nowPlaying, "lookingFor" : user.lookingFor, "favoriteGames" : user.favoriteGames, "favoriteGenres" : user.favoriteGenres, "pfpDocName" : user.pfpDocName, "authUserRef" : user.authUserRef]
+        let returnDict: [String : Any] = ["username" : user.username, "eventRefs" : user.eventRefs, "bio" : user.bio, "nowPlaying" : user.nowPlaying, "lookingFor" : user.lookingFor, "favoriteGames" : user.favoriteGames, "favoriteGenres" : user.favoriteGenres, "pfpDocName" : user.pfpDocName, "authUserRef" : user.authUserRef, "blockedUsers" : user.blockedUserRefs, "cityState" : user.cityState]
         return returnDict
     }
     
@@ -43,7 +43,7 @@ class UserController{
             for document in documents{
                 guard let loadedUser = User(firestoreDoc: document.data()), let userID = Auth.auth().currentUser?.uid else {print("couldn't make a user from the document"); return}
                 print("Loaded user: \(loadedUser.username) 🔋🔋")
-                if loadedUser.authUserRef != userID{
+                if loadedUser.authUserRef != userID && !self.loadedUsers.contains(where: {$0.authUserRef == loadedUser.authUserRef}){
                     print("Adding them to the SoT")
                     self.loadedUsers.append(loadedUser)
                 }

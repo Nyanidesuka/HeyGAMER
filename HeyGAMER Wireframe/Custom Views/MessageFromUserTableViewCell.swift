@@ -11,6 +11,8 @@ import UIKit
 class MessageFromUserTableViewCell: UITableViewCell {
     @IBOutlet weak var backgroundColorView: UIView!
     @IBOutlet weak var messageTextLabel: UILabel!
+    @IBOutlet weak var messageBubbleView: UIView!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
