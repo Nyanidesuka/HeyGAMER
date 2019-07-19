@@ -52,10 +52,10 @@ class Event{
         let venue = data["venue"] as? String,
         let openToAnyone = data["openToAnyone"] as? Bool,
         let isCompetitive = data["isCompetitive"] as? Bool,
-        let headerPhotoRef = data["headerPhotoRef"] as? String,
         let attendingUserRefs = data["attendingUserRefs"] as? [String],
         let game = data["game"] as? String,
         let address = data["address"] as? String else {print("couldn't get all of the information we needed from the document to make an event.🖲🖲🖲"); return nil}
+        let headerPhotoRef = data["headerPhotoRef"] as? String
         self.init(uuid: uuid, title: title, date: date.dateValue(), hostRef: hostRef, state: state, venue: venue, openToAnyone: openToAnyone, isCompetitive: isCompetitive, headerPhotoRef: headerPhotoRef, attendingUserRefs: attendingUserRefs, game: game, address: address)
     }
 }

@@ -84,7 +84,9 @@ class InitialFetchViewController: UIViewController {
                     }
                     guard let snapshot = snapshot else {print("couldn't unwrap the snapshot"); return}
                     for document in snapshot.documents{
-                        print("Constructing advanced units...")
+                        DispatchQueue.main.async {
+                            self.loadingMessageLabel.text = "Constructing advanced units..."
+                        }
                         guard let docName = document.data()["ref"] as? String else {print("couldnt get the string from the document🐝🐝🐝"); return}
                         //actully add that reference to the user's thing
                         if !loadedUser.conversationRefs.contains(where: {$0 == docName}){
@@ -110,23 +112,29 @@ class InitialFetchViewController: UIViewController {
                     //MARK: load conversations
                     ConversationController.shared.fetchUserConversations(completion: {
                         DispatchQueue.main.async {
-                            self.loadingMessageLabel.text = "Synthesizing gravity..."
+                            self.loadingMessageLabel.text = "Shuffling the deck"
                         }
-                        //AND THEN we load the profile pic.
-                        if let pfpRef = loadedUser.pfpDocName{
+                        //load events
+                        EventController.shared.fetchEvents {
                             DispatchQueue.main.async {
-                                self.loadingMessageLabel.text = "Rising Up"
+                                self.loadingMessageLabel.text = "Rising up"
                             }
-                            FirebaseService.shared.fetchDocument(documentName: pfpRef, collectionName: FirebaseReferenceManager.profilePicCollection, completion: { (document) in
-                                guard let document = document, let imageData = document["data"] as? Data, let profilePic = UIImage(data: imageData) else {return}
-                                loadedUser.profilePicture = profilePic
+                            //AND THEN we load the profile pic.
+                            if let pfpRef = loadedUser.pfpDocName{
+                                DispatchQueue.main.async {
+                                    self.loadingMessageLabel.text = "Pressing Start"
+                                }
+                                FirebaseService.shared.fetchDocument(documentName: pfpRef, collectionName: FirebaseReferenceManager.profilePicCollection, completion: { (document) in
+                                    guard let document = document, let imageData = document["data"] as? Data, let profilePic = UIImage(data: imageData) else {return}
+                                    loadedUser.profilePicture = profilePic
+                                    DispatchQueue.main.async {
+                                        self.segueToTabBarVC()
+                                    }
+                                })
+                            } else {
                                 DispatchQueue.main.async {
                                     self.segueToTabBarVC()
                                 }
-                            })
-                        } else {
-                            DispatchQueue.main.async {
-                                self.segueToTabBarVC()
                             }
                         }
                     })
