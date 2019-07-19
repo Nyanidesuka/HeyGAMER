@@ -39,15 +39,34 @@ class EventListViewController: UIViewController {
 
 }
 
-extension EventListViewController: UICollectionViewDelegate, UICollectionViewDataSource{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension EventListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
+    }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return EventController.shared.events.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath) as? EventCollectionViewCell else {return UICollectionViewCell()}
+        let cellEvent = EventController.shared.events[indexPath.item]
+        cell.eventNameLabel.text = cellEvent.title
+        cell.casualOrCompetitiveImage.image = UIImage(named: cellEvent.isCompetitive ? "trophy" : "meeting")
+        if let photo = cellEvent.headerPhoto{
+            cell.eventImageView.image = photo
+        } else {
+            guard let photoRef = cellEvent.headerPhotoRef, !photoRef.isEmpty else {return cell}
+            FirebaseService.shared.fetchDocument(documentName: photoRef, collectionName: FirebaseReferenceManager.eventPicCollection) { (document) in
+                guard let document = document, let data = document["data"] as? Data else {return}
+                cell.eventImageView.image = UIImage(data: data)
+            }
+        }
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width / 2, height: collectionView.frame.width / 2)
+    }
     
 }

@@ -7,11 +7,13 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 class UserController{
     
     static let shared = UserController()
     var currentUser: User?
+    var loadedUsers: [User] = []
     
     func createDictionary(fromUser user: User) -> [String : Any]{
         let returnDict: [String : Any] = ["username" : user.username, "eventRefs" : user.eventRefs, "bio" : user.bio, "nowPlaying" : user.nowPlaying, "lookingFor" : user.lookingFor, "favoriteGames" : user.favoriteGames, "favoriteGenres" : user.favoriteGenres, "pfpDocName" : user.pfpDocName, "authUserRef" : user.authUserRef]
@@ -32,5 +34,21 @@ class UserController{
         //turn each of the user's conversation references into a dictionary and then add it to the collection!
         let refDict: [String : Any] = ["ref" : ref]
         collectionRef.addDocument(data: refDict)
+    }
+    
+    func fetchUsers(completion: @escaping () -> Void){
+        FirebaseService.shared.fetchCollection(collectionName: "Users") { (snapshot) in
+            guard let snapshot = snapshot else {print("couldn't unwrap the snap"); return}
+            let documents = snapshot.documents
+            for document in documents{
+                guard let loadedUser = User(firestoreDoc: document.data()), let userID = Auth.auth().currentUser?.uid else {print("couldn't make a user from the document"); return}
+                print("Loaded user: \(loadedUser.username) 🔋🔋")
+                if loadedUser.authUserRef != userID{
+                    print("Adding them to the SoT")
+                    self.loadedUsers.append(loadedUser)
+                }
+            }
+            completion()
+        }
     }
 }

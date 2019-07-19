@@ -39,6 +39,11 @@ class AddEventViewController: UIViewController {
     var imagePicker: ImagePicker!
     var imageChanged = false
     
+    //picker alert stuff
+    var pickerValue: String = ""
+    let anPicker = UIPickerView(frame: CGRect(x: 5, y: 20, width: 250, height: 140))
+    let pickerChoices = ["Casual", "Competitive"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.scrollView.contentSize = scrollableArea.frame.size
@@ -58,9 +63,47 @@ class AddEventViewController: UIViewController {
     }
     
     @IBAction func postButtonTapped(_ sender: Any) {
-        
+        //get all the info from the fields
+        guard let eventName = self.eventTitleField.text,
+        let game = gameTitleField.text,
+        let competitiveString = casualOrCompetitiveField.text,
+        !competitiveString.isEmpty,
+        let venueName = venueNameLabel.text,
+        let address = streetAddressField.text,
+        let cityState = cityStateField.text,
+        let user = UserController.shared.currentUser else {return}
+        let isCompetitive = competitiveString == "Competitive" ? true : false
+        var photoRef: String? = nil
+        if let image = self.evemtImageView.image{
+            photoRef = UUID().uuidString
+        }
+        //now we decide whether to make a new event or update a current event.
+        if let event = self.event{
+            event.title = eventName
+            event.game = game
+            event.isCompetitive = isCompetitive
+            event.venue = venueName
+            event.address = address
+            event.state = cityState
+            event.headerPhotoRef = photoRef
+            EventController.shared.updateEvent(event: event)
+            self.performSegue(withIdentifier: "savedEvent", sender: self)
+        } else {
+            EventController.shared.createNewEvent(title: eventName, date: datePicker.date, hostRef: user.authUserRef, state: cityState, venue: venueName, openToAnyone: true, isCompetitive: isCompetitive, headerPhotoRef: photoRef, attendingUserRefs: [user.authUserRef], game: game, address: address) {(newEvent) in
+                if let image = self.evemtImageView.image{
+                    print("there's an image in the imageView so we're gonna try and save that mf👚👚👚")
+                    EventController.shared.saveEventPhoto(image: image, forEvent: newEvent)
+                }
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+        }
     }
     
+    @IBAction func casualCompetitiveButtonTapped(_ sender: Any) {
+        presentPickerAlert(withPicker: anPicker, message: "Event Style")
+    }
     
     func updateViews(){
         guard let event = event else {return}
@@ -75,6 +118,36 @@ class AddEventViewController: UIViewController {
         self.headerBackgroundView.image = event.headerPhoto
     }
     
+    func presentPickerAlert(withPicker picker: UIPickerView, message: String){
+        let pickerAlert = UIAlertController(title: message, message: "\n\n\n\n\n\n", preferredStyle: .alert)
+        pickerAlert.isModalInPopover = true
+        //add it to the alert!
+        pickerAlert.view.addSubview(picker)
+        picker.delegate = self
+        picker.dataSource = self
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
+            //here we'll grab the value from the picker and set it as the text in the apropriate field.
+            DispatchQueue.main.async {
+                self.casualOrCompetitiveField.text = self.pickerValue
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+            pickerAlert.dismiss(animated: true, completion: nil)
+        }
+        pickerAlert.addAction(okAction)
+        pickerAlert.addAction(cancelAction)
+        self.present(pickerAlert, animated: true)
+    }
+    
+    //MARK: Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "savedEvent"{
+            guard let destinVC = segue.destination as? EventDetailViewController, let event = self.event else {return}
+            destinVC.event = event
+        }
+    }
 }
 
 extension AddEventViewController: ImagePickerDelegate{
@@ -86,5 +159,24 @@ extension AddEventViewController: ImagePickerDelegate{
             self.evemtImageView.image = image
             self.imageChanged = true
         }
+    }
+}
+
+extension AddEventViewController: UIPickerViewDelegate, UIPickerViewDataSource{
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerChoices.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerChoices[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.pickerValue = pickerChoices[row]
+        self.casualOrCompetitiveImage.image = UIImage(named: pickerChoices[row] == "Competitive" ? "trophy" : "meeting")
     }
 }

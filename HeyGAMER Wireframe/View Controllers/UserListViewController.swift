@@ -16,7 +16,9 @@ class UserListViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     //SSoT
-    var loadedUsers: [User] = []
+    var loadedUsers: [User]{
+        return UserController.shared.loadedUsers
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,17 +37,7 @@ class UserListViewController: UIViewController {
             }
         }
         LocationManager.shared.locationManager?.delegate = self
-        FirebaseService.shared.fetchCollection(collectionName: "Users") { (snapshot) in
-            guard let snapshot = snapshot else {print("couldn't unwrap the snap"); return}
-            let documents = snapshot.documents
-            for document in documents{
-                guard let loadedUser = User(firestoreDoc: document.data()), let userID = Auth.auth().currentUser?.uid else {print("couldn't make a user from the document"); return}
-                print("Loaded user: \(loadedUser.username) 🔋🔋")
-                if loadedUser.authUserRef != userID{
-                    print("Adding them to the SoT")
-                    self.loadedUsers.append(loadedUser)
-                }
-            }
+        UserController.shared.fetchUsers {
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }

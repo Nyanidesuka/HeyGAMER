@@ -12,19 +12,25 @@ import Firebase
 class EventController{
     
     static let shared = EventController()
-    var events: [Event] = []
+    var events: [Event]{
+        get{
+            return userEvents + otherEvents
+        }
+    }
+    var userEvents: [Event] = []
+    var otherEvents: [Event] = []
     var eventRefs: [String] = []
     
-    func createNewEvent(title: String, date: Date, hostRef: String, state: String, venue: String, openToAnyone: Bool, isCompetitive: Bool, headerPhotoRef: String?, attendingUserRefs: [String], game: String, address: String, completion: @escaping () -> Void){
+    func createNewEvent(title: String, date: Date, hostRef: String, state: String, venue: String, openToAnyone: Bool, isCompetitive: Bool, headerPhotoRef: String?, attendingUserRefs: [String], game: String, address: String, completion: @escaping (Event) -> Void){
         guard let user = UserController.shared.currentUser else {return}
         //this function needs to create a new event, save a ref to it to the user who made it, and add it to firestore so other users can find it.
         let newEvent = Event(title: title, date: date, hostRef: hostRef, state: state, venue: venue, openToAnyone: openToAnyone, isCompetitive: isCompetitive, headerPhotoRef: headerPhotoRef, attendingUserRefs: attendingUserRefs, game: game, address: address)
-        EventController.shared.events.append(newEvent)
+        EventController.shared.userEvents.append(newEvent)
         let eventDict = EventController.shared.createDictionary(fromEvent: newEvent)
         FirebaseService.shared.addDocument(documentName: newEvent.uuid, collectionName: FirebaseReferenceManager.eventsCollection, data: eventDict) { (success) in
             print("tried to save the event to firebasee. Success: \(success)🥾🥾🥾")
             user.eventRefs.insert(newEvent.uuid, at: 0)
-            completion()
+            completion(newEvent)
         }
     }
     
@@ -61,6 +67,37 @@ class EventController{
             guard let document = document, let photoData = document["data"] as? Data else {completion(); return}
             let loadedImage = UIImage(data: photoData)
             event.headerPhoto = loadedImage
+            completion()
+        }
+    }
+    
+    func updateEvent(event: Event){
+        let eventDict = EventController.shared.createDictionary(fromEvent: event)
+        FirebaseService.shared.addDocument(documentName: event.uuid, collectionName: FirebaseReferenceManager.eventsCollection, data: eventDict) { (success) in
+            print("tried to update the event in firebase. Success: \(success)🧣🧣🧣")
+        }
+    }
+    
+    func fetchEvents(completion: @escaping () -> Void){
+        print("In the completion for event fetch🎒🎒🎒")
+        let collectionRef = FirebaseReferenceManager.root.collection(FirebaseReferenceManager.eventsCollection)
+        collectionRef.getDocuments { (snapshot, error) in
+            if let error = error{
+                print("there was an error in \(#function); \(error.localizedDescription)")
+                completion()
+                return
+            }
+            guard let snapshot = snapshot, let user = UserController.shared.currentUser else {completion(); return}
+            for document in snapshot.documents{
+                if let loadedEvent = Event(firestoreDocument: document.data()){
+                    if user.eventRefs.contains(loadedEvent.uuid){
+                        EventController.shared.userEvents.append(loadedEvent)
+                    } else {
+                        EventController.shared.otherEvents.append(loadedEvent)
+                    }
+                }
+            }
+            print("loaded \(EventController.shared.events.count) events")
             completion()
         }
     }

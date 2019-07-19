@@ -34,6 +34,7 @@ class ConversationViewController: UIViewController {
         tableView.estimatedRowHeight = 48
         self.tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
         self.messageTextView.textColor = .lightGray
+        self.messageTextView.layer.cornerRadius = 4
         guard let conversation = self.conversation else {return}
     }
     override func viewWillAppear(_ animated: Bool) {
