@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 
 class ConversationViewController: UIViewController {
     
@@ -89,6 +90,88 @@ class ConversationViewController: UIViewController {
     @IBAction func heyGamerButtonPressed(_ sender: Any) {
         
     }
+    
+    @IBAction func reportBlockButtonPressed(_ sender: Any) {
+        guard let user = self.conversationPartner, let currentUser = UserController.shared.currentUser else {return}
+        //we're gonna do this with an alert controller.
+        let blockReportAlert = UIAlertController(title: "Report or Block User", message: nil, preferredStyle: .alert)
+        let blockAction = UIAlertAction(title: "Block", style: .default) { (action) in
+            //present one more alert to make sure
+            let confirmAlert = UIAlertController(title: "Block \(user.username)?", message: nil, preferredStyle: .alert)
+            let yesAction = UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                //block them here
+                UserController.shared.currentUser?.blockedUserRefs.append(user.authUserRef)
+                //then update the user
+                let userDict = UserController.shared.createDictionary(fromUser: currentUser)
+                FirebaseService.shared.addDocument(documentName: currentUser.authUserRef, collectionName: FirebaseReferenceManager.userCollection, data: userDict, completion: { (success) in
+                    print("Tried to update the user in firebase. success: \(success)")
+                })
+                //then back out of this conversation
+                self.navigationController?.popViewController(animated: true)
+            })
+            let noAction = UIAlertAction(title: "No", style: .default, handler: nil)
+            confirmAlert.addAction(yesAction)
+            confirmAlert.addAction(noAction)
+            self.present(confirmAlert, animated: true)
+        }
+        let reportAction = UIAlertAction(title: "Report", style: .default) { (action) in
+            //bring up an alert controller of alert types
+            let reportAlert = UIAlertController(title: "Report \(user.username)", message: "Please select a reason for your report", preferredStyle: .alert)
+            let harassmentAction = UIAlertAction(title: "Harassment", style: .default, handler: { (_) in
+                self.submitReport(reason: "Harassment", forUser: user, fromUser: currentUser)
+            })
+            let inappropriateAction = UIAlertAction(title: "Inappropriate Content", style: .default, handler: { (_) in
+                self.submitReport(reason: "Inappropriate Content", forUser: user, fromUser: currentUser)
+            })
+            let offensiveAction = UIAlertAction(title: "Offensive Content", style: .default, handler: { (_) in
+                self.submitReport(reason: "Offensive Content", forUser: user, fromUser: currentUser)
+            })
+            let otherAction = UIAlertAction(title: "Other", style: .default, handler: { (_) in
+                let otherAlert = UIAlertController(title: "Enter a reason for your report", message: nil, preferredStyle: .alert)
+                otherAlert.addTextField(configurationHandler: { (field) in
+                    field.placeholder = "Enter a reason for your report"
+                })
+                let sendAction = UIAlertAction(title: "Send", style: .default, handler: { (_) in
+                    guard let reportReason = otherAlert.textFields?.first?.text else {return}
+                    self.submitReport(reason: reportReason, forUser: user, fromUser: currentUser)
+                })
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                otherAlert.addAction(sendAction)
+                otherAlert.addAction(cancelAction)
+                self.present(otherAlert, animated: true)
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            reportAlert.addAction(harassmentAction)
+            reportAlert.addAction(inappropriateAction)
+            reportAlert.addAction(offensiveAction)
+            reportAlert.addAction(otherAction)
+            reportAlert.addAction(cancelAction)
+            self.present(reportAlert,animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        blockReportAlert.addAction(blockAction)
+        blockReportAlert.addAction(reportAction)
+        blockReportAlert.addAction(cancelAction)
+        self.present(blockReportAlert, animated: true)
+    }
+    
+    func submitReport(reason: String, forUser: User, fromUser: User){
+        //send an email to the report email address
+        let mailVC = configureMailController(feedback: reason)
+        mailVC.setMessageBody("A report from \(fromUser.username) has been submitted, citing \(reason) in the profile of, or messages from, \(forUser.username). Please look into thise matter and resolve it appropriately.", isHTML: false)
+        if MFMailComposeViewController.canSendMail() {
+            self.present(mailVC, animated: true, completion: nil)
+        } else {
+            showMailError()
+        }
+    }
+    
+    func showMailError() {
+        let sendMailErrorAlert = UIAlertController(title: "Could not send email", message: "Your device could not send message at this time", preferredStyle: .alert)
+        let dismissAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        sendMailErrorAlert.addAction(dismissAction)
+        self.present(sendMailErrorAlert, animated: true, completion: nil)
+    }
 }
 
 extension ConversationViewController: UITableViewDelegate, UITableViewDataSource{
@@ -148,5 +231,15 @@ extension ConversationViewController: ConversationDelegate{
             self.loadViewIfNeeded()
             self.tableView.reloadData()
         }
+    }
+}
+
+extension ConversationViewController: MFMailComposeViewControllerDelegate{
+    func configureMailController(feedback: String) -> MFMailComposeViewController{
+        let mailComposerVC = MFMailComposeViewController()
+        mailComposerVC.mailComposeDelegate = self
+        mailComposerVC.setToRecipients(["heyGamer.reports@gmail.com"])
+        mailComposerVC.setSubject("User or Content Report - Hey GAMER")
+        return mailComposerVC
     }
 }

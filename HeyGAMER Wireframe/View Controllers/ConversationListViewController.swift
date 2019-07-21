@@ -23,6 +23,7 @@ class ConversationListViewController: UIViewController {
         for conversation in ConversationController.shared.conversations{
             conversation.delegate = self
         }
+        //make sure we dont load conversatons with blocked users
     }
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return .lightContent
