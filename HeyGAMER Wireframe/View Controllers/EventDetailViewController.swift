@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 
 class EventDetailViewController: UIViewController {
     
@@ -67,6 +68,60 @@ class EventDetailViewController: UIViewController {
     
     @IBAction func deleteButtonPressed(_ sender: Any) {
     }
+    
+    @IBAction func reportButtonPressed(_ sender: Any) {
+        guard let user = UserController.shared.currentUser, let event = self.event else {return}
+        let reportAlert = UIAlertController(title: "Report \(event.title)", message: "Please select a reason for your report", preferredStyle: .alert)
+        let harassmentAction = UIAlertAction(title: "Harassment", style: .default, handler: { (_) in
+            self.submitReport(reason: "Harassment", forEvent: event, fromUser: user)
+        })
+        let inappropriateAction = UIAlertAction(title: "Inappropriate Content", style: .default, handler: { (_) in
+            self.submitReport(reason: "Inappropriate Content", forEvent: event, fromUser: user)
+        })
+        let offensiveAction = UIAlertAction(title: "Offensive Content", style: .default, handler: { (_) in
+            self.submitReport(reason: "Offensive Content", forEvent: event, fromUser: user)
+        })
+        let otherAction = UIAlertAction(title: "Other", style: .default, handler: { (_) in
+            let otherAlert = UIAlertController(title: "Enter a reason for your report", message: nil, preferredStyle: .alert)
+            otherAlert.addTextField(configurationHandler: { (field) in
+                field.placeholder = "Enter a reason for your report"
+            })
+            let sendAction = UIAlertAction(title: "Send", style: .default, handler: { (_) in
+                guard let reportReason = otherAlert.textFields?.first?.text else {return}
+                self.submitReport(reason: reportReason, forEvent: event, fromUser: user)
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            otherAlert.addAction(sendAction)
+            otherAlert.addAction(cancelAction)
+            self.present(otherAlert, animated: true)
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        reportAlert.addAction(harassmentAction)
+        reportAlert.addAction(inappropriateAction)
+        reportAlert.addAction(offensiveAction)
+        reportAlert.addAction(otherAction)
+        reportAlert.addAction(cancelAction)
+        self.present(reportAlert,animated: true)
+    }
+    
+    func submitReport(reason: String, forEvent: Event, fromUser: User){
+        //send an email to the report email address
+        let mailVC = configureMailController(feedback: reason)
+        mailVC.setMessageBody("A report from \(fromUser.username) has been submitted, citing \(reason) in the event \(forEvent.title). Please look into thise matter and resolve it appropriately.", isHTML: false)
+        if MFMailComposeViewController.canSendMail() {
+            self.present(mailVC, animated: true, completion: nil)
+        } else {
+            showMailError()
+        }
+    }
+    
+    func showMailError() {
+        let sendMailErrorAlert = UIAlertController(title: "Could not send email", message: "Your device could not send message at this time", preferredStyle: .alert)
+        let dismissAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        sendMailErrorAlert.addAction(dismissAction)
+        self.present(sendMailErrorAlert, animated: true, completion: nil)
+    }
+    
     
     
     func updateViews(){
@@ -188,5 +243,15 @@ extension EventDetailViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width / 2.8, height: collectionView.frame.height)
+    }
+}
+
+extension EventDetailViewController: MFMailComposeViewControllerDelegate{
+    func configureMailController(feedback: String) -> MFMailComposeViewController{
+        let mailComposerVC = MFMailComposeViewController()
+        mailComposerVC.mailComposeDelegate = self
+        mailComposerVC.setToRecipients(["heyGamer.reports@gmail.com"])
+        mailComposerVC.setSubject("User or Content Report - Hey GAMER")
+        return mailComposerVC
     }
 }

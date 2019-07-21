@@ -47,6 +47,7 @@ class UserListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
+        //make sure we dont load blocked users
     }
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return .lightContent
