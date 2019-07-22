@@ -37,17 +37,18 @@ class UserListViewController: UIViewController {
             }
         }
         LocationManager.shared.locationManager?.delegate = self
-        UserController.shared.fetchUsers {
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
         //make sure we dont load blocked users
+        UserController.shared.fetchUsers {
+            DispatchQueue.main.async {
+                self.loadViewIfNeeded()
+                self.collectionView.reloadData()
+            }
+        }
     }
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return .lightContent

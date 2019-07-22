@@ -14,16 +14,16 @@ class ConversationListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.reloadData()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.tableView.reloadData()
         self.setNeedsStatusBarAppearanceUpdate()
-        for conversation in ConversationController.shared.conversations{
-            conversation.delegate = self
+        ConversationController.shared.fetchUserConversations {
+            for conversation in ConversationController.shared.conversations{
+                conversation.delegate = self
+            }
         }
-        //make sure we dont load conversatons with blocked users
     }
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return .lightContent
@@ -52,19 +52,36 @@ extension ConversationListViewController: UITableViewDelegate, UITableViewDataSo
         let conversation = ConversationController.shared.conversations[indexPath.row]
         //get the user that you're talking to so we can get their picture and username
         guard let user = UserController.shared.currentUser, let userID = conversation.userRefs.first(where: {$0 != user.authUserRef}) else {return UITableViewCell()}
-        FirebaseService.shared.fetchDocument(documentName: userID, collectionName: FirebaseReferenceManager.userCollection) { (document) in
-            guard let document = document, let otherUser = User(firestoreDoc: document) else {return}
-            DispatchQueue.main.async{
-                cell.usernameLabel.text = otherUser.username
-                cell.user = otherUser
+        if let otherUser =  UserController.shared.loadedUsers.first(where: {$0.authUserRef == userID}){
+            cell.usernameLabel.text = otherUser.username
+            cell.user = otherUser
+            if let image = otherUser.profilePicture{
+                cell.userImageView.image = image
+            } else {
+                if let picref = otherUser.pfpDocName{
+                    FirebaseService.shared.fetchDocument(documentName: picref, collectionName: FirebaseReferenceManager.profilePicCollection, completion: { (document) in
+                        guard let document = document, let imageData = document["data"] as? Data else {return}
+                        DispatchQueue.main.async {
+                            cell.userImageView.image = UIImage(data: imageData)
+                        }
+                    })
+                }
             }
-            if let picref = otherUser.pfpDocName{
-                FirebaseService.shared.fetchDocument(documentName: picref, collectionName: FirebaseReferenceManager.profilePicCollection, completion: { (document) in
-                    guard let document = document, let imageData = document["data"] as? Data else {return}
-                    DispatchQueue.main.async {
-                        cell.userImageView.image = UIImage(data: imageData)
-                    }
-                })
+        } else {
+            FirebaseService.shared.fetchDocument(documentName: userID, collectionName: FirebaseReferenceManager.userCollection) { (document) in
+                guard let document = document, let otherUser = User(firestoreDoc: document) else {return}
+                DispatchQueue.main.async{
+                    cell.usernameLabel.text = otherUser.username
+                    cell.user = otherUser
+                }
+                if let picref = otherUser.pfpDocName{
+                    FirebaseService.shared.fetchDocument(documentName: picref, collectionName: FirebaseReferenceManager.profilePicCollection, completion: { (document) in
+                        guard let document = document, let imageData = document["data"] as? Data else {return}
+                        DispatchQueue.main.async {
+                            cell.userImageView.image = UIImage(data: imageData)
+                        }
+                    })
+                }
             }
         }
         //format the date bb

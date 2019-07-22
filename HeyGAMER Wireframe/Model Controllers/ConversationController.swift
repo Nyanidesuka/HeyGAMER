@@ -12,6 +12,7 @@ class ConversationController{
     static let shared = ConversationController()
     var conversations: [Conversation] = []
     
+    
     func addMessage(toConversation conversation: Conversation, message: Message){
         conversation.messages.insert(message, at: 0)
         let convoDict = ConversationController.shared.createDictionary(fromConversation: conversation)
@@ -52,7 +53,41 @@ class ConversationController{
                 self.fetchUserConversations(index: index + 1, completion: completion)
             } else {
                 print("completing with \(ConversationController.shared.conversations.count) conversations, \(user.conversationRefs)🏈")
-                completion()
+                print("removing blocked user conversations...")
+                for conversation in ConversationController.shared.conversations{
+                    guard let otherUserRef = conversation.userRefs.first(where: {$0 != user.authUserRef}),
+                        let targetIndex = ConversationController.shared.conversations.firstIndex(where: {$0.uuid == conversation.uuid}) else {completion(); return}
+                    if user.blockedUserRefs.contains(otherUserRef){
+                        print("removing a conversation because it involves a blocked user")
+                        ConversationController.shared.conversations.remove(at: targetIndex)
+                    }
+                }
+                self.checkIfBlocked(completion: {
+                    completion()
+                })
+            }
+        }
+    }
+    
+    func checkIfBlocked(index: Int = 0, completion: @escaping () -> Void){
+        guard let currentUser = UserController.shared.currentUser, let otherUserRef = ConversationController.shared.conversations[index].userRefs.first(where: {$0 != currentUser.authUserRef}) else {print("failed the first guard");return}
+        FirebaseService.shared.fetchDocument(documentName: otherUserRef, collectionName: FirebaseReferenceManager.userCollection) { (document) in
+            guard let document = document, let blockedUsers = document["blockedUsers"] as? [String] else {print("couldn't get the blocked users");return}
+            if blockedUsers.contains(currentUser.authUserRef){
+                print("removing conversations")
+                ConversationController.shared.conversations.remove(at: index)
+                if index < ConversationController.shared.conversations.count - 1{
+                    self.checkIfBlocked(index: index, completion: completion)
+                } else {
+                    completion()
+                }
+            } else {
+                print("no need to remove this conversation")
+                if index < ConversationController.shared.conversations.count - 1{
+                    self.checkIfBlocked(index: index + 1, completion: completion)
+                } else {
+                    completion()
+                }
             }
         }
     }
@@ -86,6 +121,19 @@ class ConversationController{
                 }
             }
             completion(true)
+        }
+    }
+    
+    func filterForBlockedUsers(index: Int = 0, completion: @escaping () -> Void){
+        guard let user = UserController.shared.currentUser, let otherUserRef = ConversationController.shared.conversations[index].userRefs.first(where: {$0 != user.authUserRef}) else {return}
+        //first check if we have the user already
+        if let otherUser = UserController.shared.loadedUsers.first(where: {$0.authUserRef == otherUserRef}){
+            if otherUser.blockedUserRefs.contains(user.authUserRef){
+                ConversationController.shared.conversations.remove(at: index)
+            }
+        }
+        FirebaseService.shared.fetchDocument(documentName: otherUserRef, collectionName: FirebaseReferenceManager.userCollection) { (document) in
+            
         }
     }
 }

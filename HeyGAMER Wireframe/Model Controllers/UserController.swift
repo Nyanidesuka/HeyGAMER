@@ -41,7 +41,7 @@ class UserController{
             guard let snapshot = snapshot else {print("couldn't unwrap the snap"); return}
             let documents = snapshot.documents
             for document in documents{
-                guard let loadedUser = User(firestoreDoc: document.data()), let userID = Auth.auth().currentUser?.uid else {print("couldn't make a user from the document"); return}
+                guard let loadedUser = User(firestoreDoc: document.data()), let userID = Auth.auth().currentUser?.uid, let currentUser = UserController.shared.currentUser, !currentUser.blockedUserRefs.contains(loadedUser.authUserRef) else {print("couldn't make a user from the document OR the user is blocked."); return}
                 print("Loaded user: \(loadedUser.username) 🔋🔋")
                 if loadedUser.authUserRef != userID && !self.loadedUsers.contains(where: {$0.authUserRef == loadedUser.authUserRef}){
                     print("Adding them to the SoT")
