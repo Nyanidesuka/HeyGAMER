@@ -17,12 +17,12 @@ class ConversationListViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.tableView.reloadData()
         self.setNeedsStatusBarAppearanceUpdate()
         ConversationController.shared.fetchUserConversations {
             for conversation in ConversationController.shared.conversations{
                 conversation.delegate = self
             }
+            self.tableView.reloadData()
         }
     }
     override var preferredStatusBarStyle : UIStatusBarStyle {
@@ -44,11 +44,17 @@ class ConversationListViewController: UIViewController {
 
 extension ConversationListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ConversationController.shared.conversations.count
+        return max(ConversationController.shared.conversations.count, 1)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "conversationCell") as? ConversationTableViewCell else {return UITableViewCell()}
+        if ConversationController.shared.conversations.count == 0{
+            cell.usernameLabel.text = "Nothing here yet."
+            cell.recentMessageLabel.text = "Conversations will show up here."
+            cell.timestampLabel.text = ""
+            return cell
+        }
         let conversation = ConversationController.shared.conversations[indexPath.row]
         //get the user that you're talking to so we can get their picture and username
         guard let user = UserController.shared.currentUser, let userID = conversation.userRefs.first(where: {$0 != user.authUserRef}) else {return UITableViewCell()}

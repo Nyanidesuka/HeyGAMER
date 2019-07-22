@@ -204,6 +204,7 @@ class UserDetailViewController: UIViewController {
                 print("there's a conversation! we are gonna pass it in.")
                 destinVC.conversation = conversation
                 destinVC.conversationPartner = user
+                conversation.delegate = destinVC
             } else {
                 print("there's no conversation! A new one will be made when the first message is sent.")
                 destinVC.conversationPartner = self.user

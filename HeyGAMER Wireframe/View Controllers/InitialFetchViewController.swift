@@ -93,7 +93,6 @@ class InitialFetchViewController: UIViewController {
                             print("adding conversation ref to the user")
                             loadedUser.conversationRefs.append(docName)
                         }
-                        let docRef = FirebaseReferenceManager.root.collection(FirebaseReferenceManager.conversationCollection).document(docName)
                         //apparently i dont need this whole block so let's... leave it here til i realize why i do need it
 //                        docRef.addSnapshotListener({ (snapshot, error) in
 //                            if let error = error{

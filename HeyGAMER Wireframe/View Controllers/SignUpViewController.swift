@@ -31,6 +31,11 @@ class SignUpViewController: UIViewController {
         return .lightContent
     }
     
+    @IBAction func tapGesture(_ sender: Any) {
+        self.resignFirstResponder()
+    }
+    
+    
     @IBAction func signUpButtonPressed(_ sender: Any) {
         guard let gamerTag = gamerTagField.text,
         let email = emailField.text,
@@ -43,9 +48,20 @@ class SignUpViewController: UIViewController {
             self.present(passwordAlert, animated: true)
             return
         }
+        if gamerTag.isEmpty{
+            let usernameAlert = UIAlertController(title: "No Username", message: "Please enter a username into the GAMER Tag field.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Got it.", style: .default, handler: nil)
+            usernameAlert.addAction(okAction)
+            self.present(usernameAlert, animated: true)
+            return
+        }
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error{
                 print("there was an error in \(#function); \(error.localizedDescription)")
+                let signupErrorAlert = UIAlertController(title: "Error", message: "There was an error registering your account - \(error.localizedDescription)", preferredStyle: .alert)
+                let closeAction = UIAlertAction(title: "Close", style: .default, handler: nil)
+                signupErrorAlert.addAction(closeAction)
+                self.present(signupErrorAlert, animated: true)
                 return
             }
             guard let userID = Auth.auth().currentUser?.uid else {print("couldnt get the UID"); return}
@@ -55,6 +71,9 @@ class SignUpViewController: UIViewController {
                 print("tried to save the user document to firestore. Success: \(success)")
                 if success{
                     UserController.shared.currentUser = newUser
+                }
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "toFetchFromSignup", sender: nil)
                 }
             })
         }
@@ -83,4 +102,10 @@ class SignUpViewController: UIViewController {
     }
     */
 
+}
+extension SignUpViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }

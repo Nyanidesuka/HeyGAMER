@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 class ConversationController{
     //SoT
     static let shared = ConversationController()
@@ -21,7 +22,7 @@ class ConversationController{
         }
     }
     
-    func createConversation(initialMessage: Message, users: [String], completion: @escaping (Conversation) -> Void){
+    func createConversation(initialMessage: Message, users: [String], sender: ConversationDelegate, completion: @escaping (Conversation) -> Void){
         let newConversation = Conversation(users: users, messages: [initialMessage], uuid: UUID().uuidString)
         ConversationController.shared.conversations.insert(newConversation, at: 0)
         let convoDict = ConversationController.shared.createDictionary(fromConversation: newConversation)
@@ -29,6 +30,20 @@ class ConversationController{
             print("tried to create a new conversation. Success: \(success)")
             completion(newConversation)
         }
+        newConversation.delegate = sender
+        //add an observer to the new conversation
+        let docRef = FirebaseReferenceManager.root.collection(FirebaseReferenceManager.conversationCollection).document(newConversation.uuid)
+        let ref = newConversation.uuid
+        docRef.addSnapshotListener({ (snapshot, error) in
+            if let error = error{
+                print("there was an error in \(#function); \(error.localizedDescription)")
+                return
+            }
+            MessageController.shared.getMessages(withConversationRef: newConversation.uuid, completion: {
+                print("completion of the observer for a NEW conversation 🥎🥎🥎")
+                newConversation.delegate?.updateMessages(forConversation: newConversation)
+            })
+        })
     }
     
     func createDictionary(fromConversation conversation: Conversation) -> [String : Any]{
@@ -42,7 +57,7 @@ class ConversationController{
     }
     //i actually hate this but i cant find a way to get all these documents in one round trip
     func fetchUserConversations(index: Int = 0, completion: @escaping () -> Void){
-        guard let user = UserController.shared.currentUser else {print("there is no current user"); return}
+        guard let user = UserController.shared.currentUser, !user.conversationRefs.isEmpty else {print("there is no current user OR they have no conversations"); completion(); return}
         print("user has \(user.conversationRefs.count) refs and we're about to try and fetch index \(index)")
         FirebaseService.shared.fetchDocument(documentName: user.conversationRefs[index], collectionName: FirebaseReferenceManager.conversationCollection) { (document) in
             guard let document = document, let loadedConversation = Conversation(firebaseDocument: document) else {return}
@@ -70,6 +85,7 @@ class ConversationController{
     }
     
     func checkIfBlocked(index: Int = 0, completion: @escaping () -> Void){
+        guard !ConversationController.shared.conversations.isEmpty else {completion(); return}
         guard let currentUser = UserController.shared.currentUser, let otherUserRef = ConversationController.shared.conversations[index].userRefs.first(where: {$0 != currentUser.authUserRef}) else {print("failed the first guard");return}
         FirebaseService.shared.fetchDocument(documentName: otherUserRef, collectionName: FirebaseReferenceManager.userCollection) { (document) in
             guard let document = document, let blockedUsers = document["blockedUsers"] as? [String] else {print("couldn't get the blocked users");return}

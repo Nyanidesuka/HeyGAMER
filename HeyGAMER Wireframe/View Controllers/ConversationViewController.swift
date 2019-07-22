@@ -53,6 +53,11 @@ class ConversationViewController: UIViewController {
         return .lightContent
     }
     
+    @IBAction func tapGesture(_ sender: Any) {
+        self.messageTextView.resignFirstResponder()
+    }
+    
+    
     //i would like to refactor this to only take in the uuid of the other user but i'm gonna save things like that for after basic feature are done
     @IBAction func sendButtonPressed(_ sender: Any) {
         print("wow the button got pressed!!!!⚙️⚙️⚙️")
@@ -72,7 +77,7 @@ class ConversationViewController: UIViewController {
             userOne.conversationRefs.insert(conversation.uuid, at: 0)
         } else {
             //make a new conversation
-            ConversationController.shared.createConversation(initialMessage: newMessage, users: [userOne.authUserRef, userTwo.authUserRef]) { (newConversation) in
+            ConversationController.shared.createConversation(initialMessage: newMessage, users: [userOne.authUserRef, userTwo.authUserRef], sender: self) { (newConversation) in
                 self.conversation = newConversation
                 //the didset on conversation will handle the reload in this case
                 //make sure we add a ref to this conversation to the user!
@@ -85,6 +90,7 @@ class ConversationViewController: UIViewController {
             }
         }
         self.messageTextView.text = ""
+        self.messageTextView.resignFirstResponder()
     }
     
     @IBAction func heyGamerButtonPressed(_ sender: Any) {
@@ -100,7 +106,7 @@ class ConversationViewController: UIViewController {
             userOne.conversationRefs.insert(conversation.uuid, at: 0)
         } else {
             //make a new conversation
-            ConversationController.shared.createConversation(initialMessage: newMessage, users: [userOne.authUserRef, userTwo.authUserRef]) { (newConversation) in
+            ConversationController.shared.createConversation(initialMessage: newMessage, users: [userOne.authUserRef, userTwo.authUserRef], sender: self) { (newConversation) in
                 self.conversation = newConversation
                 //the didset on conversation will handle the reload in this case
                 //make sure we add a ref to this conversation to the user!

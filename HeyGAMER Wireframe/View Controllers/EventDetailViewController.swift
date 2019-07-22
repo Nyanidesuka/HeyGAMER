@@ -35,6 +35,7 @@ class EventDetailViewController: UIViewController {
     var event: Event?{
         didSet{
             loadViewIfNeeded()
+            print("photo: \(event?.headerPhoto)")
             DispatchQueue.main.async {
                 self.updateViews()
                 self.fetchAttendingUsers {
@@ -69,14 +70,42 @@ class EventDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
+        guard let event = self.event else {return}
+        self.updateViews()
+        EventController.shared.fetchUsers(forEvent: event) {
+            DispatchQueue.main.async {
+                self.attendingUsersCollectionView.reloadData()
+            }
+        }
     }
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return .lightContent
     }
     
     @IBAction func imGoingbuttonPressed(_ sender: Any) {
-        
+        guard let event = self.event, let user = UserController.shared.currentUser else {return}
+        if let targetIndex = event.attendingUsers.firstIndex(where: {$0.authUserRef == user.authUserRef}){
+            event.attendingUsers.remove(at: targetIndex)
+            guard let targetTwo = event.attendingUserRefs.firstIndex(of: user.authUserRef) else {return}
+            event.attendingUserRefs.remove(at: targetTwo)
+            let eventDict = EventController.shared.createDictionary(fromEvent: event)
+            FirebaseService.shared.addDocument(documentName: event.uuid, collectionName: FirebaseReferenceManager.eventsCollection, data: eventDict) { (success) in
+                print("tried to update the event in firebase. Success: \(success)")
+            }
+            self.updateViews()
+            self.attendingUsersCollectionView.reloadData()
+        } else {
+            event.attendingUsers.append(user)
+            event.attendingUserRefs.append(user.authUserRef)
+            let eventDict = EventController.shared.createDictionary(fromEvent: event)
+            FirebaseService.shared.addDocument(documentName: event.uuid, collectionName: FirebaseReferenceManager.eventsCollection, data: eventDict) { (success) in
+                print("tried to update the event in firebase. Success: \(success)")
+            }
+            self.updateViews()
+            self.attendingUsersCollectionView.reloadData()
+        }
     }
+    
     @IBAction func contactOrEditButtonPressed(_ sender: Any) {
         guard let event = event, let user = UserController.shared.currentUser else {return}
         if event.hostRef != user.authUserRef{
@@ -96,24 +125,53 @@ class EventDetailViewController: UIViewController {
             }
         } else {
             //the user is the host so we're gonna edit the event
+            if let host = event.host{
+                if host.blockedUserRefs.contains(user.authUserRef) || user.blockedUserRefs.contains(host.authUserRef){
+                    let blockedalert = UIAlertController(title: "Error", message: "Unable to contact this user.", preferredStyle: .alert)
+                    let closeAction = UIAlertAction(title: "Close", style: .default, handler: nil)
+                    blockedalert.addAction(closeAction)
+                    self.present(blockedalert, animated: true)
+                    return
+                }
+            }
+            self.performSegue(withIdentifier: "editEvent", sender: nil)
         }
     }
     
     @IBAction func deleteButtonPressed(_ sender: Any) {
         let deleteAlert = UIAlertController(title: "Delete event?", message: nil, preferredStyle: .alert)
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (_) in
-            guard let event = self.event else {return}
+            guard let event = self.event, let user = UserController.shared.currentUser else {return}
+            if user.eventRefs.contains(event.uuid){
+                guard let targetIndex = user.eventRefs.firstIndex(of: event.uuid) else {return}
+                user.eventRefs.remove(at: targetIndex)
+                let userDict = UserController.shared.createDictionary(fromUser: user)
+                FirebaseService.shared.addDocument(documentName: user.authUserRef, collectionName: FirebaseReferenceManager.userCollection, data: userDict, completion: { (success) in
+                    print("tried to update the user. success: \(success)")
+                })
+            }
+            if EventController.shared.userEvents.contains(where: {$0.uuid == event.uuid}){
+                guard let target = EventController.shared.userEvents.firstIndex(where: {$0.uuid == event.uuid}) else {return}
+                EventController.shared.userEvents.remove(at: target)
+            }
+            if EventController.shared.otherEvents.contains(where: {$0.uuid == event.uuid}){
+                guard let target = EventController.shared.otherEvents.firstIndex(where: {$0.uuid == event.uuid}) else {return}
+                EventController.shared.otherEvents.remove(at: target)
+            }
             let docRef = FirebaseReferenceManager.root.collection(FirebaseReferenceManager.eventsCollection).document(event.uuid)
             docRef.delete(completion: { (error) in
                 if let error = error{
                     print("there was an error in \(#function); \(error.localizedDescription)")
                     return
                 } else {
-                    print("event deleted🏓🏓🏓")
-                    DispatchQueue.main.async {
-                        self.navigationController?.popViewController(animated: true)
+                    print("event deleted🏓🏓🏓 from firebase")
+                    //now update the events collection again
+                    EventController.shared.fetchEvents {
+                        DispatchQueue.main.async {
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                        return
                     }
-                    return
                 }
             })
         }
@@ -186,6 +244,11 @@ class EventDetailViewController: UIViewController {
         } else {
             self.deletebutton.isEnabled = false
             self.deletebutton.alpha = 0
+        }
+        if event.attendingUserRefs.contains(where: {$0 == user.authUserRef}){
+            self.imGoingButton.setTitle("Not going", for: .normal)
+        } else {
+            self.imGoingButton.setTitle("I'm going", for: .normal)
         }
         self.casualOrCompetitiveImage.image = UIImage(named: event.isCompetitive ? "trophy" : "meeting")
         self.casualCompetitiveLabel.text = event.isCompetitive ? "Competitive" : "Casual"
