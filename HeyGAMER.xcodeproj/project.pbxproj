@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		171613E822DC01640088C9C9 /* ComposeMessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171613E722DC01640088C9C9 /* ComposeMessageTextView.swift */; };
+		1716781F22E60E3A00B41797 /* Parikesit.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1716781E22E60D7600B41797 /* Parikesit.otf */; };
 		171F7EFE22D3BE420012210A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171F7EFD22D3BE420012210A /* AppDelegate.swift */; };
 		171F7F0322D3BE420012210A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 171F7F0122D3BE420012210A /* Main.storyboard */; };
 		171F7F0622D3BE420012210A /* HeyGAMER_Wireframe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 171F7F0422D3BE420012210A /* HeyGAMER_Wireframe.xcdatamodeld */; };
@@ -50,6 +51,8 @@
 
 /* Begin PBXFileReference section */
 		171613E722DC01640088C9C9 /* ComposeMessageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeMessageTextView.swift; sourceTree = "<group>"; };
+		1716781E22E60D7600B41797 /* Parikesit.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Parikesit.otf; sourceTree = "<group>"; };
+		1716782022E61F0C00B41797 /* HeyGAMER.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HeyGAMER.entitlements; sourceTree = "<group>"; };
 		171F7EFA22D3BE420012210A /* HeyGAMER.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeyGAMER.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		171F7EFD22D3BE420012210A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		171F7F0222D3BE420012210A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -111,6 +114,7 @@
 		171F7EF122D3BE420012210A = {
 			isa = PBXGroup;
 			children = (
+				1716782022E61F0C00B41797 /* HeyGAMER.entitlements */,
 				171F7EFC22D3BE420012210A /* HeyGAMER Wireframe */,
 				171F7EFB22D3BE420012210A /* Products */,
 				44B663E41678A1FC3C4DBF73 /* Pods */,
@@ -137,6 +141,7 @@
 				171F7F1422D3C0AC0012210A /* Custom Views */,
 				171F7F1722D3C2960012210A /* View Controllers */,
 				171F7F0722D3BE430012210A /* Assets.xcassets */,
+				1716781E22E60D7600B41797 /* Parikesit.otf */,
 				171F7F0922D3BE430012210A /* LaunchScreen.storyboard */,
 				171F7F0C22D3BE430012210A /* Info.plist */,
 				17228DB722D525E900A9D4D2 /* GoogleService-Info.plist */,
@@ -265,6 +270,11 @@
 				TargetAttributes = {
 					171F7EF922D3BE420012210A = {
 						CreatedOnToolsVersion = 10.2.1;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -292,6 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				171F7F0B22D3BE430012210A /* LaunchScreen.storyboard in Resources */,
+				1716781F22E60E3A00B41797 /* Parikesit.otf in Resources */,
 				17228DB822D525E900A9D4D2 /* GoogleService-Info.plist in Resources */,
 				171F7F0822D3BE430012210A /* Assets.xcassets in Resources */,
 				171F7F0322D3BE420012210A /* Main.storyboard in Resources */,

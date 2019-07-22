@@ -88,7 +88,30 @@ class ConversationViewController: UIViewController {
     }
     
     @IBAction func heyGamerButtonPressed(_ sender: Any) {
-        
+        guard let newMessage = MessageController.shared.createMessage(withText: "Hey GAMER"),
+            let userTwo = self.conversationPartner,
+            let userOne = UserController.shared.currentUser else {print("failed the first guard");return}
+        if let conversation = self.conversation{
+            ConversationController.shared.addMessage(toConversation: conversation, message: newMessage)
+            self.tableView.reloadData()
+            //make sure we move the conversation ref to the front of the array since it now has the most recent activity.
+            guard let targetIndex = userOne.conversationRefs.firstIndex(of: conversation.uuid) else {print("failed the second guard"); return}
+            userOne.conversationRefs.remove(at: targetIndex)
+            userOne.conversationRefs.insert(conversation.uuid, at: 0)
+        } else {
+            //make a new conversation
+            ConversationController.shared.createConversation(initialMessage: newMessage, users: [userOne.authUserRef, userTwo.authUserRef]) { (newConversation) in
+                self.conversation = newConversation
+                //the didset on conversation will handle the reload in this case
+                //make sure we add a ref to this conversation to the user!
+                userOne.conversationRefs.insert(newConversation.uuid, at: 0)
+                UserController.shared.updateConversationRefs(withNewRef: newConversation.uuid)
+                FirebaseService.shared.sendConvoRef(toUser: userTwo, ref: newConversation.uuid)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
     }
     
     @IBAction func reportBlockButtonPressed(_ sender: Any) {

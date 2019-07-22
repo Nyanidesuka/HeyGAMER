@@ -45,6 +45,7 @@ class UserDetailViewController: UIViewController {
         }
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
@@ -207,7 +208,6 @@ class UserDetailViewController: UIViewController {
                 print("there's no conversation! A new one will be made when the first message is sent.")
                 destinVC.conversationPartner = self.user
             }
-            destinVC.navigationItem.title = ""
         }
     }
 }

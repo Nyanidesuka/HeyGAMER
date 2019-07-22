@@ -34,7 +34,15 @@ class SignUpViewController: UIViewController {
     @IBAction func signUpButtonPressed(_ sender: Any) {
         guard let gamerTag = gamerTagField.text,
         let email = emailField.text,
-            let password = passwordField.text else {return}
+            let password = passwordField.text,
+        let confirmPassword = antiTypoField.text else {return}
+        if password != confirmPassword{
+            let passwordAlert = UIAlertController(title: "Passwords do not match", message: "Please make sure the password is entered identically into both password fields, to be sure your password is set correctly.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Got it.", style: .default, handler: nil)
+            passwordAlert.addAction(okAction)
+            self.present(passwordAlert, animated: true)
+            return
+        }
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error{
                 print("there was an error in \(#function); \(error.localizedDescription)")

@@ -40,9 +40,24 @@ class EventDetailViewController: UIViewController {
                 self.fetchAttendingUsers {
                 }
             }
+            if event?.host == nil{
+                print("event has no loaded host")
+                guard let hostRef = event?.hostRef else {return}
+                print("but it does have a host ref")
+                if let hostUser = UserController.shared.loadedUsers.first(where: {$0.authUserRef == hostRef}){
+                    self.event?.host = hostUser
+                } else {
+                    FirebaseService.shared.fetchDocument(documentName: hostRef, collectionName: FirebaseReferenceManager.userCollection) { (document) in
+                        guard let document = document, let loadedUser = User(firestoreDoc: document) else {return}
+                        self.event?.host = loadedUser
+                    }
+                }
+            }
         }
     }
-    var eventHost: User?
+    var eventHost: User?{
+        return self.event?.host
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,10 +78,49 @@ class EventDetailViewController: UIViewController {
         
     }
     @IBAction func contactOrEditButtonPressed(_ sender: Any) {
-        
+        guard let event = event, let user = UserController.shared.currentUser else {return}
+        if event.hostRef != user.authUserRef{
+            //the user is not the host so we can try to contact the host
+            if let host = event.host{
+                print("contacting \(host.username)")
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "messageHost", sender: nil)
+                }
+                return
+            } else {
+                let errorAlert = UIAlertController(title: "Error", message: "Couldn't start a conversation with the host. Please try again later.", preferredStyle: .alert)
+                let closeAction = UIAlertAction(title: "close", style: .default, handler: nil)
+                errorAlert.addAction(closeAction)
+                self.present(errorAlert, animated: true)
+                return
+            }
+        } else {
+            //the user is the host so we're gonna edit the event
+        }
     }
     
     @IBAction func deleteButtonPressed(_ sender: Any) {
+        let deleteAlert = UIAlertController(title: "Delete event?", message: nil, preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (_) in
+            guard let event = self.event else {return}
+            let docRef = FirebaseReferenceManager.root.collection(FirebaseReferenceManager.eventsCollection).document(event.uuid)
+            docRef.delete(completion: { (error) in
+                if let error = error{
+                    print("there was an error in \(#function); \(error.localizedDescription)")
+                    return
+                } else {
+                    print("event deleted🏓🏓🏓")
+                    DispatchQueue.main.async {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                    return
+                }
+            })
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        deleteAlert.addAction(deleteAction)
+        deleteAlert.addAction(cancelAction)
+        self.present(deleteAlert, animated: true)
     }
     
     @IBAction func reportButtonPressed(_ sender: Any) {
@@ -204,6 +258,28 @@ class EventDetailViewController: UIViewController {
             } else {
                 completion()
             }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "messageHost"{
+            print("in the segue")
+            guard let destinVC = segue.destination as? ConversationViewController else {return}
+            print("past guard one")
+            if let host = self.eventHost{
+                if let conversation = ConversationController.shared.conversations.first(where: {$0.userRefs.contains(host.authUserRef)}){
+                    //so if we get here, we know these two are already talkin.
+                    print("there's a conversation! we are gonna pass it in.")
+                    destinVC.conversation = conversation
+                    destinVC.conversationPartner = host
+                } else {
+                    print("there's no conversation! A new one will be made when the first message is sent.")
+                    destinVC.conversationPartner = host
+                }
+            }
+        } else if segue.identifier == "editEvent"{
+            guard let destinVC = segue.destination as? AddEventViewController else {return}
+            destinVC.event = self.event
         }
     }
 }

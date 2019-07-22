@@ -90,9 +90,9 @@ class EventController{
             guard let snapshot = snapshot, let user = UserController.shared.currentUser else {completion(); return}
             for document in snapshot.documents{
                 if let loadedEvent = Event(firestoreDocument: document.data()){
-                    if user.eventRefs.contains(loadedEvent.uuid){
+                    if user.eventRefs.contains(loadedEvent.uuid) && !EventController.shared.userEvents.contains(where: {$0.uuid == loadedEvent.uuid}){
                         EventController.shared.userEvents.append(loadedEvent)
-                    } else {
+                    } else if !EventController.shared.otherEvents.contains(where: {$0.uuid == loadedEvent.uuid}) {
                         EventController.shared.otherEvents.append(loadedEvent)
                     }
                 }

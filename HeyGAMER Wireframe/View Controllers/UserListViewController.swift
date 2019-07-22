@@ -19,6 +19,8 @@ class UserListViewController: UIViewController {
     var loadedUsers: [User]{
         return UserController.shared.loadedUsers
     }
+    //refresh control
+    private let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +39,12 @@ class UserListViewController: UIViewController {
             }
         }
         LocationManager.shared.locationManager?.delegate = self
+        if #available(iOS 10.0, *) {
+            collectionView.refreshControl = refreshControl
+        } else {
+            collectionView.addSubview(refreshControl)
+        }
+        refreshControl.addTarget(self, action: #selector(refreshCollection), for: .valueChanged)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,15 +63,32 @@ class UserListViewController: UIViewController {
     }
     
     @IBAction func logOutButtonTapped(_ sender: Any) {
-        do{
-            try Auth.auth().signOut()
-            print("henlo, we're firing the segue to the fetch VC.")
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let viewController = storyboard.instantiateViewController(withIdentifier: "initialFetchVC")
-            UIApplication.shared.windows.first?.rootViewController = viewController
-            self.performSegue(withIdentifier: "logOut", sender: nil)
-        }catch{
-            print(error)
+        let logOutAlert = UIAlertController(title: "Log Out?", message: nil, preferredStyle: .alert)
+        let LogOutAction = UIAlertAction(title: "Log Out", style: .default) { (_) in
+            do{
+                try Auth.auth().signOut()
+                print("henlo, we're firing the segue to the fetch VC.")
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let viewController = storyboard.instantiateViewController(withIdentifier: "initialFetchVC")
+                UIApplication.shared.windows.first?.rootViewController = viewController
+                self.performSegue(withIdentifier: "logOut", sender: nil)
+            }catch{
+                print(error)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        logOutAlert.addAction(LogOutAction)
+        logOutAlert.addAction(cancelAction)
+        self.present(logOutAlert, animated: true)
+    }
+    
+    @objc func refreshCollection(){
+        UserController.shared.fetchUsers {
+            DispatchQueue.main.async {
+                self.loadViewIfNeeded()
+                self.collectionView.reloadData()
+                self.refreshControl.endRefreshing()
+            }
         }
     }
     

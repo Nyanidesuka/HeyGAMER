@@ -12,18 +12,39 @@ class EventListViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    //refresh control
+    private let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        if #available(iOS 10.0, *) {
+            collectionView.refreshControl = refreshControl
+        } else {
+            collectionView.addSubview(refreshControl)
+        }
+        refreshControl.addTarget(self, action: #selector(refreshCollection), for: .valueChanged)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
+        EventController.shared.fetchEvents {
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
     }
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return .lightContent
+    }
+    
+    @objc func refreshCollection(){
+        EventController.shared.fetchEvents {
+            DispatchQueue.main.async {
+                self.loadViewIfNeeded()
+                self.collectionView.reloadData()
+                self.refreshControl.endRefreshing()
+            }
+        }
     }
     
     // MARK: - Navigation
