@@ -43,9 +43,16 @@ class UserController{
             for document in documents{
                 guard let loadedUser = User(firestoreDoc: document.data()), let userID = Auth.auth().currentUser?.uid, let currentUser = UserController.shared.currentUser, !currentUser.blockedUserRefs.contains(loadedUser.authUserRef) else {print("couldn't make a user from the document OR the user is blocked."); return}
                 print("Loaded user: \(loadedUser.username) 🔋🔋")
-                if loadedUser.authUserRef != userID && !self.loadedUsers.contains(where: {$0.authUserRef == loadedUser.authUserRef}){
+                if loadedUser.authUserRef != userID && !self.loadedUsers.contains(where: {$0.authUserRef == loadedUser.authUserRef}) && !loadedUser.blockedUserRefs.contains(userID){
                     print("Adding them to the SoT")
                     self.loadedUsers.append(loadedUser)
+                }
+                //if we find a blocked user but theyre already loaded, remove them
+                if loadedUser.blockedUserRefs.contains(userID) || currentUser.blockedUserRefs.contains(loadedUser.authUserRef){
+                    if UserController.shared.loadedUsers.contains(where: {$0.authUserRef == loadedUser.authUserRef}){
+                        guard let targetIndex = UserController.shared.loadedUsers.firstIndex(where: {$0.authUserRef == loadedUser.authUserRef}) else {return}
+                        UserController.shared.loadedUsers.remove(at: targetIndex)
+                    }
                 }
             }
             completion()
