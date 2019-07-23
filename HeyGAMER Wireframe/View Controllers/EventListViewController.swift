@@ -67,6 +67,11 @@ extension EventListViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventCell", for: indexPath) as? EventCollectionViewCell else {return UICollectionViewCell()}
+        if EventController.shared.events.count == 0{
+            cell.casualOrCompetitiveImage.image = nil
+            cell.labelBackgroundView.layer.cornerRadius = 5
+            cell.eventNameLabel.text = "Nothing here yet"
+        }
         let cellEvent = EventController.shared.events[indexPath.item]
         cell.eventNameLabel.text = cellEvent.title
         cell.casualOrCompetitiveImage.image = UIImage(named: cellEvent.isCompetitive ? "trophy" : "meeting")
@@ -78,6 +83,7 @@ extension EventListViewController: UICollectionViewDelegate, UICollectionViewDat
             FirebaseService.shared.fetchDocument(documentName: photoRef, collectionName: FirebaseReferenceManager.eventPicCollection) { (document) in
                 guard let document = document, let data = document["data"] as? Data else {return}
                 cell.eventImageView.image = UIImage(data: data)
+                cellEvent.headerPhoto = UIImage(data: data)
             }
         }
         

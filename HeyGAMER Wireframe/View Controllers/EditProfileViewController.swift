@@ -136,6 +136,11 @@ class EditProfileViewController: UIViewController {
         presentPickerAlert(withPicker: statePicker, message: "Select a State", senderTag: 0)
     }
     
+    @IBAction func tapGesture(_ sender: Any) {
+        self.bioTextView.resignFirstResponder()
+    }
+    
+    
     
     func presentPickerAlert(withPicker picker: UIPickerView, message: String, senderTag: Int){
         let pickerAlert = UIAlertController(title: message, message: "\n\n\n\n\n\n", preferredStyle: .alert)
@@ -263,5 +268,13 @@ extension EditProfileViewController: UITextViewDelegate{
             }
         }
         characterCountLabel.text = "\(textView.text.count) / 500"
+    }
+    
+}
+
+extension EditProfileViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

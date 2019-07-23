@@ -37,24 +37,27 @@ class UserController{
     }
     
     func fetchUsers(completion: @escaping () -> Void){
+        var fetchedUsers: [User] = []
         FirebaseService.shared.fetchCollection(collectionName: "Users") { (snapshot) in
             guard let snapshot = snapshot else {print("couldn't unwrap the snap"); return}
             let documents = snapshot.documents
             for document in documents{
-                guard let loadedUser = User(firestoreDoc: document.data()), let userID = Auth.auth().currentUser?.uid, let currentUser = UserController.shared.currentUser, !currentUser.blockedUserRefs.contains(loadedUser.authUserRef) else {print("couldn't make a user from the document OR the user is blocked."); return}
-                print("Loaded user: \(loadedUser.username) 🔋🔋")
-                if loadedUser.authUserRef != userID && !self.loadedUsers.contains(where: {$0.authUserRef == loadedUser.authUserRef}) && !loadedUser.blockedUserRefs.contains(userID){
-                    print("Adding them to the SoT")
-                    self.loadedUsers.append(loadedUser)
-                }
-                //if we find a blocked user but theyre already loaded, remove them
-                if loadedUser.blockedUserRefs.contains(userID) || currentUser.blockedUserRefs.contains(loadedUser.authUserRef){
-                    if UserController.shared.loadedUsers.contains(where: {$0.authUserRef == loadedUser.authUserRef}){
-                        guard let targetIndex = UserController.shared.loadedUsers.firstIndex(where: {$0.authUserRef == loadedUser.authUserRef}) else {return}
-                        UserController.shared.loadedUsers.remove(at: targetIndex)
+                if let loadedUser = User(firestoreDoc: document.data()), let userID = Auth.auth().currentUser?.uid, let currentUser = UserController.shared.currentUser, !currentUser.blockedUserRefs.contains(loadedUser.authUserRef){
+                    print("Loaded user: \(loadedUser.username) 🔋🔋")
+                    if loadedUser.authUserRef != userID && !fetchedUsers.contains(where: {$0.authUserRef == loadedUser.authUserRef}) && !loadedUser.blockedUserRefs.contains(userID){
+                        print("Adding them to the SoT")
+                        fetchedUsers.append(loadedUser)
+                    }
+                    //if we find a blocked user but theyre already loaded, remove them
+                    if loadedUser.blockedUserRefs.contains(userID) || currentUser.blockedUserRefs.contains(loadedUser.authUserRef){
+                        if fetchedUsers.contains(where: {$0.authUserRef == loadedUser.authUserRef}){
+                            guard let targetIndex = fetchedUsers.firstIndex(where: {$0.authUserRef == loadedUser.authUserRef}) else {return}
+                            fetchedUsers.remove(at: targetIndex)
+                        }
                     }
                 }
             }
+            UserController.shared.loadedUsers = fetchedUsers
             completion()
         }
     }

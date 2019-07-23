@@ -99,11 +99,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="x4e-5u-FIM"/>
                     </view>
-                    <navigationItem key="navigationItem" id="g7a-gK-rgt">
-                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="2Yk-j4-UMs">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="g7a-gK-rgt"/>
                     <connections>
                         <outlet property="tableView" destination="GlY-QZ-L3K" id="Q7d-fX-b6c"/>
                     </connections>
@@ -280,6 +276,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.99938076730000003" green="0.49720072749999999" blue="0.15170446039999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="648-hd-XI4" firstAttribute="leading" secondItem="WS5-2c-51h" secondAttribute="leading" constant="8" id="0r9-OJ-OoQ"/>
                             <constraint firstItem="dZS-dp-U9z" firstAttribute="leading" secondItem="648-hd-XI4" secondAttribute="trailing" id="2r3-rU-9VD"/>
@@ -300,6 +297,9 @@
                             <constraint firstItem="WS5-2c-51h" firstAttribute="bottom" secondItem="648-hd-XI4" secondAttribute="bottom" constant="8" id="opm-2y-FV0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WS5-2c-51h"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="SXZ-0J-HBm" appends="YES" id="f4Z-D8-Dr8"/>
+                        </connections>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Pa0-3S-FNN">
@@ -319,6 +319,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tNW-SS-y4K" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="SXZ-0J-HBm">
+                    <connections>
+                        <action selector="tapGesture:" destination="9hA-JX-6Jp" id="1gO-5v-op8"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2060.8695652173915" y="699.77678571428567"/>
         </scene>
@@ -352,7 +357,10 @@
                                                 <rect key="frame" x="0.0" y="548" width="414" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="MlA-2c-Xf3" id="Qba-RT-kid"/>
+                                                </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Looking For" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TeM-Oj-eCn">
                                                 <rect key="frame" x="8" y="813" width="111.5" height="26.5"/>
@@ -424,25 +432,37 @@
                                                 <rect key="frame" x="0.0" y="1020" width="414" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="MlA-2c-Xf3" id="xiQ-Qb-ydY"/>
+                                                </connections>
                                             </textField>
                                             <textField opaque="NO" tag="1" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter another game title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ekS-RB-WvR">
                                                 <rect key="frame" x="0.0" y="1058" width="414" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="MlA-2c-Xf3" id="Nev-Kc-txU"/>
+                                                </connections>
                                             </textField>
                                             <textField opaque="NO" tag="2" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter one more game title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="x45-py-gdU">
                                                 <rect key="frame" x="0.0" y="1096" width="414" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="MlA-2c-Xf3" id="oMv-Pb-d11"/>
+                                                </connections>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your GAMER Tag" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ncv-E2-j6P">
                                                 <rect key="frame" x="0.0" y="454" width="414" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="MlA-2c-Xf3" id="7iv-az-lcj"/>
+                                                </connections>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j5z-vI-QWe">
                                                 <rect key="frame" x="0.0" y="685" width="414" height="30"/>
@@ -515,7 +535,10 @@
                                                         <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="MlA-2c-Xf3" id="mB4-J5-Q2D"/>
+                                                        </connections>
                                                     </textField>
                                                     <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Tap to select state" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rG1-oU-uQk">
                                                         <rect key="frame" x="259" y="0.0" width="155" height="30"/>
@@ -531,6 +554,7 @@
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" ambiguous="YES" text="Profile of a gamer" translatesAutoresizingMaskIntoConstraints="NO" id="3Hd-YS-xdJ">
                                                 <rect key="frame" x="0.0" y="736" width="414" height="128"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="128" id="sTD-KJ-iFA"/>
                                                 </constraints>
@@ -555,6 +579,7 @@
                                             </label>
                                         </subviews>
                                         <color key="backgroundColor" red="0.91033840669999999" green="0.91033840669999999" blue="0.91033840669999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstItem="Sib-VJ-JXe" firstAttribute="leading" secondItem="6xZ-H5-GKd" secondAttribute="leading" constant="8" id="0Mk-xW-JNI"/>
                                             <constraint firstItem="Jd2-2v-Tag" firstAttribute="leading" secondItem="6xZ-H5-GKd" secondAttribute="leading" constant="8" id="0Tn-0E-Dj5"/>
@@ -649,6 +674,9 @@
                                             <constraint firstAttribute="trailing" secondItem="eoq-on-ebx" secondAttribute="trailing" id="zR0-qr-Lnr"/>
                                         </constraints>
                                         <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="MWi-cv-T6p" appends="YES" id="zlE-sV-MFz"/>
+                                        </connections>
                                     </view>
                                 </subviews>
                                 <constraints>
@@ -698,6 +726,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IXK-mD-UK1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="MWi-cv-T6p">
+                    <connections>
+                        <action selector="tapGesture:" destination="MlA-2c-Xf3" id="YhJ-59-Fff"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1074" y="-1063"/>
         </scene>
@@ -710,8 +743,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zbR-f9-od3">
-                                <rect key="frame" x="0.0" y="133" width="414" height="680"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" red="0.91033840669999999" green="0.91033840669999999" blue="0.91033840669999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="b0E-Wp-JdZ">
                                     <size key="itemSize" width="202" height="202"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -772,21 +805,13 @@
                                     <outlet property="delegate" destination="ygy-Fb-fxO" id="QUx-Fg-gnq"/>
                                 </connections>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nearby" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9T-d5-a9E">
-                                <rect key="frame" x="16" y="104" width="56" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.91033840669999999" green="0.91033840669999999" blue="0.91033840669999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="zbR-f9-od3" firstAttribute="leading" secondItem="Xd3-KO-hfh" secondAttribute="leading" id="5ot-eu-7Cn"/>
-                            <constraint firstItem="m9T-d5-a9E" firstAttribute="leading" secondItem="Xd3-KO-hfh" secondAttribute="leading" constant="16" id="8mb-zF-ryI"/>
+                            <constraint firstItem="zbR-f9-od3" firstAttribute="top" secondItem="Xd3-KO-hfh" secondAttribute="top" id="Eza-Nn-6xq"/>
                             <constraint firstItem="Xd3-KO-hfh" firstAttribute="trailing" secondItem="zbR-f9-od3" secondAttribute="trailing" id="HBA-9g-JWB"/>
-                            <constraint firstItem="zbR-f9-od3" firstAttribute="top" secondItem="m9T-d5-a9E" secondAttribute="bottom" constant="8" id="jhf-PX-Uos"/>
                             <constraint firstItem="Xd3-KO-hfh" firstAttribute="bottom" secondItem="zbR-f9-od3" secondAttribute="bottom" id="p24-jV-GUV"/>
-                            <constraint firstItem="m9T-d5-a9E" firstAttribute="top" secondItem="Xd3-KO-hfh" secondAttribute="top" constant="16" id="ry7-wy-ZBe"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Xd3-KO-hfh"/>
                     </view>
@@ -1030,14 +1055,20 @@
                                 <color key="backgroundColor" red="0.59322376943005184" green="0.33372975672027189" blue="0.15633509217972041" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="8yY-XO-6OG" id="3pU-cn-X9Q"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dzZ-V5-bbT">
                                 <rect key="frame" x="64" y="434" width="286" height="30"/>
                                 <color key="backgroundColor" red="0.59322376939999999" green="0.33372975669999999" blue="0.1563350922" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES" textContentType="password"/>
+                                <connections>
+                                    <outlet property="delegate" destination="8yY-XO-6OG" id="bEU-zl-Z7u"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="e-Mail Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xa3-Wq-ChQ">
                                 <rect key="frame" x="64" y="315" width="115.5" height="20.5"/>
@@ -1153,7 +1184,10 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="9t3-Y0-y0h" id="aIB-sR-7NS"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="76C-J6-UDc">
                                 <rect key="frame" x="64" y="405.5" width="79" height="21"/>
@@ -1167,7 +1201,10 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="9t3-Y0-y0h" id="iiO-Cy-JSE"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confirm Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1o1-r3-Cem">
                                 <rect key="frame" x="64" y="496.5" width="140" height="21"/>
@@ -1181,7 +1218,10 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="9t3-Y0-y0h" id="dgi-DZ-Aoo"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="frB-Kj-hOA">
                                 <rect key="frame" x="180" y="587.5" width="54" height="30"/>
@@ -1210,7 +1250,10 @@
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="9t3-Y0-y0h" id="fZX-bn-Cyd"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GAMER Tag:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wcn-bB-ED3">
                                 <rect key="frame" x="64" y="223.5" width="95" height="21"/>
@@ -1273,7 +1316,7 @@
                         <outlet property="emailField" destination="6ws-Ur-Pmu" id="KWA-Mp-gM7"/>
                         <outlet property="gamerTagField" destination="A0B-YY-AjD" id="D95-rr-GhW"/>
                         <outlet property="passwordField" destination="luO-u7-E9V" id="czs-t6-1w9"/>
-                        <segue destination="Pmf-Fd-FG7" kind="show" identifier="toFetchVC" id="pt5-84-AHx"/>
+                        <segue destination="Pmf-Fd-FG7" kind="show" identifier="toFetchFromSignup" id="pt5-84-AHx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fEs-M1-fzW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1289,19 +1332,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jbh-DX-gVA">
-                                <rect key="frame" x="180" y="576" width="54" height="25"/>
+                                <rect key="frame" x="180" y="464" width="54" height="25"/>
                                 <fontDescription key="fontDescription" name="parikesit" family="parikesit" pointSize="22"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GamerIconBase" translatesAutoresizingMaskIntoConstraints="NO" id="ies-5t-EGB">
-                                <rect key="frame" x="111" y="352" width="192" height="192"/>
+                                <rect key="frame" x="111" y="240" width="192" height="192"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="ies-5t-EGB" secondAttribute="height" multiplier="1:1" id="cPl-nq-avO"/>
                                 </constraints>
                             </imageView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="sIK-ce-a1e">
-                                <rect key="frame" x="175" y="617" width="64" height="64"/>
+                                <rect key="frame" x="175" y="505" width="64" height="64"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="64" id="BQb-zt-o1b"/>
                                     <constraint firstAttribute="height" constant="64" id="ZRm-nQ-QiW"/>
@@ -1312,7 +1355,7 @@
                         <color key="backgroundColor" red="0.99938076730000003" green="0.49720072749999999" blue="0.15170446039999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="sIK-ce-a1e" firstAttribute="top" secondItem="Jbh-DX-gVA" secondAttribute="bottom" constant="16" id="1am-ki-7av"/>
-                            <constraint firstItem="ies-5t-EGB" firstAttribute="centerY" secondItem="B4D-WX-OMR" secondAttribute="centerY" id="2Yt-kx-02Z"/>
+                            <constraint firstItem="ies-5t-EGB" firstAttribute="centerY" secondItem="B4D-WX-OMR" secondAttribute="centerY" multiplier="0.75" id="2Yt-kx-02Z"/>
                             <constraint firstItem="ies-5t-EGB" firstAttribute="centerX" secondItem="B4D-WX-OMR" secondAttribute="centerX" id="2br-sw-QWQ"/>
                             <constraint firstItem="Jbh-DX-gVA" firstAttribute="centerX" secondItem="B4D-WX-OMR" secondAttribute="centerX" id="BwK-gm-guT"/>
                             <constraint firstItem="Jbh-DX-gVA" firstAttribute="top" secondItem="ies-5t-EGB" secondAttribute="bottom" constant="32" id="JRB-gS-LdW"/>
@@ -1526,7 +1569,10 @@
                                                 <color key="tintColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="OF0-FX-Gys" id="p5U-mF-WD0"/>
+                                                </connections>
                                             </textField>
                                             <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="752" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Tap to select" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tQ1-AX-Xq2">
                                                 <rect key="frame" x="0.0" y="244" width="414" height="30"/>
@@ -1554,14 +1600,20 @@
                                                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="OF0-FX-Gys" id="xkk-KL-QWH"/>
+                                                </connections>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sec-yq-HN9">
                                                 <rect key="frame" x="0.0" y="153" width="414" height="31"/>
                                                 <color key="tintColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="OF0-FX-Gys" id="BZv-Mf-xBl"/>
+                                                </connections>
                                             </textField>
                                             <datePicker contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Pcu-pd-Hic">
                                                 <rect key="frame" x="0.0" y="585" width="414" height="216"/>
@@ -1614,7 +1666,10 @@
                                                 <color key="tintColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="OF0-FX-Gys" id="prC-Gt-qUf"/>
+                                                </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmS-mT-vh6">
                                                 <rect key="frame" x="8" y="397" width="59" height="21"/>
@@ -1639,7 +1694,10 @@
                                                 <color key="tintColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="OF0-FX-Gys" id="IqW-GB-RXO"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                         <color key="backgroundColor" red="0.91033840669999999" green="0.91033840669999999" blue="0.91033840669999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -2089,7 +2147,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="kf2-le-uZA"/>
         <segue reference="tmV-4k-62e"/>
-        <segue reference="h6O-sI-kZG"/>
+        <segue reference="ZZk-yb-Rg6"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

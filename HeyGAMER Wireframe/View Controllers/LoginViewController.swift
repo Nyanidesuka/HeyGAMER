@@ -28,6 +28,8 @@ class LoginViewController: UIViewController {
         return .lightContent
     }
     
+    
+    
     @IBAction func logInButtonTapped(_ sender: Any) {
         guard let email = usernameTextField.text,
             let password = passwordTextField.text else {return}
@@ -77,5 +79,12 @@ class LoginViewController: UIViewController {
         forgotPasswordAlert.addAction(sendAction)
         forgotPasswordAlert.addAction(cancelAction)
         self.present(forgotPasswordAlert, animated: true)
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

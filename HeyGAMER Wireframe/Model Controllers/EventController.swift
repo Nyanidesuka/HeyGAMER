@@ -50,7 +50,9 @@ class EventController{
         let userDocName = event.attendingUserRefs[index]
         FirebaseService.shared.fetchDocument(documentName: userDocName, collectionName: FirebaseReferenceManager.userCollection) { (document) in
             guard let document = document, let loadedUser = User(firestoreDoc: document) else {print("couldn't load a user from this reference. 💈💈💈💈"); completion(); return}
-            event.attendingUsers.append(loadedUser)
+            if !event.attendingUsers.contains(where: {$0.authUserRef == loadedUser.authUserRef}){
+                event.attendingUsers.append(loadedUser)
+            }
             if event.attendingUsers.count < event.attendingUserRefs.count{
                 print("so far we have \(event.attendingUsers) users from \(event.attendingUserRefs) references. Going for another lap. 🕹🕹🕹")
                 EventController.shared.fetchUsers(forEvent: event, index: index + 1, completion: completion)
@@ -88,15 +90,19 @@ class EventController{
                 return
             }
             guard let snapshot = snapshot, let user = UserController.shared.currentUser else {completion(); return}
+            var userEvents: [Event] = []
+            var otherEvents: [Event] = []
             for document in snapshot.documents{
                 if let loadedEvent = Event(firestoreDocument: document.data()){
-                    if user.eventRefs.contains(loadedEvent.uuid) && !EventController.shared.userEvents.contains(where: {$0.uuid == loadedEvent.uuid}){
-                        EventController.shared.userEvents.append(loadedEvent)
-                    } else if !EventController.shared.otherEvents.contains(where: {$0.uuid == loadedEvent.uuid}) {
-                        EventController.shared.otherEvents.append(loadedEvent)
+                    if user.eventRefs.contains(loadedEvent.uuid){
+                        userEvents.append(loadedEvent)
+                    } else {
+                        otherEvents.append(loadedEvent)
                     }
                 }
             }
+            EventController.shared.userEvents = userEvents
+            EventController.shared.otherEvents = otherEvents
             print("loaded \(EventController.shared.events.count) events")
             completion()
         }

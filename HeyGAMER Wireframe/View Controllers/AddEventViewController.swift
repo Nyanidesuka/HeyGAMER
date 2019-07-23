@@ -58,6 +58,11 @@ class AddEventViewController: UIViewController {
         return .lightContent
     }
     
+    @IBAction func tapGesture(_ sender: Any) {
+        self.resignFirstResponder()
+    }
+    
+    
     @IBAction func addImageButtonTapped(_ sender: UIButton) {
         self.imagePicker.present(from: self.view)
     }
@@ -79,15 +84,30 @@ class AddEventViewController: UIViewController {
         }
         //now we decide whether to make a new event or update a current event.
         if let event = self.event{
+            print("updating an event🙌🙌🙌🙌")
             event.title = eventName
             event.game = game
             event.isCompetitive = isCompetitive
             event.venue = venueName
             event.address = address
             event.state = cityState
-            event.headerPhotoRef = photoRef
+            if imageChanged{
+                //delete the old image doc
+                if let photoRef = event.headerPhotoRef{
+                    print("deleting the old image doc")
+                    let docRef = FirebaseReferenceManager.root.collection(FirebaseReferenceManager.eventPicCollection).document(photoRef)
+                    docRef.delete()
+                }
+                if let image = evemtImageView.image{
+                    print("setting a new photo ref")
+                    let newPhotoRef = UUID().uuidString
+                    event.headerPhotoRef = newPhotoRef
+                    event.headerPhoto = image
+                    EventController.shared.saveEventPhoto(image: image, forEvent: event)
+                }
+            }
             EventController.shared.updateEvent(event: event)
-            self.performSegue(withIdentifier: "savedEvent", sender: self)
+            self.navigationController?.popViewController(animated: true)
         } else {
             EventController.shared.createNewEvent(title: eventName, date: datePicker.date, hostRef: user.authUserRef, state: cityState, venue: venueName, openToAnyone: true, isCompetitive: isCompetitive, headerPhotoRef: photoRef, attendingUserRefs: [user.authUserRef], game: game, address: address) {(newEvent) in
                 if let image = self.evemtImageView.image{
@@ -178,5 +198,12 @@ extension AddEventViewController: UIPickerViewDelegate, UIPickerViewDataSource{
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.pickerValue = pickerChoices[row]
         self.casualOrCompetitiveImage.image = UIImage(named: pickerChoices[row] == "Competitive" ? "trophy" : "meeting")
+    }
+}
+
+extension AddEventViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
