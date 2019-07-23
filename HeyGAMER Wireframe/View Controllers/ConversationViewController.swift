@@ -43,6 +43,8 @@ class ConversationViewController: UIViewController {
         self.messageTextView.textColor = .lightGray
         self.messageTextView.layer.cornerRadius = 4
         self.heyGamerButtonView.layer.cornerRadius = self.heyGamerButtonView.frame.height / 2
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         guard let conversation = self.conversation else {return}
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -55,6 +57,20 @@ class ConversationViewController: UIViewController {
     
     @IBAction func tapGesture(_ sender: Any) {
         self.messageTextView.resignFirstResponder()
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
     }
     
     

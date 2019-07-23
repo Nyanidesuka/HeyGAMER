@@ -404,7 +404,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <button opaque="NO" tag="1" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YYk-UP-rCF">
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YYk-UP-rCF">
                                                 <rect key="frame" x="0.0" y="685" width="414" height="30"/>
                                                 <connections>
                                                     <action selector="lookingForTapped:" destination="MlA-2c-Xf3" eventType="touchUpInside" id="sJD-Ne-f6f"/>

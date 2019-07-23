@@ -68,6 +68,8 @@ class AddEventViewController: UIViewController {
     }
     
     @IBAction func postButtonTapped(_ sender: Any) {
+        let popover = buildLoadingPopover()
+        self.present(popover, animated: true)
         //get all the info from the fields
         guard let eventName = self.eventTitleField.text,
         let game = gameTitleField.text,
@@ -107,7 +109,12 @@ class AddEventViewController: UIViewController {
                 }
             }
             EventController.shared.updateEvent(event: event)
-            self.navigationController?.popViewController(animated: true)
+            DispatchQueue.main.async {
+                popover.dismiss(animated: true, completion: {
+                    self.navigationController?.popViewController(animated: true)
+                })
+            }
+            
         } else {
             EventController.shared.createNewEvent(title: eventName, date: datePicker.date, hostRef: user.authUserRef, state: cityState, venue: venueName, openToAnyone: true, isCompetitive: isCompetitive, headerPhotoRef: photoRef, attendingUserRefs: [user.authUserRef], game: game, address: address) {(newEvent) in
                 if let image = self.evemtImageView.image{
@@ -115,7 +122,9 @@ class AddEventViewController: UIViewController {
                     EventController.shared.saveEventPhoto(image: image, forEvent: newEvent)
                 }
                 DispatchQueue.main.async {
-                    self.navigationController?.popViewController(animated: true)
+                    popover.dismiss(animated: true, completion: {
+                        self.navigationController?.popViewController(animated: true)
+                    })
                 }
             }
         }
