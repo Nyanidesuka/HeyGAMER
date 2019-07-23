@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1713138822E76227006B167C /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1713138722E76227006B167C /* UIViewController+Extension.swift */; };
 		171613E822DC01640088C9C9 /* ComposeMessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171613E722DC01640088C9C9 /* ComposeMessageTextView.swift */; };
 		1716781F22E60E3A00B41797 /* Parikesit.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1716781E22E60D7600B41797 /* Parikesit.otf */; };
 		171F7EFE22D3BE420012210A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171F7EFD22D3BE420012210A /* AppDelegate.swift */; };
@@ -50,6 +51,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1713138722E76227006B167C /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		171613E722DC01640088C9C9 /* ComposeMessageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeMessageTextView.swift; sourceTree = "<group>"; };
 		1716781E22E60D7600B41797 /* Parikesit.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Parikesit.otf; sourceTree = "<group>"; };
 		1716782022E61F0C00B41797 /* HeyGAMER.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HeyGAMER.entitlements; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				171F7F1222D3C0A70012210A /* UserCollectionViewCell.swift */,
+				1713138722E76227006B167C /* UIViewController+Extension.swift */,
 				17DBFF8322DE7EC0000C1F43 /* MessageFromUserTableViewCell.swift */,
 				17DBFF8522DE7ECD000C1F43 /* MessageFromSelfTableViewCell.swift */,
 				173B063E22DD23A400147244 /* ImagePicker.swift */,
@@ -376,6 +379,7 @@
 				17228DD322D53B6B00A9D4D2 /* InitialFetchViewController.swift in Sources */,
 				173B063F22DD23A400147244 /* ImagePicker.swift in Sources */,
 				171F7F1F22D3E46E0012210A /* UserInfoTableViewCell.swift in Sources */,
+				1713138822E76227006B167C /* UIViewController+Extension.swift in Sources */,
 				17228DCD22D52A7700A9D4D2 /* ConversationController.swift in Sources */,
 				17228DC622D529FB00A9D4D2 /* Event.swift in Sources */,
 				171F7F1322D3C0A70012210A /* UserCollectionViewCell.swift in Sources */,

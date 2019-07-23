@@ -35,8 +35,9 @@ class SignUpViewController: UIViewController {
         self.resignFirstResponder()
     }
     
-    
     @IBAction func signUpButtonPressed(_ sender: Any) {
+        let popover = buildLoadingPopover()
+        self.present(popover, animated: true)
         guard let gamerTag = gamerTagField.text,
         let email = emailField.text,
             let password = passwordField.text,
@@ -45,14 +46,22 @@ class SignUpViewController: UIViewController {
             let passwordAlert = UIAlertController(title: "Passwords do not match", message: "Please make sure the password is entered identically into both password fields, to be sure your password is set correctly.", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Got it.", style: .default, handler: nil)
             passwordAlert.addAction(okAction)
-            self.present(passwordAlert, animated: true)
+            popover.dismiss(animated: true) {
+                DispatchQueue.main.async {
+                    self.present(passwordAlert, animated: true)
+                }
+            }
             return
         }
         if gamerTag.isEmpty{
             let usernameAlert = UIAlertController(title: "No Username", message: "Please enter a username into the GAMER Tag field.", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Got it.", style: .default, handler: nil)
             usernameAlert.addAction(okAction)
-            self.present(usernameAlert, animated: true)
+            popover.dismiss(animated: true) {
+                DispatchQueue.main.async {
+                    self.present(usernameAlert, animated: true)
+                }
+            }
             return
         }
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
@@ -61,7 +70,11 @@ class SignUpViewController: UIViewController {
                 let signupErrorAlert = UIAlertController(title: "Error", message: "There was an error registering your account - \(error.localizedDescription)", preferredStyle: .alert)
                 let closeAction = UIAlertAction(title: "Close", style: .default, handler: nil)
                 signupErrorAlert.addAction(closeAction)
-                self.present(signupErrorAlert, animated: true)
+                popover.dismiss(animated: true) {
+                    DispatchQueue.main.async {
+                        self.present(signupErrorAlert, animated: true)
+                    }
+                }
                 return
             }
             guard let userID = Auth.auth().currentUser?.uid else {print("couldnt get the UID"); return}
@@ -73,7 +86,11 @@ class SignUpViewController: UIViewController {
                     UserController.shared.currentUser = newUser
                 }
                 DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "toFetchFromSignup", sender: nil)
+                    popover.dismiss(animated: true, completion: {
+                        DispatchQueue.main.async {
+                            self.performSegue(withIdentifier: "toFetchFromSignup", sender: nil)
+                        }
+                    })
                 }
             })
         }

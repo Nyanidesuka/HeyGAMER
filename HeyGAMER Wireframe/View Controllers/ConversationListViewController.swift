@@ -53,6 +53,7 @@ extension ConversationListViewController: UITableViewDelegate, UITableViewDataSo
             cell.usernameLabel.text = "Nothing here yet."
             cell.recentMessageLabel.text = "Conversations will show up here."
             cell.timestampLabel.text = ""
+            cell.isUserInteractionEnabled = false
             return cell
         }
         let conversation = ConversationController.shared.conversations[indexPath.row]

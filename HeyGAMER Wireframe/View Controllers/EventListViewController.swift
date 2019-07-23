@@ -71,6 +71,8 @@ extension EventListViewController: UICollectionViewDelegate, UICollectionViewDat
             cell.casualOrCompetitiveImage.image = nil
             cell.labelBackgroundView.layer.cornerRadius = 5
             cell.eventNameLabel.text = "Nothing here yet"
+            cell.isUserInteractionEnabled = false
+            return cell
         }
         let cellEvent = EventController.shared.events[indexPath.item]
         cell.eventNameLabel.text = cellEvent.title

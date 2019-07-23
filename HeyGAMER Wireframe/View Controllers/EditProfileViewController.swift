@@ -78,6 +78,8 @@ class EditProfileViewController: UIViewController {
     
     @IBAction func saveButtonTapped(_ sender: Any) {
         //we need to update the user, then save the profile picture to firebase, then save the user to firebase
+        let popover = buildLoadingPopover()
+        self.present(popover, animated: true)
         guard let user = UserController.shared.currentUser,
         let username = gamerTagField.text,
         let nowPlaying = nowPlayingField.text else {return}
@@ -107,6 +109,7 @@ class EditProfileViewController: UIViewController {
             user.cityState = ""
         }
         if imageChanged{
+            print("the image changed and we are gonna try to save it")
             //if the user has a pfp ref already keep that and if not make a new one
             let pfpRef = user.pfpDocName ?? UUID().uuidString
             //get the image from the imageview and make it into data
@@ -119,7 +122,16 @@ class EditProfileViewController: UIViewController {
                     let userDict = UserController.shared.createDictionary(fromUser: user)
                     FirebaseService.shared.addDocument(documentName: user.authUserRef, collectionName: FirebaseReferenceManager.userCollection, data: userDict) { (success) in
                         print("tried to save the user to firestore. Success: \(success)")
+                        DispatchQueue.main.async {
+                            popover.dismiss(animated: true, completion: {
+                                DispatchQueue.main.async {
+                                    self.navigationController?.popViewController(animated: true)
+                                }
+                            })
+                        }
+                        
                     }
+                    user.profilePicture = image
                 }
             }
         } else {
@@ -127,6 +139,13 @@ class EditProfileViewController: UIViewController {
             let userDict = UserController.shared.createDictionary(fromUser: user)
             FirebaseService.shared.addDocument(documentName: user.authUserRef, collectionName: FirebaseReferenceManager.userCollection, data: userDict) { (success) in
                 print("tried to save the user to firestore. Success: \(success)")
+                DispatchQueue.main.async {
+                    popover.dismiss(animated: true, completion: {
+                        DispatchQueue.main.async {
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    })
+                }
             }
         }
     }
@@ -270,6 +289,18 @@ extension EditProfileViewController: UITextViewDelegate{
         characterCountLabel.text = "\(textView.text.count) / 500"
     }
     
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray || textView.text == "Profile of a gamer"{
+            textView.text = ""
+            textView.textColor = UIColor.darkText
+        }
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if let text = textView.text, text.isEmpty{
+            textView.textColor = UIColor.lightGray
+            textView.text = "Profile of a gamer"
+        }
+    }
 }
 
 extension EditProfileViewController: UITextFieldDelegate{
