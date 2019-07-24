@@ -104,6 +104,18 @@ class EventController{
             EventController.shared.userEvents = userEvents
             EventController.shared.otherEvents = otherEvents
             print("loaded \(EventController.shared.events.count) events")
+            print("taking out the blocked ones.")
+            if let user = UserController.shared.currentUser{
+                for event in EventController.shared.events{
+                    if user.blockedEventRefs.contains(event.uuid){
+                        if let targetIndex = EventController.shared.otherEvents.firstIndex(where: {$0.uuid == event.uuid}){
+                            EventController.shared.otherEvents.remove(at: targetIndex)
+                        } else if let targetIndex = EventController.shared.userEvents.firstIndex(where: {$0.uuid == event.uuid}){
+                            EventController.shared.userEvents.remove(at: targetIndex)
+                        }
+                    }
+                }
+            }
             completion()
         }
     }

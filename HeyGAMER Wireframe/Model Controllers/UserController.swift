@@ -16,7 +16,7 @@ class UserController{
     var loadedUsers: [User] = []
     
     func createDictionary(fromUser user: User) -> [String : Any]{
-        let returnDict: [String : Any] = ["username" : user.username, "eventRefs" : user.eventRefs, "bio" : user.bio, "nowPlaying" : user.nowPlaying, "lookingFor" : user.lookingFor, "favoriteGames" : user.favoriteGames, "favoriteGenres" : user.favoriteGenres, "pfpDocName" : user.pfpDocName, "authUserRef" : user.authUserRef, "blockedUsers" : user.blockedUserRefs, "cityState" : user.cityState]
+        let returnDict: [String : Any] = ["username" : user.username, "eventRefs" : user.eventRefs, "bio" : user.bio, "nowPlaying" : user.nowPlaying, "lookingFor" : user.lookingFor, "favoriteGames" : user.favoriteGames, "favoriteGenres" : user.favoriteGenres, "pfpDocName" : user.pfpDocName, "authUserRef" : user.authUserRef, "blockedUsers" : user.blockedUserRefs, "cityState" : user.cityState, "blockedEventRefs" : user.blockedEventRefs]
         return returnDict
     }
     
