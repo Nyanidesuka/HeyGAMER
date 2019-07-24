@@ -66,6 +66,7 @@ class EventDetailViewController: UIViewController {
         self.contactButton.layer.cornerRadius = 5
         self.imGoingButton.layer.cornerRadius = 5
         self.deletebutton.layer.cornerRadius = 5
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -183,37 +184,62 @@ class EventDetailViewController: UIViewController {
     
     @IBAction func reportButtonPressed(_ sender: Any) {
         guard let user = UserController.shared.currentUser, let event = self.event else {return}
-        let reportAlert = UIAlertController(title: "Report \(event.title)", message: "Please select a reason for your report", preferredStyle: .alert)
-        let harassmentAction = UIAlertAction(title: "Harassment", style: .default, handler: { (_) in
-            self.submitReport(reason: "Harassment", forEvent: event, fromUser: user)
-        })
-        let inappropriateAction = UIAlertAction(title: "Inappropriate Content", style: .default, handler: { (_) in
-            self.submitReport(reason: "Inappropriate Content", forEvent: event, fromUser: user)
-        })
-        let offensiveAction = UIAlertAction(title: "Offensive Content", style: .default, handler: { (_) in
-            self.submitReport(reason: "Offensive Content", forEvent: event, fromUser: user)
-        })
-        let otherAction = UIAlertAction(title: "Other", style: .default, handler: { (_) in
-            let otherAlert = UIAlertController(title: "Enter a reason for your report", message: nil, preferredStyle: .alert)
-            otherAlert.addTextField(configurationHandler: { (field) in
-                field.placeholder = "Enter a reason for your report"
-            })
-            let sendAction = UIAlertAction(title: "Send", style: .default, handler: { (_) in
-                guard let reportReason = otherAlert.textFields?.first?.text else {return}
-                self.submitReport(reason: reportReason, forEvent: event, fromUser: user)
+        let reportOrBlockAlert = UIAlertController(title: "Report or Hide Event", message: nil, preferredStyle: .alert)
+        let hideAction = UIAlertAction(title: "Hide", style: .default) { (_) in
+            let blockAlert = UIAlertController(title: "Hide this event?", message: "It'll no longer show up in the events tab.", preferredStyle: .alert)
+            let blockAction = UIAlertAction(title: "Hide it.", style: .default, handler: { (_) in
+                user.blockedEventRefs.append(event.uuid)
+                let userDict = UserController.shared.createDictionary(fromUser: user)
+                FirebaseService.shared.addDocument(documentName: user.authUserRef, collectionName: FirebaseReferenceManager.userCollection, data: userDict, completion: { (success) in
+                    print("tried to update the user in firestore. Success: \(success)")
+                    DispatchQueue.main.async {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                })
             })
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            otherAlert.addAction(sendAction)
-            otherAlert.addAction(cancelAction)
-            self.present(otherAlert, animated: true)
-        })
+            blockAlert.addAction(blockAction)
+            blockAlert.addAction(cancelAction)
+            self.present(blockAlert, animated: true)
+        }
+        let reportAction = UIAlertAction(title: "Report", style: .default) { (_) in
+            let reportAlert = UIAlertController(title: "Report \(event.title)", message: "Please select a reason for your report", preferredStyle: .alert)
+            let harassmentAction = UIAlertAction(title: "Harassment", style: .default, handler: { (_) in
+                self.submitReport(reason: "Harassment", forEvent: event, fromUser: user)
+            })
+            let inappropriateAction = UIAlertAction(title: "Inappropriate Content", style: .default, handler: { (_) in
+                self.submitReport(reason: "Inappropriate Content", forEvent: event, fromUser: user)
+            })
+            let offensiveAction = UIAlertAction(title: "Offensive Content", style: .default, handler: { (_) in
+                self.submitReport(reason: "Offensive Content", forEvent: event, fromUser: user)
+            })
+            let otherAction = UIAlertAction(title: "Other", style: .default, handler: { (_) in
+                let otherAlert = UIAlertController(title: "Enter a reason for your report", message: nil, preferredStyle: .alert)
+                otherAlert.addTextField(configurationHandler: { (field) in
+                    field.placeholder = "Enter a reason for your report"
+                })
+                let sendAction = UIAlertAction(title: "Send", style: .default, handler: { (_) in
+                    guard let reportReason = otherAlert.textFields?.first?.text else {return}
+                    self.submitReport(reason: reportReason, forEvent: event, fromUser: user)
+                })
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                otherAlert.addAction(sendAction)
+                otherAlert.addAction(cancelAction)
+                self.present(otherAlert, animated: true)
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            reportAlert.addAction(harassmentAction)
+            reportAlert.addAction(inappropriateAction)
+            reportAlert.addAction(offensiveAction)
+            reportAlert.addAction(otherAction)
+            reportAlert.addAction(cancelAction)
+            self.present(reportAlert,animated: true)
+        }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        reportAlert.addAction(harassmentAction)
-        reportAlert.addAction(inappropriateAction)
-        reportAlert.addAction(offensiveAction)
-        reportAlert.addAction(otherAction)
-        reportAlert.addAction(cancelAction)
-        self.present(reportAlert,animated: true)
+        reportOrBlockAlert.addAction(hideAction)
+        reportOrBlockAlert.addAction(reportAction)
+        reportOrBlockAlert.addAction(cancelAction)
+        self.present(reportOrBlockAlert, animated: true)
     }
     
     func submitReport(reason: String, forEvent: Event, fromUser: User){

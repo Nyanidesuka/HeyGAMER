@@ -22,6 +22,7 @@
 		171F7F1D22D3E4150012210A /* UserDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171F7F1C22D3E4150012210A /* UserDetailViewController.swift */; };
 		171F7F1F22D3E46E0012210A /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171F7F1E22D3E46E0012210A /* UserInfoTableViewCell.swift */; };
 		171F7F2122D3E47B0012210A /* UserBioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171F7F2022D3E47B0012210A /* UserBioTableViewCell.swift */; };
+		17222F1822E8B9890076A662 /* TnCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17222F1722E8B9890076A662 /* TnCViewController.swift */; };
 		17228DB822D525E900A9D4D2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 17228DB722D525E900A9D4D2 /* GoogleService-Info.plist */; };
 		17228DBA22D526BA00A9D4D2 /* FirebaseReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DB922D526BA00A9D4D2 /* FirebaseReferenceManager.swift */; };
 		17228DBD22D5280800A9D4D2 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17228DBC22D5280800A9D4D2 /* FirebaseService.swift */; };
@@ -69,6 +70,7 @@
 		171F7F1C22D3E4150012210A /* UserDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewController.swift; sourceTree = "<group>"; };
 		171F7F1E22D3E46E0012210A /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
 		171F7F2022D3E47B0012210A /* UserBioTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBioTableViewCell.swift; sourceTree = "<group>"; };
+		17222F1722E8B9890076A662 /* TnCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TnCViewController.swift; sourceTree = "<group>"; };
 		17228DB722D525E900A9D4D2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		17228DB922D526BA00A9D4D2 /* FirebaseReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseReferenceManager.swift; sourceTree = "<group>"; };
 		17228DBC22D5280800A9D4D2 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 			children = (
 				171F7F1522D3C11A0012210A /* UserListViewController.swift */,
 				176A0C4A22E2306D0047BBAB /* TabBarViewController.swift */,
+				17222F1722E8B9890076A662 /* TnCViewController.swift */,
 				173B063C22DCEA7000147244 /* EditProfileViewController.swift */,
 				17228DD422D543B400A9D4D2 /* SignUpViewController.swift */,
 				17228DD222D53B6B00A9D4D2 /* InitialFetchViewController.swift */,
@@ -375,6 +378,7 @@
 				17228DC222D529DF00A9D4D2 /* Conversation.swift in Sources */,
 				17228DBA22D526BA00A9D4D2 /* FirebaseReferenceManager.swift in Sources */,
 				17228DD122D53A4A00A9D4D2 /* LoginViewController.swift in Sources */,
+				17222F1822E8B9890076A662 /* TnCViewController.swift in Sources */,
 				171F7F2122D3E47B0012210A /* UserBioTableViewCell.swift in Sources */,
 				17228DD322D53B6B00A9D4D2 /* InitialFetchViewController.swift in Sources */,
 				173B063F22DD23A400147244 /* ImagePicker.swift in Sources */,

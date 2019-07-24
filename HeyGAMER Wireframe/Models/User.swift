@@ -28,9 +28,10 @@ class User{
     //reference to the firebase auth doc for this user
     var authUserRef: String
     var blockedUserRefs: [String]
+    var blockedEventRefs: [String]
     var cityState: String
     
-    init(username: String, authUserRef: String, eventRefs: [String] = [], conversationRefs: [String] = [], bio: String = "", nowPlaying: String = "", lookingFor: [String] = [], favoriteGames: [String] = [], favoriteGenres: [String] = [], location: CLLocation? = nil, profilePicture: UIImage? = nil, pfpDocName: String? = nil, blockedUserRefs: [String] = [], cityState: String = ""){
+    init(username: String, authUserRef: String, eventRefs: [String] = [], conversationRefs: [String] = [], bio: String = "", nowPlaying: String = "", lookingFor: [String] = [], favoriteGames: [String] = [], favoriteGenres: [String] = [], location: CLLocation? = nil, profilePicture: UIImage? = nil, pfpDocName: String? = nil, blockedUserRefs: [String] = [], cityState: String = "", blockedEventRefs: [String] = []){
         self.username = username
         self.authUserRef = authUserRef
         self.bio = bio
@@ -45,6 +46,7 @@ class User{
         self.pfpDocName = pfpDocName
         self.blockedUserRefs = blockedUserRefs
         self.cityState = cityState
+        self.blockedEventRefs = blockedEventRefs
     }
     
     convenience init?(firestoreDoc data: [String : Any]){
@@ -57,7 +59,8 @@ class User{
         let favoriteGames = data["favoriteGames"] as? [String],
         let favoriteGenres = data["favoriteGenres"] as? [String],
         let blockedUsers = data["blockedUsers"] as? [String],
-        let cityState = data["cityState"] as? String else {print("couldnt get all of the info we needed from the document. Gonna print it all!"); return nil}
+        let cityState = data["cityState"] as? String,
+        let blockedEventRefs = data["blockedEventRefs"] as? [String] else {print("couldnt get all of the info we needed from the document. Gonna print it all!"); return nil}
         let pfpDocName = data["pfpDocName"] as? String
         self.init(username: username, authUserRef: authUserRef, eventRefs: eventRefs, conversationRefs: [], bio: bio, nowPlaying: nowPlaying, lookingFor: lookingFor, favoriteGames: favoriteGames, favoriteGenres: favoriteGenres, pfpDocName: pfpDocName, blockedUserRefs: blockedUsers, cityState: cityState)
     }
